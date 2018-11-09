@@ -1,0 +1,53 @@
+.RoomOverviewCardCollectionSection {
+  @include grid-row;
+
+  padding-top: $grid;
+  padding-bottom: $grid * 3;
+  @include screen-min-md {
+    padding-top: $grid * 8;
+    padding-bottom: $grid * 8;
+  }
+  @include screen-min-lg {
+    padding-top: $grid * 10;
+    padding-bottom: $grid * 10;
+  }
+
+  &__item {
+    padding-top: $grid * 3;
+    padding-bottom: $grid * 3;
+    border-bottom: 1px solid $brand-color-border;
+    &:first-of-type {
+      padding-top: 0;
+    }
+    &:last-of-type {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+    @include screen-min-md {
+      padding-top: 0 !important;
+      padding-bottom: $grid * 8 !important;
+      border-bottom: 0 !important;
+    }
+
+    &--layout--two-column {
+      @include grid-column(12);
+      @include screen-min-md {
+        @include grid-column(6);
+      }
+    }
+
+    &--layout--three-column {
+      @include grid-column(12);
+      @include screen-min-md {
+        @include grid-column(6);
+      }
+      @include screen-min-lg {
+        @include grid-column(4);
+      }
+    }
+
+    &__inner {
+      height: 100%;
+    }
+  }
+}

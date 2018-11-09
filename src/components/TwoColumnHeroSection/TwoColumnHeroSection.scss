@@ -1,0 +1,109 @@
+.TwoColumnHeroSection {
+  @include container;
+
+  &__bg {
+    z-index: 2;
+    @include aspect-ratio(16, 9);
+    @include screen-min-md {
+      @include aspect-ratio(5, 2);
+    }
+    &__image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    &__overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      cursor: pointer;
+      @include screen-min-md {
+        font-size: 72px;
+      }
+    }
+  }
+
+  &__main {
+    position: relative;
+    z-index: 3;
+
+    @include screen-min-md {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-top: -$grid * 8;
+      margin-right: $grid * 10;
+      background-color: #fff;
+      padding: ($grid * 4) ($grid * 4) ($grid * 4) 0;
+    }
+  }
+
+  &__content {
+    padding: ($grid * 2) 0 ($grid * 3);
+    @include screen-min-md {
+      flex: 640 640 0;
+      max-width: 640px;
+      padding: 0;
+    }
+  }
+
+  &__subtitle {
+    margin-bottom: $grid;
+    @include h4;
+    @include screen-min-md {
+      margin-bottom: $grid * 2;
+      @include h3-large;
+    }
+  }
+
+  &__description {
+  }
+
+  &__actions {
+    margin-top: $grid * 3;
+    @include screen-min-lg {
+      display: flex;
+      margin-top: $grid * 4;
+    }
+  }
+
+  &__button {
+    + .TwoColumnHeroSection__button {
+      margin-top: $grid * 2;
+    }
+
+    @include screen-min-lg {
+      display: inline-block;
+      + .TwoColumnHeroSection__button {
+        margin-top: 0;
+        margin-left: $grid * 2;
+      }
+    }
+  }
+
+  &__sidebar {
+    background-color: #fafafa;
+    padding: ($grid * 3);
+    @include screen-min-md {
+      flex: 416 416 0;
+      max-width: 416px;
+      margin-left: $grid-md-inside;
+    }
+    @include screen-min-lg {
+      margin-left: $grid-lg-inside;
+    }
+    @include screen-min-xl {
+      margin-left: $grid-xl-inside;
+    }
+  }
+}

@@ -1,0 +1,44 @@
+.BookForm {
+  $screen-switch-expand: $screen-md-min;
+
+  color: #fff;
+
+  &__inputs {
+    padding: 32px;
+
+    background-color: rgba(#000, 0.7);
+  }
+
+  &__title {
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 300;
+
+    display: none;
+
+    @include screen-width-above($screen-switch-expand) {
+      display: block;
+    }
+  }
+
+  &__submit {
+    @include reset-default-button-styles;
+    @include button-color-scheme(primary);
+    @include button-size($display: block, $size: lg);
+
+    border-radius: 0 0 2px 2px;
+
+    text-align: center;
+  }
+
+  &__secondary-action {
+    padding-top: 20px;
+
+    text-align: center;
+    line-height: 16px;
+  }
+
+  &__secondary-action-link {
+    @include link-default;
+  }
+}

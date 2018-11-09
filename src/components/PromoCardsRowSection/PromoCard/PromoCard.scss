@@ -1,0 +1,70 @@
+.PromoCard {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: $grid * 3;
+
+  &__image {
+    background-color: #2f2f2f;
+
+    @include aspect-ratio(4, 3);
+    margin-bottom: $grid * 2;
+    @include screen-min-md {
+      @include aspect-ratio(7, 8);
+      margin-bottom: $grid * 3;
+    }
+
+    > img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+  &__metas {
+    @include h6;
+    color: #757575;
+    margin-bottom: $grid * 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    @include screen-min-md {
+      margin-bottom: $grid * 3;
+    }
+  }
+
+  &__meta + .PromoCard__meta {
+    margin-left: $grid * 2;
+  }
+
+  &__title {
+    @include h4;
+  }
+
+  &__description {
+    @include subtitle-text-small;
+    margin-top: $grid;
+    @include screen-min-md {
+      margin-top: $grid * 2;
+    }
+  }
+
+  &__buttons {
+    margin-top: auto;
+  }
+
+  &__primary-button {
+    margin-top: $grid * 2;
+    @include screen-min-md {
+      margin-top: $grid * 3;
+    }
+  }
+
+  &__tertiary-button {
+    margin-top: $grid * 3;
+    text-align: center;
+  }
+}

@@ -1,0 +1,57 @@
+.HorizontalItemsScroll {
+  &__list {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    @include screen-min-xl {
+      margin: 0 auto;
+      max-width: $grid-xl-outside-max-width;
+    }
+
+    // Make the scrollbar appear for now
+    // -ms-overflow-style: -ms-autohiding-scrollbar;
+    // &::-webkit-scrollbar {
+    //   display: none;
+    // }
+
+    &__inner {
+      display: inline-flex;
+      align-items: stretch;
+      justify-content: space-between;
+      min-width: 100%;
+
+      padding: 0 $grid-xs-outside;
+      @include screen-min-sm {
+        padding: 0 $grid-sm-outside;
+      }
+      @include screen-min-md {
+        padding: 0 $grid-md-outside;
+      }
+      @include screen-min-lg {
+        padding: 0 $grid-lg-outside;
+      }
+      @include screen-min-xl {
+        padding: 0 $grid-xl-outside;
+      }
+
+      > * {
+        margin-left: $grid-xs-inside;
+        @include screen-min-sm {
+          margin-left: $grid-sm-inside;
+        }
+        @include screen-min-md {
+          margin-left: $grid-md-inside;
+        }
+        @include screen-min-lg {
+          margin-left: $grid-lg-inside;
+        }
+        @include screen-min-xl {
+          margin-left: $grid-xl-inside;
+        }
+        &:first-child {
+          margin-left: 0 !important;
+        }
+      }
+    }
+  }
+}

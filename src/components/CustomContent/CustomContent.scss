@@ -1,0 +1,116 @@
+.CustomContent {
+  overflow: hidden;
+  &--variant--small {
+    @include subtitle-text-small;
+  }
+  &--variant--large {
+    @include lead-text-small;
+  }
+
+  > :first-child {
+    margin-top: 0;
+  }
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+  a {
+    @include link-default;
+    text-decoration: underline;
+  }
+
+  p,
+  ul,
+  ol {
+    margin-top: $grid;
+    margin-bottom: $grid;
+    @include screen-min-md {
+      margin-top: $grid * 2;
+      margin-bottom: $grid * 2;
+    }
+  }
+
+  h1,
+  .h1 {
+    @include h1;
+  }
+  h2,
+  .h2 {
+    @include h2;
+  }
+  .h2-small {
+    @include h2-small;
+  }
+  .h2-large {
+    @include h2-large;
+  }
+  h3,
+  .h3 {
+    @include h3;
+  }
+  .h3-small {
+    @include h3-small;
+  }
+  .h3-large {
+    @include h3-large;
+  }
+  h4,
+  .h4 {
+    @include h4;
+  }
+  h5,
+  .h5 {
+    @include h5;
+  }
+  h6,
+  .h6 {
+    @include h6;
+  }
+
+  .quote-text,
+  blockquote {
+    margin: 0;
+    @include quote-text;
+  }
+  .lead-text,
+  big {
+    @include lead-text;
+  }
+  .lead-text-small {
+    @include lead-text-small;
+  }
+  .lead-text-large {
+    @include lead-text-large;
+  }
+  .subtitle-text {
+    @include subtitle-text;
+  }
+  .subtitle-text-small {
+    @include subtitle-text-small;
+  }
+  .subtitle-text-large {
+    @include subtitle-text-large;
+  }
+  .body-text {
+    @include body-text;
+  }
+  .body-text-small {
+    @include body-text-small;
+  }
+  .body-text-large {
+    @include body-text-large;
+  }
+  .micro-text,
+  small {
+    @include micro-text;
+  }
+  .micro-text-label {
+    @include micro-text-label;
+  }
+  .micro-text-small {
+    @include micro-text-small;
+  }
+  .micro-text-large {
+    @include micro-text-large;
+  }
+}

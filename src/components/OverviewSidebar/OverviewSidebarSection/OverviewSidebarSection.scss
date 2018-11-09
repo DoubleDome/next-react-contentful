@@ -1,0 +1,67 @@
+.OverviewSidebarSection {
+  &__headline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__title {
+      @include h5;
+    }
+
+    &__content {
+      flex-shrink: 0;
+      @include subtitle-text-small;
+      a {
+        @include link-default;
+      }
+    }
+
+    &__social-icon {
+      position: relative;
+      display: inline-block;
+      height: 32px;
+      width: 32px;
+      top: -4px;
+      cursor: pointer;
+      svg {
+        position: relative;
+        height: 32px;
+        width: 32px;
+      }
+    }
+  }
+
+  &__items {
+  }
+
+  .OverviewSidebarSection__headline + .OverviewSidebarSection__items {
+    margin-top: $grid;
+  }
+
+  &__item {
+    &--inline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .OverviewSidebarSection__item__label {
+        @include micro-text-label;
+      }
+
+      .OverviewSidebarSection__item__content {
+        flex-shrink: 0;
+        @include subtitle-text-small;
+        a {
+          @include link-default;
+        }
+      }
+    }
+
+    &--block {
+    }
+
+    + .OverviewSidebarSection__item {
+      margin-top: $grid;
+    }
+  }
+}

@@ -1,0 +1,45 @@
+.PromoCardsRowSection {
+  .PromoCard {
+    min-width: 300px;
+    min-width: 70vw;
+    @include screen-min-md {
+      min-width: 0;
+      flex: 1 1 0;
+    }
+  }
+
+  &__moreBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-width: 50vw;
+    color: $brand-color-primary;
+    font-size: 18px;
+    text-decoration: none;
+
+    &__circle {
+      border-radius: 50%;
+      background-color: $brand-color-primary;
+      height: $grid * 7;
+      width: $grid * 7;
+      padding: $grid * 2;
+      margin-bottom: $grid;
+      > svg {
+        width: 100%;
+        height: 100%;
+        color: #fff;
+      }
+    }
+
+    &__label {
+      text-decoration: underline;
+    }
+
+    &:hover {
+      .PromoCardsRowSection__moreBtn__label {
+        text-decoration: none;
+      }
+    }
+  }
+}

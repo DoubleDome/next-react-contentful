@@ -1,0 +1,178 @@
+@mixin h1 {
+  color: #000;
+  font-size: 56px;
+  line-height: 64px;
+  font-weight: 300;
+}
+
+@mixin h2-small {
+  color: #000;
+  font-size: 28px;
+  line-height: 32px;
+  font-weight: 300;
+}
+
+@mixin h2-large {
+  color: #000;
+  font-size: 36px;
+  line-height: 40px;
+  font-weight: 300;
+}
+
+@mixin h2 {
+  @include h2-small;
+  @include screen-min-md {
+    @include h2-large;
+  }
+}
+
+@mixin h3-small {
+  color: #000;
+  font-size: 24px;
+  line-height: 27px;
+  font-weight: 400;
+}
+
+@mixin h3-large {
+  color: #000;
+  font-size: 28px;
+  line-height: 32px;
+  font-weight: 400;
+}
+
+@mixin h3 {
+  @include h3-small;
+  @include screen-min-md {
+    @include h3-large;
+  }
+}
+
+@mixin h4 {
+  color: #000;
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 400;
+}
+
+@mixin h5 {
+  color: #000;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+@mixin h6 {
+  color: #000;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+@mixin quote-text {
+  color: #606060;
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 300;
+  font-style: italic;
+}
+
+@mixin lead-text-small {
+  color: #444;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 300;
+}
+
+@mixin lead-text-large {
+  color: #444;
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 300;
+}
+
+@mixin lead-text {
+  @include lead-text-small;
+  @include screen-min-md {
+    @include lead-text-large;
+  }
+}
+
+@mixin subtitle-text-small {
+  color: #606060;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+@mixin subtitle-text-large {
+  color: #606060;
+  font-size: 20px;
+  line-height: 27px;
+  font-weight: 400;
+}
+
+@mixin subtitle-text {
+  @include subtitle-text-small;
+  @include screen-min-md {
+    @include subtitle-text-large;
+  }
+}
+
+@mixin body-text-small {
+  color: #000;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+@mixin body-text-large {
+  color: #000;
+  font-size: 20px;
+  line-height: 27px;
+}
+
+@mixin body-text {
+  @include body-text-small;
+  @include screen-min-md {
+    @include body-text-large;
+  }
+}
+
+@mixin micro-text-label {
+  color: #757575;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+@mixin micro-text-small {
+  color: #757575;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+}
+
+@mixin micro-text-large {
+  color: #757575;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+@mixin micro-text {
+  @include micro-text-small;
+  @include screen-min-md {
+    @include micro-text-large;
+  }
+}
+
+@mixin price-text-large {
+  color: $brand-color-primary;
+  font-size: 28px;
+  line-height: 28px;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}

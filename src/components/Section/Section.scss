@@ -1,0 +1,46 @@
+.Section {
+  border-bottom: 1px solid #e6e6e6;
+
+  &--padding {
+    padding-top: $grid * 5;
+    padding-bottom: $grid * 5;
+    @include screen-min-md {
+      padding-top: $grid * 8;
+      padding-bottom: $grid * 8;
+    }
+    @include screen-min-lg {
+      padding-top: $grid * 10;
+      padding-bottom: $grid * 10;
+    }
+  }
+
+  &__headline {
+    @include container;
+    padding-bottom: $grid * 4;
+    @include screen-min-md {
+      padding-bottom: $grid * 5;
+    }
+
+    &__inner {
+      display: flex;
+      align-items: center;
+    }
+
+    &__title {
+      @include h2-large;
+    }
+
+    &__button {
+      margin-left: auto;
+    }
+  }
+
+  &--contentPadding .Section__content {
+    @include container;
+  }
+
+  &__footer {
+    @include container;
+    padding: ($grid * 2) 0;
+  }
+}

@@ -1,0 +1,53 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  // ios opera momentum scrolling
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  // ios safari momentum scrolling
+  -webkit-overflow-scrolling: touch;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+blockquote {
+  margin: 0;
+}
+
+/* no outline for non-keyboard-inputs elements */
+*:focus {
+  outline: none;
+}
+
+body.modality-keyboard *:focus {
+  outline: 2px solid #7aacfe; /* for non-webkit browsers */
+  outline: 5px auto -webkit-focus-ring-color;
+}
+
+// Disable window scroll when modal is open
+body.hasGalleryLightboxOpen {
+  overflow: hidden;
+}
+
+.screen-reader-text {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute !important;
+  width: 1px;
+  word-wrap: normal !important;
+}

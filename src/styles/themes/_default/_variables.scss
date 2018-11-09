@@ -1,0 +1,76 @@
+// the only purpose of this file is to make it possible to use
+// themifier, variable definitions need to exist before we
+// import components inside themifier mixin
+
+// Breakpoints
+
+$screen-xl-min: 1440px !global;
+$screen-lg-max: $screen-xl-min - 1px !global;
+$screen-lg-min: 1024px !global;
+$screen-md-max: $screen-lg-min - 1px !global;
+$screen-md-min: 768px !global;
+$screen-sm-max: $screen-md-min - 1px !global;
+$screen-sm-min: 420px !global;
+$screen-xs-max: $screen-sm-min - 1px !global;
+
+// Grid
+
+$grid: 8px !global;
+$grid-gutter: 32px !global; // deprecated
+
+$grid-xl-outside: 64px !global;
+$grid-lg-outside: 64px !global;
+$grid-md-outside: 32px !global;
+$grid-sm-outside: 32px !global;
+$grid-xs-outside: 24px !global;
+
+$grid-xl-inside: 32px !global;
+$grid-lg-inside: 32px !global;
+$grid-md-inside: 24px !global;
+$grid-sm-inside: 24px !global;
+$grid-xs-inside: 18px !global;
+
+$grid-xl-outside-max-width: 1440px !global;
+$grid-xl-inside-max-width: $grid-xl-outside-max-width - 2 * $grid-xl-outside !global;
+
+// Colors
+
+$brand-color-primary: #000000 !global;
+$brand-color-text-accent: #000000 !global;
+// $brand-color-success: #00d200 !global;
+// $brand-color-edit: orange !global;
+
+$brand-color-text-accent: #000000 !global;
+$brand-color-text: #606060 !global;
+$brand-color-text-light: #969696 !global;
+$brand-color-text-lighter: #bfc3c7 !global;
+// $brand-color-text-disabled: $brand-color-text-lighter !global;
+
+// $brand-color-danger: #e66161 !global;
+// $brand-color-warning: $brand-color-edit !global;
+// $brand-color-info: #788995 !global;
+$brand-color-link: $brand-color-primary !global;
+
+// $brand-color-divider: rgba(#d0d4d8, 0.5) !global;
+// $brand-color-divider-dark: rgba(darken(#d0d4d8, 25%), 0.5) !global;
+
+$brand-color-border: #e6e6e6 !global;
+// $brand-color-label: $brand-color-text-lighter !global;
+
+$brand-color-background-lightest: #fff !global;
+$brand-color-background-lighter: #fcfcfc !global;
+$brand-color-background-light: #f5f5f5 !global;
+
+// $brand-color-input-readonly-background: $brand-color-background-light !global;
+
+// Fonts
+$brand-font-text: 'TT Commons', sans-serif !global;
+$brand-font-display: 'TT Commons', serif !global;
+$brand-font-size: 16px !global;
+
+// Components
+
+$image-slider-progress-bar-height-large: 2px !global;
+$image-slider-progress-bar-height-small: 1px !global;
+$image-slider-progress-bar-margin-bottom-large: $grid * 4 !global;
+$image-slider-progress-bar-margin-bottom-small: $grid * 3 !global;

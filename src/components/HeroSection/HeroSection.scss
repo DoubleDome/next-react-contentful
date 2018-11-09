@@ -1,0 +1,186 @@
+.HeroSection {
+  @include aspect-ratio(4, 3);
+  @include screen-min-md {
+    @include aspect-ratio(16, 9);
+  }
+  @include screen-min-lg {
+    @include aspect-ratio(5, 2);
+  }
+  &--premium {
+    @include aspect-ratio(4, 3);
+    @include screen-min-md {
+      @include aspect-ratio(16, 9);
+    }
+  }
+
+  &__slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: 810px;
+  }
+
+  &__slider__background {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    &:after {
+      content: ' ';
+      position: absolute;
+      z-index: 3;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 50%,
+        rgba(0, 0, 0, 0.4) 100%
+      );
+      @include screen-min-md {
+        background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0) 50%,
+            rgba(0, 0, 0, 0.4) 100%
+          ),
+          linear-gradient(to right, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 50%);
+      }
+    }
+  }
+
+  &__slider__logo {
+    @include container;
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    right: 0;
+    top: $grid-xs-outside;
+    pointer-events: none;
+    @include screen-min-sm {
+      top: $grid-sm-outside;
+    }
+    @include screen-min-md {
+      top: $grid-md-outside;
+    }
+    @include screen-min-lg {
+      top: $grid-lg-outside;
+    }
+    @include screen-min-xl {
+      top: $grid-xl-outside;
+    }
+    > img {
+      height: 70px;
+      @include screen-max-sm {
+        height: 40px;
+      }
+    }
+  }
+
+  &__overlay {
+    @include container;
+    position: absolute;
+    z-index: 3;
+    bottom: $grid * 4;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: flex-end;
+    color: #fff;
+    @include screen-max-sm {
+      bottom: $grid * 3;
+    }
+  }
+  &--has-multiple-slides .HeroSection__overlay {
+    bottom: $image-slider-progress-bar-margin-bottom-large +
+      $image-slider-progress-bar-height-large + $grid * 4;
+    @include screen-max-sm {
+      bottom: $image-slider-progress-bar-margin-bottom-small +
+        $image-slider-progress-bar-height-small + $grid;
+    }
+  }
+
+  &__overlay__left {
+    flex: 1 1 0;
+    margin-right: $grid * 2;
+    max-width: 500px;
+  }
+
+  &__overlay__right {
+    margin-left: auto;
+    flex: 0.8 0.8 0;
+  }
+
+  &__overlay__title {
+    @include h1;
+    color: inherit;
+    @include screen-max-sm {
+      @include h2-large;
+      color: inherit;
+    }
+  }
+
+  &__overlay__description {
+    @include subtitle-text-large;
+    color: inherit;
+    margin-top: $grid;
+  }
+
+  &__overlay__cta {
+    margin-top: $grid * 3;
+  }
+
+  &__overlay__captions {
+    position: relative;
+    white-space: nowrap;
+  }
+
+  &__overlay__caption {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    display: flex;
+    align-items: center;
+
+    &.fade-exit:not(.fade-exit-active),
+    &.fade-enter-active,
+    &.fade-enter-done {
+      opacity: 1;
+    }
+    &.fade-exit-active,
+    &.fade-exit-done,
+    &.fade-enter:not(.fade-enter-active) {
+      opacity: 0;
+    }
+  }
+
+  &__overlay__caption__label {
+    @include body-text-small;
+    color: inherit;
+    line-height: 1;
+  }
+
+  &__overlay__caption__button {
+    margin-left: $grid * 2;
+  }
+
+  &__caption {
+    @include container;
+    padding: ($grid * 2) 0;
+  }
+
+  &__caption__description {
+    @include subtitle-text-small;
+    + .HeroSection__caption__cta {
+      margin-top: $grid * 2;
+    }
+  }
+}

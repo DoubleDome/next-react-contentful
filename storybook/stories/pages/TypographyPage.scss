@@ -1,0 +1,19 @@
+.TypographyPage {
+  &__row {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+
+    &__label {
+      font-size: 14px;
+      color: #757575;
+      min-width: 100px;
+      width: 100px;
+      text-align: right;
+      margin-right: 32px;
+    }
+
+    &__body {
+    }
+  }
+}

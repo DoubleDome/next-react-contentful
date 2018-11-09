@@ -1,0 +1,145 @@
+@mixin screen-width-above($min) {
+  @media only screen and (min-width: $min) {
+    @content;
+  }
+}
+@mixin screen-width-below($max) {
+  @media only screen and (max-width: $max) {
+    @content;
+  }
+}
+@mixin screen-width-between($min, $max) {
+  @media only screen and (min-width: $min) and (max-width: $max) {
+    @content;
+  }
+}
+
+@mixin screen-max-xs {
+  @include screen-width-below($screen-xs-max) {
+    @content;
+  }
+}
+@mixin screen-max-sm {
+  @include screen-width-below($screen-sm-max) {
+    @content;
+  }
+}
+@mixin screen-max-md {
+  @include screen-width-below($screen-md-max) {
+    @content;
+  }
+}
+@mixin screen-max-lg {
+  @include screen-width-below($screen-lg-max) {
+    @content;
+  }
+}
+@mixin screen-min-sm {
+  @include screen-width-above($screen-sm-min) {
+    @content;
+  }
+}
+@mixin screen-min-md {
+  @include screen-width-above($screen-md-min) {
+    @content;
+  }
+}
+@mixin screen-min-lg {
+  @include screen-width-above($screen-lg-min) {
+    @content;
+  }
+}
+@mixin screen-min-xl {
+  @include screen-width-above($screen-xl-min) {
+    @content;
+  }
+}
+@mixin screen-xs {
+  @include screen-max-xs {
+    @content;
+  }
+}
+@mixin screen-sm {
+  @include screen-width-between($screen-sm-min, $screen-sm-max) {
+    @content;
+  }
+}
+@mixin screen-md {
+  @include screen-width-between($screen-md-min, $screen-md-max) {
+    @content;
+  }
+}
+@mixin screen-lg {
+  @include screen-width-between($screen-lg-min, $screen-lg-max) {
+    @content;
+  }
+}
+@mixin screen-xl {
+  @include screen-min-xl {
+    @content;
+  }
+}
+
+@mixin container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: calc(100% - #{2 * $grid-xs-outside});
+  @include screen-min-sm {
+    max-width: calc(100% - #{2 * $grid-sm-outside});
+  }
+  @include screen-min-md {
+    max-width: calc(100% - #{2 * $grid-md-outside});
+  }
+  @include screen-min-lg {
+    max-width: calc(100% - #{2 * $grid-lg-outside});
+  }
+  @include screen-min-xl {
+    max-width: $grid-xl-inside-max-width;
+  }
+}
+
+@mixin grid-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -0.5 * $grid-xs-inside;
+  margin-right: -0.5 * $grid-xs-inside;
+  @include screen-min-sm {
+    margin-left: -0.5 * $grid-sm-inside;
+    margin-right: -0.5 * $grid-sm-inside;
+  }
+  @include screen-min-md {
+    margin-left: -0.5 * $grid-md-inside;
+    margin-right: -0.5 * $grid-md-inside;
+  }
+  @include screen-min-lg {
+    margin-left: -0.5 * $grid-lg-inside;
+    margin-right: -0.5 * $grid-lg-inside;
+  }
+  @include screen-min-xl {
+    margin-left: -0.5 * $grid-xl-inside;
+    margin-right: -0.5 * $grid-xl-inside;
+  }
+}
+
+@mixin grid-column($size, $columns: 12) {
+  flex: 0 0 percentage($size / $columns);
+  max-width: percentage($size / $columns);
+  padding-left: 0.5 * $grid-xs-inside;
+  padding-right: 0.5 * $grid-xs-inside;
+  @include screen-min-sm {
+    padding-left: 0.5 * $grid-sm-inside;
+    padding-right: 0.5 * $grid-sm-inside;
+  }
+  @include screen-min-md {
+    padding-left: 0.5 * $grid-md-inside;
+    padding-right: 0.5 * $grid-md-inside;
+  }
+  @include screen-min-lg {
+    padding-left: 0.5 * $grid-lg-inside;
+    padding-right: 0.5 * $grid-lg-inside;
+  }
+  @include screen-min-xl {
+    padding-left: 0.5 * $grid-xl-inside;
+    padding-right: 0.5 * $grid-xl-inside;
+  }
+}

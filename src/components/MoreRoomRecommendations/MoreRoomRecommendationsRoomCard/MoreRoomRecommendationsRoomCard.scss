@@ -1,0 +1,128 @@
+.MoreRoomRecommendationsRoomCard {
+  margin-right: 20px;
+  max-width: 229px;
+
+  @include screen-width-above($screen-sm-min) {
+    max-width: 416px;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  @include screen-width-above($screen-sm-min) {
+    margin-right: 32px;
+  }
+
+  &__image {
+    height: 172px;
+
+    @include screen-width-above($screen-sm-min) {
+      height: 312px;
+    }
+  }
+
+  &__headline {
+    color: #000;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 28px;
+    margin-bottom: 5px;
+    margin-top: 16px;
+    width: 100%;
+
+    @include screen-width-above($screen-sm-min) {
+      font-size: 28px;
+      line-height: 32px;
+      margin-bottom: 8px;
+      margin-top: 24px;
+    }
+  }
+
+  &__meta-row {
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: hidden;
+    margin-bottom: 8px;
+  }
+
+  &__meta {
+    border-left: 1px solid #757575;
+    color: #757575;
+    display: none;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    margin-left: 16px;
+    padding-left: 16px;
+    white-space: nowrap;
+
+    &:first-child,
+    &:nth-child(2) {
+      display: block;
+    }
+
+    &:first-child {
+      border-left: none;
+      margin-left: 0;
+      padding-left: 0;
+    }
+
+    @include screen-width-above($screen-sm-min) {
+      display: block;
+    }
+  }
+
+  &__body {
+    color: #606060;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    margin-bottom: 24px;
+  }
+
+  &__ctas {
+    display: flex;
+    flex-direction: column;
+
+    @include screen-width-above($screen-sm-min) {
+      align-items: center;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  &__cta-primary {
+    @include reset-default-button-styles;
+    @include button-size(md);
+    @include button-color-scheme(primary);
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  &__cta-secondary {
+    @include reset-default-button-styles;
+    @include button-variant($brand-color-primary, transparent, transparent);
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    font-size: 18px;
+    justify-content: center;
+    letter-spacing: 0;
+    margin-top: 8px;
+    padding: 16px 24px;
+    text-transform: none;
+
+    @include screen-width-above($screen-sm-min) {
+      justify-content: flex-end;
+      margin-left: 8px;
+      margin-top: 0;
+      padding-right: 0;
+    }
+  }
+
+  &__cta-secondary-label {
+    border-bottom: 1px solid #e6e6e6;
+    margin-right: 8px;
+  }
+}

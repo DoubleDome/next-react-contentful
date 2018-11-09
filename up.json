@@ -1,0 +1,11 @@
+{
+  "name": "mgm-storybook",
+  "profile": "mgm-storybook",
+  "type": "static",
+  "static": {
+    "dir": "storybook-dist"
+  },
+  "hooks": {
+    "build": "npm run storybook:build"
+  }
+}

@@ -1,0 +1,49 @@
+@mixin link($color, $hover-color, $active-color, $decoration) {
+  color: $color;
+  cursor: pointer;
+  text-decoration: $decoration;
+
+  &:visited {
+    color: $color;
+  }
+
+  &:active {
+    color: $active-color;
+  }
+
+  &:hover {
+    color: $hover-color;
+  }
+
+  &.is-inactive {
+    cursor: initial;
+  }
+}
+
+@mixin link-default {
+  $color: $brand-color-link;
+  $active-color: darken($brand-color-link, 25%);
+  $hover-color: darken($brand-color-link, 25%);
+  $decoration: none;
+
+  @include link(
+    $color: $color,
+    $hover-color: $hover-color,
+    $active-color: $active-color,
+    $decoration: $decoration
+  );
+}
+
+@mixin link-custom-color($color) {
+  $color: $color;
+  $active-color: darken($color, 25%);
+  $hover-color: darken($color, 25%);
+  $decoration: none;
+
+  @include link(
+    $color: $color,
+    $hover-color: $hover-color,
+    $active-color: $active-color,
+    $decoration: $decoration
+  );
+}

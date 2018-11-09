@@ -1,0 +1,59 @@
+.RoomOverviewCardHeader {
+  $b: '.RoomOverviewCardHeader';
+
+  &__inner {
+    @include aspect-ratio(4, 3);
+    @include screen-min-md {
+      @include aspect-ratio(16, 9);
+    }
+  }
+
+  &:hover,
+  &:focus {
+    #{$b}__overlay {
+      @include visually-hidden-reset;
+
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  &__image-container {
+    background-color: $brand-color-background-light;
+  }
+
+  &__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  &__overlay {
+    @include visually-hidden;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__cta {
+    @include button-ghost;
+
+    &:hover {
+      border-color: inherit;
+    }
+  }
+}

@@ -1,0 +1,5 @@
+.OffersModuleViewAllButton {
+  @include reset-default-button-styles;
+  @include button-color-scheme(secondary);
+  @include button-size;
+}

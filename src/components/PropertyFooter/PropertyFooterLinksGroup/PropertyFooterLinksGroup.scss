@@ -1,0 +1,31 @@
+.PropertyFooterLinksGroup {
+  $screen-switch-to-horizontal: $screen-md-min;
+
+  &__label {
+    color: #000;
+    display: block;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    line-height: 16px;
+    margin: 0 0 24px;
+    text-decoration: none;
+
+    &--mobile-only {
+      @include screen-width-above($screen-switch-to-horizontal) {
+        display: none;
+      }
+    }
+
+    @include screen-width-above($screen-switch-to-horizontal) {
+      font-size: 14px;
+      font-weight: 500;
+      margin: 40px 0 16px;
+      text-transform: uppercase;
+
+      &:first-of-type {
+        margin: 0 0 16px;
+      }
+    }
+  }
+}

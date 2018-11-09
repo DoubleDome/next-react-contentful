@@ -1,0 +1,95 @@
+.AccordionItem {
+  position: relative;
+  border-bottom: 1px solid #e6e6e6;
+  color: #606060;
+  padding: ($grid * 2) 0;
+  @include screen-min-md {
+    padding: ($grid * 3) ($grid * 4);
+  }
+  @include screen-min-lg {
+    padding: ($grid * 3) ($grid * 14);
+  }
+
+  &:first-child {
+    border-top: 1px solid #e6e6e6;
+  }
+
+  &__title {
+    @include h5;
+    position: relative;
+    padding-right: $grid * 3;
+    cursor: pointer;
+    overflow: hidden;
+    @include screen-min-md {
+      @include h4;
+    }
+  }
+
+  &__button {
+    @include reset-default-button-styles;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: $grid * 3;
+    height: $grid * 3;
+    transform: rotate(180deg);
+    transition: transform 0.5s ease-in-out;
+    color: #111111;
+  }
+  &.is-collapsed .AccordionItem__button {
+    transform: rotate(0deg);
+  }
+
+  &__content {
+    @include subtitle-text-small;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.645, 0.045, 0.355, 1),
+      opacity 0.5s ease-in-out;
+  }
+  &.collapsing-exit:not(.collapsing-exit-active) .AccordionItem__content,
+  &.collapsing-enter-active .AccordionItem__content,
+  &.collapsing-enter-done .AccordionItem__content {
+    max-height: 0px !important;
+    opacity: 0;
+  }
+  &.collapsing-exit-active .AccordionItem__content,
+  &.collapsing-exit-done .AccordionItem__content,
+  &.collapsing-enter:not(.collapsing-enter-active) .AccordionItem__content {
+    max-height: 10000px;
+    opacity: 1;
+  }
+  &.is-collapsed:not(.collapsing-exit):not(.collapsing-exit-done):not(.collapsing-enter)
+    .AccordionItem__content {
+    max-height: 0px !important;
+    visibility: hidden;
+  }
+  &__content__inner {
+    padding-top: $grid * 2;
+  }
+
+  &__list {
+    column-count: 1;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    @include screen-min-md {
+      column-count: 2;
+    }
+
+    &__item {
+      margin-bottom: $grid * 2;
+      margin-left: 0;
+      padding-left: $grid * 4;
+      position: relative;
+      width: 100%;
+
+      &:before {
+        content: '•';
+        position: absolute;
+        left: 0;
+      }
+    }
+  }
+}

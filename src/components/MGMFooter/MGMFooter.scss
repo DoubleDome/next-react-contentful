@@ -1,0 +1,96 @@
+.MGMFooter {
+  $screen-switch-to-horizontal: $screen-md-min;
+  $link-margin-top: 10px;
+
+  display: none;
+  background-color: #000000;
+  color: #969696;
+  padding: 48px 0;
+  overflow: hidden;
+
+  @include screen-width-above($screen-switch-to-horizontal) {
+    display: block;
+  }
+
+  &__container {
+    @include container;
+    text-align: center;
+
+    @include screen-width-above($screen-switch-to-horizontal) {
+      text-align: left;
+    }
+  }
+
+  &__row {
+    @include grid-row;
+  }
+
+  &__aside {
+    @include grid-column(12, 12);
+
+    @include screen-width-above($screen-switch-to-horizontal) {
+      @include grid-column(3, 12);
+    }
+  }
+
+  &__logo-container {
+    display: flex;
+    justify-content: center;
+
+    @include screen-width-above($screen-switch-to-horizontal) {
+      justify-content: flex-start;
+      margin-bottom: floor(64px - $link-margin-top);
+    }
+  }
+
+  &__logo {
+    display: block;
+    align-self: center;
+    max-width: 100%;
+    height: auto;
+  }
+
+  &__links {
+    margin-top: floor(32px - $link-margin-top);
+    margin-bottom: 32px;
+
+    @include screen-width-above($screen-switch-to-horizontal) {
+      margin-top: floor(64px - $link-margin-top);
+    }
+  }
+
+  &__link {
+    @include link-custom-color($brand-color-text-light);
+    display: block;
+    width: 100%;
+
+    padding-right: 12px;
+    margin-top: $link-margin-top;
+    word-break: break-word;
+
+    line-height: 20px;
+
+    @include screen-width-above($screen-lg-min) {
+      display: inline-block;
+
+      width: 50%;
+    }
+  }
+
+  &__properties {
+    @include grid-column(12, 12);
+    padding-left: 24px;
+    padding-right: 24px;
+
+    @include screen-width-above($screen-switch-to-horizontal) {
+      @include grid-column(9, 12);
+
+      padding-left: 48px;
+      padding-right: 48px;
+    }
+  }
+
+  &__property {
+    display: inline-block;
+  }
+}

@@ -1,0 +1,121 @@
+@mixin themifier {
+  [data-theme='aria'] {
+    @import '~@/styles/themes/aria/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+
+  [data-theme='beauRivage'] {
+    @import '~@/styles/themes/beauRivage/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+
+  [data-theme='bellagio'] {
+    @import '~@/styles/themes/bellagio/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+
+  [data-theme='cabana'] {
+    @import '~@/styles/themes/cabana/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+
+  [data-theme='cclv'] {
+    @import '~@/styles/themes/cclv/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+
+  [data-theme='delano'] {
+    @import '~@/styles/themes/delano/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+
+  [data-theme='detroit'] {
+    @import '~@/styles/themes/detroit/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+
+  [data-theme='excalibur'] {
+    @import '~@/styles/themes/excalibur/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+
+  [data-theme='goldStrike'] {
+    @import '~@/styles/themes/goldStrike/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+
+  [data-theme='luxor'] {
+    @import '~@/styles/themes/luxor/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+
+  [data-theme='mandalayBay'] {
+    @import '~@/styles/themes/mandalayBay/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+
+  [data-theme='mgmGrand'] {
+    @import '~@/styles/themes/mgmGrand/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+
+  [data-theme='mgmResorts'] {
+    @import '~@/styles/themes/mgmResorts/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+
+  [data-theme='mirage'] {
+    @import '~@/styles/themes/mirage/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+
+  [data-theme='nationalHarbor'] {
+    @import '~@/styles/themes/nationalHarbor/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+
+  [data-theme='nyny'] {
+    @import '~@/styles/themes/nyny/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+
+  [data-theme='parkMgm'] {
+    @import '~@/styles/themes/parkMgm/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+
+  [data-theme='signature'] {
+    @import '~@/styles/themes/signature/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+
+  [data-theme='springfield'] {
+    @import '~@/styles/themes/springfield/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+
+  [data-theme='vdara'] {
+    @import '~@/styles/themes/vdara/variables';
+    @import '~@/styles/shared/mixins';
+    @content;
+  }
+}

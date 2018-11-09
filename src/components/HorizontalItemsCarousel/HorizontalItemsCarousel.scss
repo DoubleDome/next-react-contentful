@@ -1,0 +1,43 @@
+.HorizontalItemsCarousel {
+  .slider-control-centerleft,
+  .slider-control-centerright {
+    position: initial !important;
+    top: initial !important;
+    left: initial !important;
+    right: initial !important;
+    transform: none !important;
+  }
+
+  .HorizontalItemsCarousel__arrow {
+    @include reset-default-button-styles;
+    text-indent: -9999px;
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    bottom: 0;
+    // background: rgba(0, 0, 0, 0.5);
+    width: $grid-xs-outside;
+    @include screen-min-sm {
+      width: $grid-sm-outside;
+    }
+    @include screen-min-md {
+      width: $grid-md-outside;
+    }
+    @include screen-min-lg {
+      width: $grid-lg-outside;
+    }
+    @include screen-min-xl {
+      width: $grid-xl-outside;
+    }
+
+    &.HorizontalItemsCarousel__prev {
+      left: 0;
+      cursor: w-resize;
+    }
+
+    &.HorizontalItemsCarousel__next {
+      right: 0;
+      cursor: e-resize;
+    }
+  }
+}

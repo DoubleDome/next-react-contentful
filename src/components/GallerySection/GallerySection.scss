@@ -1,0 +1,100 @@
+$gallery-grid-xs-inside-horizontal: 18px;
+$gallery-grid-xs-inside-vertical: 24px;
+$gallery-grid-sm-inside-horizontal: 18px;
+$gallery-grid-sm-inside-vertical: 24px;
+$gallery-grid-md-inside-horizontal: 24px;
+$gallery-grid-md-inside-vertical: 24px;
+$gallery-grid-lg-inside-horizontal: 32px;
+$gallery-grid-lg-inside-vertical: 32px;
+$gallery-grid-xl-inside-horizontal: 80px;
+$gallery-grid-xl-inside-vertical: 64px;
+
+.GallerySection {
+  &__load-more {
+    text-align: center;
+    margin-top: $grid * 4;
+    @include screen-min-md {
+      margin-top: $grid * 8;
+    }
+  }
+
+  &__vtour {
+    @include screen-min-md {
+      margin-bottom: $gallery-grid-md-inside-vertical;
+    }
+    @include screen-min-lg {
+      margin-bottom: $gallery-grid-lg-inside-vertical;
+    }
+    @include screen-min-xl {
+      margin-bottom: $gallery-grid-xl-inside-vertical;
+    }
+  }
+
+  &__cards {
+    @include container;
+    margin-bottom: -$gallery-grid-xs-inside-vertical;
+    @include screen-min-sm {
+      margin-bottom: -$gallery-grid-sm-inside-vertical;
+    }
+    @include screen-min-md {
+      margin-bottom: -$gallery-grid-md-inside-vertical;
+    }
+    @include screen-min-lg {
+      margin-bottom: -$gallery-grid-lg-inside-vertical;
+    }
+    @include screen-min-xl {
+      margin-bottom: -$gallery-grid-xl-inside-vertical;
+    }
+
+    &__row {
+      display: flex;
+      flex-wrap: wrap;
+      margin-left: -0.5 * $gallery-grid-xs-inside-horizontal;
+      margin-right: -0.5 * $gallery-grid-xs-inside-horizontal;
+      @include screen-min-sm {
+        margin-left: -0.5 * $gallery-grid-sm-inside-horizontal;
+        margin-right: -0.5 * $gallery-grid-sm-inside-horizontal;
+      }
+      @include screen-min-md {
+        margin-left: -0.5 * $gallery-grid-md-inside-horizontal;
+        margin-right: -0.5 * $gallery-grid-md-inside-horizontal;
+      }
+      @include screen-min-lg {
+        margin-left: -0.5 * $gallery-grid-lg-inside-horizontal;
+        margin-right: -0.5 * $gallery-grid-lg-inside-horizontal;
+      }
+      @include screen-min-xl {
+        margin-left: -0.5 * $gallery-grid-xl-inside-horizontal;
+        margin-right: -0.5 * $gallery-grid-xl-inside-horizontal;
+      }
+    }
+
+    &__item {
+      flex: 0 0 50%;
+      max-width: 50%;
+      padding-left: 0.5 * $gallery-grid-xs-inside-horizontal;
+      padding-right: 0.5 * $gallery-grid-xs-inside-horizontal;
+      padding-bottom: $gallery-grid-xs-inside-vertical;
+      @include screen-min-sm {
+        padding-left: 0.5 * $gallery-grid-sm-inside-horizontal;
+        padding-right: 0.5 * $gallery-grid-sm-inside-horizontal;
+        padding-bottom: $gallery-grid-sm-inside-vertical;
+      }
+      @include screen-min-md {
+        padding-left: 0.5 * $gallery-grid-md-inside-horizontal;
+        padding-right: 0.5 * $gallery-grid-md-inside-horizontal;
+        padding-bottom: $gallery-grid-md-inside-vertical;
+      }
+      @include screen-min-lg {
+        padding-left: 0.5 * $gallery-grid-lg-inside-horizontal;
+        padding-right: 0.5 * $gallery-grid-lg-inside-horizontal;
+        padding-bottom: $gallery-grid-lg-inside-vertical;
+      }
+      @include screen-min-xl {
+        padding-left: 0.5 * $gallery-grid-xl-inside-horizontal;
+        padding-right: 0.5 * $gallery-grid-xl-inside-horizontal;
+        padding-bottom: $gallery-grid-xl-inside-vertical;
+      }
+    }
+  }
+}

@@ -1,0 +1,88 @@
+.MoreRoomRecommendations {
+  padding-top: 40px;
+  padding-bottom: 22px;
+
+  @include screen-width-above($screen-sm-min) {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  &__header {
+    @include container;
+
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+
+    @include screen-width-above($screen-sm-min) {
+      margin-bottom: 40px;
+    }
+  }
+
+  &__heading {
+    line-height: 40px;
+    font-size: 36px;
+    font-weight: 300;
+    color: $brand-color-text-accent;
+  }
+
+  &__header-ctas {
+    display: none;
+
+    @include screen-width-above($screen-sm-min) {
+      display: block;
+    }
+  }
+
+  &__top-button {
+    @include screen-width-above($screen-sm-min) {
+      @include reset-default-button-styles;
+      @include button-variant($brand-color-primary, transparent, transparent);
+
+      align-items: center;
+      display: flex;
+      justify-content: flex-end;
+      text-transform: none;
+      font-size: 18px;
+      line-height: 16px;
+      letter-spacing: 0;
+    }
+  }
+
+  &__footer-ctas {
+    @include container;
+
+    @include screen-width-above($screen-sm-min) {
+      display: none;
+    }
+  }
+
+  &__bottom-button {
+    @include reset-default-button-styles;
+    @include button-size(md, block);
+    @include button-color-scheme(secondary);
+
+    margin-top: 24px;
+    text-align: center;
+  }
+
+  &__button-label {
+    border-bottom: 1px solid #e6e6e6;
+    margin-right: 8px;
+  }
+
+  &__cards {
+    @include container;
+
+    display: flex;
+    justify-content: space-between;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    // -ms-overflow-style: -ms-autohiding-scrollbar;
+    // &::-webkit-scrollbar {
+    //   display: none;
+    // }
+  }
+}

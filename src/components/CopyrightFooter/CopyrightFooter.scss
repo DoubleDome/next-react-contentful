@@ -1,0 +1,48 @@
+.CopyrightFooter {
+  background-color: #000000;
+  font-size: 14px;
+  color: $brand-color-text-light;
+
+  &__container {
+    @include container;
+    border-top: 1px solid rgba(#e6e6e6, 0.15);
+  }
+
+  &__content {
+    @include grid-row;
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+
+  &__notice {
+    @include grid-column(12, 12);
+    margin-bottom: 16px;
+
+    @include screen-width-above($screen-sm-min) {
+      margin-bottom: 0;
+      @include grid-column(6, 12);
+    }
+  }
+
+  &__links {
+    @include grid-column(12, 12);
+
+    @include screen-width-above($screen-sm-min) {
+      @include grid-column(6, 12);
+      text-align: right;
+    }
+  }
+
+  &__link {
+    @include link-custom-color($brand-color-text-light);
+    margin-right: 24px;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+
+    @include screen-width-above($screen-sm-min) {
+      text-align: right;
+    }
+  }
+}

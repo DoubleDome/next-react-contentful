@@ -1,0 +1,71 @@
+.PropertyFooterContact {
+  $screen-switch-to-horizontal: $screen-md-min;
+
+  &__label {
+    color: #000;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 16px;
+    margin: 40px 0 16px;
+    text-transform: uppercase;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
+
+  &__address {
+    margin-bottom: 24px;
+  }
+
+  &__address-line {
+    display: block;
+  }
+
+  &__phone {
+    margin-bottom: 8px;
+  }
+
+  &__email {
+    margin-bottom: 48px;
+  }
+
+  &__social {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 36px;
+
+    @include screen-width-above($screen-md-min) {
+      justify-content: space-between;
+    }
+
+    @include screen-width-above($screen-switch-to-horizontal) {
+      margin-bottom: 0;
+    }
+
+    @include screen-width-above($screen-lg-min) {
+      justify-content: flex-start;
+    }
+  }
+
+  &__social-icon {
+    margin-left: 32px;
+
+    &:first-of-type {
+      margin-left: 0;
+    }
+
+    @include screen-width-above($screen-md-min) {
+      margin-left: 0;
+    }
+
+    @include screen-width-above($screen-lg-min) {
+      margin-left: 32px;
+
+      &:first-of-type {
+        margin-left: 0;
+      }
+    }
+  }
+}

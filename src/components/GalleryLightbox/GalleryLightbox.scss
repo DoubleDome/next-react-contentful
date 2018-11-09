@@ -1,0 +1,186 @@
+$scrollbar-width: 17px;
+$header-inner-height: $grid * 3;
+$header-vertical-margin-top-sm: $grid * 2;
+$header-vertical-margin-bottom-sm: $grid * 2;
+$header-vertical-margin-top-md: $grid * 6;
+$header-vertical-margin-bottom-md: $grid * 5;
+$header-outer-height-sm: $header-inner-height + $header-vertical-margin-top-sm +
+  $header-vertical-margin-bottom-sm;
+$header-outer-height-md: $header-inner-height + $header-vertical-margin-top-md +
+  $header-vertical-margin-bottom-md;
+$caption-assumed-lines: 3;
+$caption-line-height: 20px;
+$caption-padding-horizontal-sm: $grid * 2;
+$caption-padding-top-sm: $grid * 2;
+$caption-padding-bottom-sm: $grid;
+$caption-padding-horizontal-md: $grid * 3;
+$caption-padding-top-md: $grid * 2;
+$caption-padding-bottom-md: $grid;
+
+.GalleryLightbox {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: $header-outer-height-sm 0 0;
+  @include screen-min-md {
+    padding: $header-outer-height-md 0 0;
+  }
+
+  &__header {
+    @include container;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: $header-vertical-margin-top-sm auto
+      $header-vertical-margin-bottom-sm;
+    height: $header-inner-height;
+    width: 100%;
+
+    @include screen-min-md {
+      margin: $header-vertical-margin-top-md auto
+        $header-vertical-margin-bottom-md;
+    }
+
+    &__pagination {
+      @include micro-text-large;
+    }
+
+    &__close {
+      @include reset-default-button-styles;
+      height: $header-inner-height;
+      width: $header-inner-height;
+      margin-left: $grid * 2;
+
+      &__icon {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  &__content {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    @include screen-min-md {
+      padding: 0 64px;
+    }
+  }
+
+  &__item-with-caption {
+    margin: 0 auto;
+    @include screen-min-md {
+      display: table;
+      width: 1%;
+      // &__inner {
+      //   height: auto;
+      //   overflow: hidden;
+      // }
+    }
+  }
+
+  &__item {
+    position: relative;
+    text-align: center;
+
+    &__image,
+    &__video {
+      max-width: 100%;
+      // max-width: calc(100vw - #{$scrollbar-width});
+      max-height: 500px;
+      max-height: 90vh;
+      max-height: calc(
+        100vh - #{$header-outer-height-sm + $caption-padding-top-sm +
+          $caption-padding-bottom-sm + $caption-line-height *
+          $caption-assumed-lines} - 4px
+      );
+      @include screen-min-md {
+        max-width: calc(100vw - 64px * 2 - #{$scrollbar-width});
+        max-height: calc(
+          100vh - #{$header-outer-height-md + $caption-padding-top-md +
+            $caption-padding-bottom-md + $caption-line-height *
+            $caption-assumed-lines} - 4px
+        );
+      }
+    }
+
+    &__video {
+      min-width: 50%;
+    }
+  }
+
+  &__controls {
+  }
+
+  &__control {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    z-index: 2;
+    pointer-events: none;
+
+    &--prev {
+      left: 0;
+    }
+    &--next {
+      right: 0;
+    }
+    @include screen-min-md {
+      &--prev {
+        left: auto;
+        right: 100%;
+      }
+      &--next {
+        left: 100%;
+        right: auto;
+      }
+    }
+
+    &__button {
+      @include reset-default-button-styles;
+      font-size: 16px;
+      pointer-events: all;
+      cursor: pointer;
+
+      width: 32px;
+      height: 32px;
+      background-color: #fff;
+      @include screen-min-md {
+        width: 64px;
+        height: 100%;
+        background-color: transparent;
+      }
+
+      > svg {
+        height: auto;
+        width: 100%;
+      }
+    }
+  }
+
+  &__caption {
+    @include micro-text-large;
+    max-width: 800px;
+    padding: $caption-padding-top-sm $caption-padding-horizontal-sm
+      $caption-padding-bottom-sm;
+    @include screen-min-md {
+      padding: $caption-padding-top-md $caption-padding-horizontal-md
+        $caption-padding-bottom-md;
+    }
+
+    &__description {
+    }
+
+    &__credit {
+      font-style: italic;
+    }
+  }
+}

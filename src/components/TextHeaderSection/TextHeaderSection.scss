@@ -1,0 +1,24 @@
+.TextHeaderSection {
+  @include container;
+  margin-top: $grid * 5;
+  margin-bottom: $grid * 5;
+
+  &__container {
+    max-width: 752px;
+  }
+
+  &__title {
+    @include h2-large;
+    @include screen-min-md {
+      @include h1;
+    }
+  }
+
+  &__subtitle {
+    margin-top: $grid * 2;
+    @include subtitle-text-small;
+    @include screen-min-md {
+      @include lead-text-small;
+    }
+  }
+}

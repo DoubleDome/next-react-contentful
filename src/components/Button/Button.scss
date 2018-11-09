@@ -1,0 +1,153 @@
+.Button {
+  @include reset-default-button-styles;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &--fluid {
+    display: flex;
+    width: 100%;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
+
+  // General style
+
+  &.Button--variant--primary,
+  &.Button--variant--secondary {
+    text-decoration: none;
+    appearance: none;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 1px;
+    border: 1px solid transparent;
+    text-align: center;
+    font-size: 14px;
+    line-height: 16px;
+    border-radius: 2px;
+  }
+
+  // Sizing
+
+  &.Button--size--small {
+    padding: 11px ($grid * 3);
+  }
+  &.Button--size--medium {
+    padding: ($grid * 2) ($grid * 3);
+  }
+  &.Button--size--medium-padded {
+    padding: ($grid * 2) ($grid * 5);
+  }
+  &.Button--size--large {
+    padding: ($grid * 3) ($grid * 3);
+  }
+
+  // Colors
+
+  &.Button--variant--primary {
+    color: #fff;
+    background-color: $brand-color-primary;
+    border-color: $brand-color-primary;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: #fff;
+      background-color: darken($brand-color-primary, 5%);
+      border-color: darken($brand-color-primary, 5%);
+    }
+
+    &[disabled] {
+      background-color: #e6e6e6;
+      border-color: #e6e6e6;
+      color: #c8c8c8;
+    }
+  }
+
+  &.Button--variant--secondary:not(.Button--inverted) {
+    color: $brand-color-primary;
+    background-color: transparent;
+    border-color: $brand-color-primary;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: #fff;
+      background-color: $brand-color-primary;
+      border-color: $brand-color-primary;
+    }
+
+    &[disabled] {
+      color: #c8c8c8;
+      background-color: transparent;
+      border-color: #c8c8c8;
+    }
+  }
+
+  &.Button--variant--secondary.Button--inverted {
+    color: #fff;
+    background-color: transparent;
+    border-color: #fff;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: #000;
+      background-color: #fff;
+      border-color: #fff;
+    }
+
+    &[disabled] {
+      color: #c8c8c8;
+      background-color: transparent;
+      border-color: #c8c8c8;
+    }
+  }
+
+  &.Button--variant--tertiary {
+    color: $brand-color-primary;
+    text-decoration: none;
+    font-size: 18px;
+    &.Button--inverted {
+      color: #fff;
+    }
+    &[disabled] {
+      color: #c8c8c8;
+    }
+
+    .Button__label {
+      background-repeat: repeat-x;
+      background-size: 1px 1px;
+      background-position: 0 calc(1em + 1px);
+      background-image: linear-gradient(to right, #e6e6e6 100%, #e6e6e6 0);
+    }
+    &:hover .Button__label,
+    &:focus .Button__label,
+    &[disabled] .Button__label {
+      background-image: linear-gradient(
+        to right,
+        currentColor 100%,
+        currentColor 0
+      );
+    }
+  }
+
+  &__icon {
+    display: inline-flex;
+
+    &.Button__icon--left {
+      margin-right: $grid;
+    }
+
+    &.Button__icon--right {
+      margin-left: $grid;
+    }
+
+    > svg {
+      height: 1em;
+      width: auto;
+    }
+  }
+}

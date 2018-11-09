@@ -1,0 +1,81 @@
+.RoomOverviewCard {
+  $ns: '.RoomOverviewCard';
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &--variant--full-row {
+    flex-direction: row;
+    height: auto;
+  }
+
+  &__header {
+  }
+  &--variant--full-row #{$ns}__header {
+    min-width: 50vw;
+    @include screen-min-xl {
+      min-width: $grid-xl-outside-max-width / 2;
+    }
+  }
+
+  &__main {
+    margin-top: $grid * 3;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+  }
+  &--variant--full-row #{$ns}__main {
+    position: relative;
+    margin-left: -$grid * 10;
+    background: #fff;
+    padding: $grid * 6;
+    align-self: flex-end;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 0;
+  }
+
+  &__title {
+    @include h4;
+    margin-bottom: $grid;
+    @include screen-min-md {
+      @include h3-large;
+    }
+  }
+
+  &__key-values {
+    @include micro-text-small;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2 * $grid;
+  }
+
+  &__key-value {
+    padding-right: $grid;
+    border-right: 1px solid $brand-color-border;
+    margin-right: $grid;
+
+    @include screen-min-sm {
+      padding-right: 2 * $grid;
+      margin-right: 2 * $grid;
+    }
+
+    &:last-of-type {
+      padding-right: 0;
+      border-right: 0;
+      margin-right: 0;
+    }
+  }
+
+  &__description {
+    @include subtitle-text-small;
+    margin-bottom: $grid * 3;
+  }
+  &--variant--full-row #{$ns}__description {
+    @include subtitle-text-large;
+  }
+}

@@ -1,0 +1,58 @@
+// This will be preimported by BrandThemeComponentBuilder automatically
+// @import "./themes/abc/variables";
+
+@font-face {
+  font-family: 'TT Commons';
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/resources/TTCommons-Light.eot?#iefix');
+  src: url('/fonts/resources/TTCommons-Light.eot?#iefix') format('eot'),
+    url('/fonts/resources/TTCommons-Light.woff2') format('woff2'),
+    url('/fonts/resources/TTCommons-Light.woff') format('woff'),
+    url('/fonts/resources/TTCommons-Light.ttf') format('truetype'),
+    url('/fonts/resources/TTCommons-Light.svg#TTCommons-Light') format('svg');
+}
+
+@font-face {
+  font-family: 'TT Commons';
+  font-display: swap;
+  src: url('/fonts/resources/TTCommons-Regular.eot?#iefix');
+  src: url('/fonts/resources/TTCommons-Regular.eot?#iefix') format('eot'),
+    url('/fonts/resources/TTCommons-Regular.woff2') format('woff2'),
+    url('/fonts/resources/TTCommons-Regular.woff') format('woff'),
+    url('/fonts/resources/TTCommons-Regular.ttf') format('truetype'),
+    url('/fonts/resources/TTCommons-Regular.svg#TTCommons-Regular')
+      format('svg');
+}
+
+@font-face {
+  font-family: 'TT Commons';
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/resources/TTCommons-Medium.eot?#iefix');
+  src: url('/fonts/resources/TTCommons-Medium.eot?#iefix') format('eot'),
+    url('/fonts/resources/TTCommons-Medium.woff2') format('woff2'),
+    url('/fonts/resources/TTCommons-Medium.woff') format('woff'),
+    url('/fonts/resources/TTCommons-Medium.ttf') format('truetype'),
+    url('/fonts/resources/TTCommons-Medium.svg#TTCommons-Medium') format('svg');
+}
+
+@font-face {
+  font-family: 'TT Commons';
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/resources/TTCommons-Bold.eot?#iefix');
+  src: url('/fonts/resources/TTCommons-Bold.eot?#iefix') format('eot'),
+    url('/fonts/resources/TTCommons-Bold.woff2') format('woff2'),
+    url('/fonts/resources/TTCommons-Bold.woff') format('woff'),
+    url('/fonts/resources/TTCommons-Bold.ttf') format('truetype'),
+    url('/fonts/resources/TTCommons-Bold.svg#TTCommons-Bold') format('svg');
+}
+
+@import './base/normalize';
+@import './base/base';
+@import './base/body';
+
+body {
+  @include document-body;
+}

@@ -1,0 +1,154 @@
+.VirtualTourHeroSection {
+  $b: '.VirtualTourHeroSection';
+  $z-image: 2;
+  $z-image-after: 3;
+  $z-backdrop: 4;
+  $z-overlay: 5;
+
+  &--singular {
+    .VirtualTourHeroSection__image-wrapper {
+      @include aspect-ratio(16, 9);
+      @include screen-min-md {
+        @include aspect-ratio(5, 2);
+      }
+    }
+  }
+
+  &--multiple {
+    .VirtualTourHeroSection__image-wrapper {
+      @include aspect-ratio(4, 3);
+    }
+
+    #{$b}__overlay {
+      @include screen-min-xl {
+        max-width: calc(100% - #{2 * $grid-xl-outside});
+      }
+    }
+  }
+
+  &--multiple--inline {
+    display: flex;
+    .VirtualTourHeroSection__tour {
+      flex: 1 1 0;
+      border-left: 1px solid #fff;
+      &:first-child {
+        border-left: none;
+      }
+    }
+  }
+
+  &--multiple--scrolled {
+    .VirtualTourHeroSection__tour {
+      min-width: 300px;
+      min-width: 70vw;
+      min-width: calc((100vw - #{2 * $grid-xs-outside}) * 0.9);
+      @include screen-min-sm {
+        min-width: calc((100vw - #{2 * $grid-sm-outside}) * 0.9);
+      }
+    }
+  }
+
+  &__image {
+    position: absolute;
+    z-index: $z-image;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    &:after {
+      content: ' ';
+      display: block;
+      position: absolute;
+      z-index: $z-image-after;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      @include screen-min-md {
+        background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0) 50%,
+            rgba(0, 0, 0, 0.4) 100%
+          ),
+          linear-gradient(to right, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 50%);
+      }
+    }
+  }
+
+  &__overlay {
+    @include container;
+    position: absolute;
+    z-index: $z-overlay;
+    left: 0;
+    right: 0;
+    color: #fff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    top: $grid-xs-outside;
+    bottom: $grid-xs-outside;
+    @include screen-min-sm {
+      top: $grid-sm-outside;
+      bottom: $grid-sm-outside;
+    }
+    @include screen-min-md {
+      top: auto;
+      justify-content: initial;
+      bottom: $grid-md-outside;
+    }
+    @include screen-min-lg {
+      bottom: $grid-lg-outside;
+    }
+    @include screen-min-xl {
+      bottom: $grid-xl-outside;
+    }
+
+    &__inner {
+      max-width: 528px;
+    }
+
+    &__icon {
+      display: inline-flex;
+      font-size: $grid * 5;
+      line-height: 1;
+    }
+    &__title {
+      @include h2-large;
+      color: inherit;
+      margin-top: $grid * 3;
+    }
+    &__description {
+      @include subtitle-text-large;
+      color: inherit;
+      margin-top: $grid;
+    }
+    &__button {
+      margin-top: $grid * 3;
+    }
+  }
+
+  &--singular .VirtualTourHeroSection__caption,
+  &--multiple--inline .VirtualTourHeroSection__caption {
+    @include container;
+  }
+  &__caption {
+    padding: ($grid * 2) 0;
+    &__title {
+      @include h4;
+    }
+    &__description {
+      @include subtitle-text-small;
+      margin-top: $grid;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+.GalleryCard {
+  margin: 0;
+
+  &__image {
+    @include aspect-ratio(4, 3);
+    cursor: pointer;
+    @include screen-min-md {
+      @include aspect-ratio(16, 9);
+    }
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+  &__caption {
+    display: none;
+    @include micro-text-large;
+    max-width: 480px;
+    margin-top: $grid * 2;
+    @include screen-min-md {
+      display: block;
+    }
+  }
+
+  &__overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    @include screen-min-md {
+      font-size: 72px;
+    }
+  }
+}

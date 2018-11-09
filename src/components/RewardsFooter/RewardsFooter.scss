@@ -1,0 +1,14 @@
+.RewardsFooter {
+  background-color: $brand-color-background-lighter;
+  padding-top: 48px;
+  padding-bottom: 38px;
+  border-bottom: 1px solid #e6e6e6;
+
+  &__container {
+    @include container;
+  }
+
+  &__row {
+    @include grid-row;
+  }
+}

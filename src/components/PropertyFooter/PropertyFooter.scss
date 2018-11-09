@@ -1,0 +1,64 @@
+.PropertyFooter {
+  $screen-switch-to-horizontal: $screen-md-min;
+  $screen-switch-to-semi-horizontal: $screen-sm-min;
+
+  background-color: $brand-color-background-lighter;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 38px 0;
+
+  @include screen-width-above($screen-switch-to-horizontal) {
+    padding: 48px 0;
+  }
+
+  &__container {
+    @include container;
+
+    flex-direction: column;
+    justify-content: center;
+
+    @include screen-width-above($screen-switch-to-horizontal) {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+
+  &__row {
+    @include grid-row;
+  }
+
+  &__contact {
+    @include grid-column(12, 12);
+    border-bottom: 1px solid #e6e6e6;
+
+    @include screen-width-above($screen-switch-to-horizontal) {
+      @include grid-column(3, 12);
+      border-bottom: none;
+    }
+  }
+
+  &__links {
+    @include grid-column(12, 12);
+
+    @include screen-width-above($screen-switch-to-horizontal) {
+      @include grid-column(2, 12);
+    }
+  }
+
+  &__awards {
+    @include grid-column(12, 12);
+    display: none;
+
+    @include screen-width-above($screen-switch-to-horizontal) {
+      @include grid-column(3, 12);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @include screen-width-above($screen-lg-min) {
+      align-items: flex-start;
+    }
+  }
+}

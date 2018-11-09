@@ -1,0 +1,58 @@
+@font-face {
+  font-family: 'TT Commons';
+  font-weight: 300;
+  font-display: swap;
+  src: url('~@/styles/fonts/TTCommons-Light.eot?#iefix');
+  src: url('~@/styles/fonts/TTCommons-Light.eot?#iefix') format('eot'),
+    url('~@/styles/fonts/TTCommons-Light.woff2') format('woff2'),
+    url('~@/styles/fonts/TTCommons-Light.woff') format('woff'),
+    url('~@/styles/fonts/TTCommons-Light.ttf') format('truetype'),
+    url('~@/styles/fonts/TTCommons-Light.svg#TTCommons-Light') format('svg');
+}
+
+@font-face {
+  font-family: 'TT Commons';
+  font-display: swap;
+  src: url('~@/styles/fonts/TTCommons-Regular.eot?#iefix');
+  src: url('~@/styles/fonts/TTCommons-Regular.eot?#iefix') format('eot'),
+    url('~@/styles/fonts/TTCommons-Regular.woff2') format('woff2'),
+    url('~@/styles/fonts/TTCommons-Regular.woff') format('woff'),
+    url('~@/styles/fonts/TTCommons-Regular.ttf') format('truetype'),
+    url('~@/styles/fonts/TTCommons-Regular.svg#TTCommons-Regular') format('svg');
+}
+
+@font-face {
+  font-family: 'TT Commons';
+  font-weight: 500;
+  font-display: swap;
+  src: url('~@/styles/fonts/TTCommons-Medium.eot?#iefix');
+  src: url('~@/styles/fonts/TTCommons-Medium.eot?#iefix') format('eot'),
+    url('~@/styles/fonts/TTCommons-Medium.woff2') format('woff2'),
+    url('~@/styles/fonts/TTCommons-Medium.woff') format('woff'),
+    url('~@/styles/fonts/TTCommons-Medium.ttf') format('truetype'),
+    url('~@/styles/fonts/TTCommons-Medium.svg#TTCommons-Medium') format('svg');
+}
+
+@font-face {
+  font-family: 'TT Commons';
+  font-weight: 700;
+  font-display: swap;
+  src: url('~@/styles/fonts/TTCommons-Bold.eot?#iefix');
+  src: url('~@/styles/fonts/TTCommons-Bold.eot?#iefix') format('eot'),
+    url('~@/styles/fonts/TTCommons-Bold.woff2') format('woff2'),
+    url('~@/styles/fonts/TTCommons-Bold.woff') format('woff'),
+    url('~@/styles/fonts/TTCommons-Bold.ttf') format('truetype'),
+    url('~@/styles/fonts/TTCommons-Bold.svg#TTCommons-Bold') format('svg');
+}
+
+@import './base/normalize';
+@import './base/base';
+@import './base/body';
+
+@import './themes/themifier';
+
+// in storybook we dont dynamically style body, all styles will be
+// attached to root wrapper instead
+@include themifier {
+  @include document-body;
+}

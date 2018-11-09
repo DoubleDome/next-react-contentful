@@ -1,0 +1,26 @@
+.RoomOverviewHeaderMain {
+  &__title {
+    @include h4;
+    @include screen-min-md {
+      @include h3-large;
+    }
+  }
+
+  &__content {
+    margin-top: $grid;
+    @include screen-min-md {
+      margin-top: $grid * 2;
+    }
+  }
+
+  &__actions {
+    display: none;
+    @include screen-min-md {
+      display: flex;
+      margin-top: $grid * 3;
+    }
+    @include screen-min-xl {
+      margin-top: $grid * 4;
+    }
+  }
+}

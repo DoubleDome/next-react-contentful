@@ -1,0 +1,6 @@
+@mixin document-body {
+  font-family: $brand-font-text;
+  font-size: $brand-font-size;
+  color: $brand-color-text;
+  background-color: $brand-color-background-lightest;
+}

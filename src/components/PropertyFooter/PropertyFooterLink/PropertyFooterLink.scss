@@ -1,0 +1,15 @@
+.PropertyFooterLink {
+  $screen-switch-to-horizontal: $screen-md-min;
+  display: none;
+
+  @include screen-width-above($screen-switch-to-horizontal) {
+    @include link-custom-color(#606060);
+
+    display: block;
+    margin-top: 8px;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
+}

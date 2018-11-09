@@ -1,0 +1,97 @@
+.RoomOverviewHeaderSection {
+  border-bottom: 1px solid #e6e6e6;
+
+  &__slider {
+    @include aspect-ratio(4, 3);
+    @include screen-min-md {
+      @include aspect-ratio(16, 9);
+    }
+    @include screen-min-lg {
+      @include aspect-ratio(5, 2);
+    }
+
+    z-index: 2;
+    &__inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      max-height: 810px;
+
+      &:after {
+        content: ' ';
+        position: absolute;
+        z-index: 3;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0) 50%,
+          rgba(0, 0, 0, 0.4) 100%
+        );
+      }
+    }
+  }
+
+  &__main {
+    @include container;
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding-top: $grid * 3;
+    padding-bottom: $grid * 5;
+
+    @include screen-min-md {
+      padding-top: $grid * 4;
+      padding-bottom: $grid * 8;
+    }
+
+    @include screen-min-lg {
+      flex-direction: row;
+      padding-top: $grid * 8;
+      margin-top: -$grid * 4;
+      padding-left: $grid * 4;
+      padding-right: $grid * 4;
+    }
+
+    @include screen-min-xl {
+      padding-top: $grid * 10;
+      padding-bottom: $grid * 10;
+      margin-top: -$grid * 8;
+      padding-left: $grid * 14;
+      padding-right: $grid * 14;
+    }
+  }
+
+  &__content {
+  }
+
+  &__aside {
+    margin-top: $grid * 5;
+    border-top: 1px solid #e6e6e6;
+    padding-top: $grid * 5;
+
+    @include screen-min-md {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    @include screen-min-lg {
+      margin-top: 0;
+      margin-left: $grid * 7;
+      min-width: 250px;
+    }
+
+    @include screen-min-xl {
+      margin-left: $grid * 18;
+      min-width: 304px;
+    }
+  }
+}

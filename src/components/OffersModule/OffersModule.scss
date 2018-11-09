@@ -1,0 +1,109 @@
+@import './variables';
+
+.OffersModule {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #fff;
+  border-bottom: 1px solid #e6e6e6;
+
+  @include screen-width-above($screen-sm-min) {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  &__container {
+    @include container;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__header-actions {
+    display: none;
+
+    @include screen-width-above($screen-offers-module-horizontal) {
+      display: block;
+    }
+  }
+
+  &__heading {
+    line-height: 40px;
+    font-size: 36px;
+    font-weight: 300;
+    color: $brand-color-text-accent;
+
+    margin-bottom: 24px;
+
+    @include screen-width-below($screen-xs-max) {
+      margin-bottom: 40px;
+    }
+  }
+
+  &__items-container {
+    @include screen-width-below($screen-xs-max) {
+      @include container;
+    }
+  }
+
+  &__items-row {
+    @include screen-width-below($screen-xs-max) {
+      margin-left: -24px;
+      margin-right: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    @include screen-width-above($screen-offers-module-horizontal) {
+      margin-left: -16px;
+      margin-right: -16px;
+    }
+  }
+
+  &__items {
+    @include autohiding-scrollbar($display: flex);
+
+    display: flex;
+    flex-wrap: nowrap;
+
+    padding-left: 16px;
+    padding-right: 16px;
+
+    @include screen-width-above($screen-offers-module-horizontal) {
+      display: flex;
+      flex-wrap: wrap;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  &__item {
+    @include grid-column(12, 12);
+    padding: 0 8px;
+    max-width: 75%;
+    flex-basis: 75%;
+    min-width: 230px;
+
+    @include screen-width-below($screen-xs-max) {
+      flex-basis: 280px;
+      max-width: 280px;
+    }
+
+    @include screen-width-above($screen-sm-min) {
+      @include grid-column(6, 12);
+    }
+  }
+
+  &__footer-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 40px;
+
+    @include screen-width-above($screen-offers-module-horizontal) {
+      display: none;
+    }
+  }
+}
