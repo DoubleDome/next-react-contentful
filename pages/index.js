@@ -1,6 +1,7 @@
 import { createClient } from '../common/contentful';
 import React from 'react';
 import Layout from '../components/layout';
+import G2TextHeaderSection from '../dmp/components/G2TextHeaderSection/G2TextHeaderSection.ssr-chunk';
 
 class Index extends React.Component {
   static async getInitialProps() {
@@ -15,14 +16,7 @@ class Index extends React.Component {
   render() {
     return (
       <Layout>
-        <div className="text-center">
-          <h1>{this.props.homePageProp.fields.header}</h1>
-          {this.props.homePageProp.fields.rooms.map((room, index) => {
-            return (
-              <p>{room.fields.description}</p>
-            );
-          })}
-        </div>
+       
       </Layout>
     );
   }
