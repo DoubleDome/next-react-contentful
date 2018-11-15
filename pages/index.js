@@ -16,7 +16,7 @@ class Index extends React.Component {
   render() {
     return (
       <Layout>
-       
+       <G2TextHeaderSection title="Hi" subtitle="Subtitle"/>
       </Layout>
     );
   }

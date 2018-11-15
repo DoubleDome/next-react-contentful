@@ -1,10 +1,9 @@
 /* eslint-disable no-undef, no-unused-vars */
 import Head from 'next/head';
 import React from 'react';
-import NProgress from 'nprogress';
 import Router from 'next/router';
 
-import stylesheet from '../styles/index.scss';
+import stylesheet from '../src/styles/base.dmp.scss';
 
 Router.onRouteChangeStart = (url) => {
   NProgress.start();

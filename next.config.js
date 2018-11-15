@@ -27,10 +27,10 @@ module.exports = {
       ,
       {
         test: /\.s(a|c)ss$/,
-        use: ['raw-loader', 'postcss-loader',
+        use: ['raw-loader', 'style-loader','postcss-loader',
           { loader: 'sass-loader',
             options: {
-              includePaths: ['styles', 'node_modules']
+              includePaths: ['./src/styles', 'node_modules']
                 .map((d) => path.join(__dirname, d))
                 .map((g) => glob.sync(g))
                 .reduce((a, c) => a.concat(c), [])
