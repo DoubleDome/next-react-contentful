@@ -2,7 +2,7 @@ const express = require('express');
 const next = require('next');
 
 const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev });
+const app = next({dir: './src' , dev });
 const handle = app.getRequestHandler();
 
 app.prepare()
@@ -10,11 +10,11 @@ app.prepare()
     const server = express();
 
     /** EXAMPLE ROUTE */
-    server.get('/a/:id', (req, res) => {
-      const actualPage = '/article';
-      const queryParams = { id: req.params.id };
-      app.render(req, res, actualPage, queryParams);
-    });
+    // server.get('/a/:id', (req, res) => {
+    //   const actualPage = '/article';
+    //   const queryParams = { id: req.params.id };
+    //   app.render(req, res, actualPage, queryParams);
+    // });
 
     server.get('*', (req, res) => {
       return handle(req, res);

@@ -2,8 +2,7 @@
 import Head from 'next/head';
 import React from 'react';
 import Router from 'next/router';
-
-import stylesheet from '../src/styles/base.dmp.scss';
+import stylesheet from '../styles/base.dmp.scss';
 
 Router.onRouteChangeStart = (url) => {
   NProgress.start();
@@ -22,7 +21,7 @@ class Layout extends React.Component {
     return  (
       <div style={{ height: '100%' }}>
         <Head>
-          <title>Next / Contentful / Bootstrap 4 Boilerplate</title>
+          <title>Next / Contentful / React</title>
           <meta charSet="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
           <style dangerouslySetInnerHTML={{ __html: stylesheet }} />      
