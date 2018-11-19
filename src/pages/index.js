@@ -1,4 +1,5 @@
 import { createClient } from '../../common/contentful';
+
 import React from 'react';
 import Layout from '../components/layout';
 import G2TextHeaderSection from '../../dmp/components/G2TextHeaderSection/G2TextHeaderSection.component';
@@ -9,6 +10,8 @@ import PropertyFooter from '../../src/components/PropertyFooter/PropertyFooter.c
 import MGMFooter from '../../src/components/MGMFooter/MGMFooter.component';
 import CopyrightFooter from '../../src/components/CopyrightFooter/CopyrightFooter.component';
 
+
+
 class Index extends React.Component {
   static async getInitialProps() {
     const client = createClient();
@@ -16,6 +19,7 @@ class Index extends React.Component {
       content_type:'roomLandingPage',
       include: 1
     });
+
     return { roomLandingPageProp: entries.items[0] };
   }
 
@@ -26,6 +30,42 @@ class Index extends React.Component {
     return (
       <Layout>
         <G2TextHeaderSection title={content.textHeader.fields.title} subtitle={content.textHeader.fields.subtitle}/>
+
+        {/* GraphQL needed for proper Contentful implementation of Hero*/}
+        <G2HeroSection
+          title={content.sectionHero.fields.title}
+          description={content.sectionHero.fields.description.content[0].content[0].value}
+          images={[
+            {
+              url: content.sectionHero.fields.room1imageUrl,
+              caption: content.sectionHero.fields.room1caption,
+              tertiaryAction: {
+                label: 'Check Rates',
+                url:
+                  content.sectionHero.fields.room1actionUrl,
+              },
+            },
+            {
+              url: content.sectionHero.fields.room2imageUrl,
+              caption: content.sectionHero.fields.room2caption,
+              tertiaryAction: {
+                label: 'Check Rates',
+                url:
+                content.sectionHero.fields.room2actionUrl,
+              },
+            },
+            {
+              url: content.sectionHero.fields.room3imageUrl,
+              caption: content.sectionHero.fields.room3caption,
+              tertiaryAction: {
+                label: 'Check Rates',
+                url:
+                  content.sectionHero.fields.room3actionUrl
+              },
+            },
+          ]}
+        />
+
         <G2RoomOverviewCardCollectionSection
             rooms={
               content.roomCollection.map((room) => {
@@ -34,7 +74,7 @@ class Index extends React.Component {
                       title: room.fields.title,
                       keyValues: [room.fields.squareFeet, room.fields.bedType, room.fields.maxGuests],
                       description: room.fields.shortDescription.content[0].content[0].value,
-                    image: {
+                      image: {
                         url: room.fields.cardImageUrl,
                       },
                       primaryAction: {
@@ -59,5 +99,7 @@ class Index extends React.Component {
     );
   }
 }
+
+
 
 export default Index;
