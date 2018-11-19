@@ -7,7 +7,6 @@ import G2HeroSection  from '../../dmp/components/G2HeroSection/G2HeroSection.com
 import G2RoomOverviewCardCollectionSection  from '../../dmp/components/G2RoomOverviewCardCollectionSection/G2RoomOverviewCardCollectionSection.component';
 import PromoCardsRowSection from '../../src/components/PromoCardsRowSection/PromoCardsRowSection.component';
 
-
 class Index extends React.Component {
   static async getInitialProps() {
     const client = createClient();
