@@ -35,8 +35,7 @@ class Index extends React.Component {
                       keyValues: [room.fields.squareFeet, room.fields.bedType, room.fields.maxGuests],
                       description: room.fields.shortDescription.content[0].content[0].value,
                     image: {
-                        url:
-                          room.fields.cardImageUrl 
+                        url: room.fields.cardImageUrl,
                       },
                       primaryAction: {
                         label: room.fields.primaryActionLabel,
