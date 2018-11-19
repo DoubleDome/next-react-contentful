@@ -13,8 +13,6 @@ import {
 } from '../config/config';
 import { window } from '../utils/browser';
 
-const ENV_TEST = window.ENV_TEST === true;
-
 const mediaQueries = {
   xs: `(max-width: ${SCREEN_WIDTH_XS_MAX}px)`,
   sm: `(min-width: ${SCREEN_WIDTH_SM_MIN}px) and (max-width: ${SCREEN_WIDTH_SM_MAX}px)`,
@@ -45,15 +43,7 @@ class ResponsiveDiv extends React.PureComponent {
       throw new TypeError(`Unknown screen prop value: ${screen}`);
     }
 
-    if (ENV_TEST) {
-      // For now let's simulate lg screen size on test environment
-      const matches =
-        'lg min-sm min-md min-lg max-lg'.split(' ').indexOf(screen) !== -1;
-      if (typeof children === 'function') {
-        return children(matches);
-      }
-      return matches ? children : null;
-    }
+  
 
     return <MediaQuery query={mediaQuery}>{children}</MediaQuery>;
   }
