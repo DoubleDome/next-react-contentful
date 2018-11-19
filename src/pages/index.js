@@ -6,10 +6,6 @@ import G2TextHeaderSection from '../../dmp/components/G2TextHeaderSection/G2Text
 import G2HeroSection  from '../../dmp/components/G2HeroSection/G2HeroSection.component';
 import G2RoomOverviewCardCollectionSection  from '../../dmp/components/G2RoomOverviewCardCollectionSection/G2RoomOverviewCardCollectionSection.component';
 import PromoCardsRowSection from '../../src/components/PromoCardsRowSection/PromoCardsRowSection.component';
-import PropertyFooter from '../../src/components/PropertyFooter/PropertyFooter.component';
-import MGMFooter from '../../src/components/MGMFooter/MGMFooter.component';
-import CopyrightFooter from '../../src/components/CopyrightFooter/CopyrightFooter.component';
-
 
 
 class Index extends React.Component {
@@ -95,6 +91,18 @@ class Index extends React.Component {
           }
           layout={content.roomCollectionLayout}
         />
+
+        <G2HeroSection
+          premium={content.premiumSectionHero.fields.premium}
+          title={content.premiumSectionHero.fields.title}
+          description={content.premiumSectionHero.fields.description.content[0].content[0].value}
+          images={[
+            {
+              url: content.premiumSectionHero.fields.room1imageUrl
+            }
+          ]}
+        />
+
       </Layout>
     );
   }
