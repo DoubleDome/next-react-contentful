@@ -16,91 +16,100 @@ class Index extends React.Component {
     });
 
     {/* Todo: input validation, either here or Contentful */}
-    
-    return { roomLandingPageProp: entries.items[0] };
+    return { roomLandingPageProp: entries.items[0],
+        textHeader: entries.items[0].fields.textHeader.fields,
+        hero: entries.items[0].fields.sectionHero.fields,
+        roomCollection: entries.items[0].fields.roomCollection,
+        roomCollectionLayout: entries.items[0].roomCollectionLayout,
+        secondHero: entries.items[0].fields.premiumSectionHero.fields,
+        promoCards: entries.items[0].fields.promoCards,
+    };
   }
 
   render() {
     const content = this.props.roomLandingPageProp.fields;
-    const hero = content.sectionHero.fields;
+
+    const { textHeader, hero, roomCollection, roomCollectionLayout, secondHero, promoCards } = this.props;
 
     return (
       <Layout>
-        <G2TextHeaderSection title={content.textHeader.fields.title} subtitle={content.textHeader.fields.subtitle}/>
+        <G2TextHeaderSection title={textHeader.title} subtitle={textHeader.subtitle}/>
 
         {/* GraphQL needed for proper Contentful implementation of Hero */}
         <G2HeroSection
-          title={content.sectionHero.fields.title}
-          description={content.sectionHero.fields.description.content[0].content[0].value}
+          title={hero.title}
+          premium={hero.premium}
+          description={hero.description.content[0].content[0].value}
           images={[
             {
-              url: content.sectionHero.fields.room1imageUrl,
-              caption: content.sectionHero.fields.room1caption,
+              url: hero.room1imageUrl,
+              caption: hero.room1caption,
               tertiaryAction: {
                 label: 'Check Rates',
                 url:
-                  content.sectionHero.fields.room1actionUrl,
+                  hero.room1actionUrl,
               },
             },
             {
-              url: content.sectionHero.fields.room2imageUrl,
-              caption: content.sectionHero.fields.room2caption,
+              url: hero.room2imageUrl,
+              caption: hero.room2caption,
               tertiaryAction: {
                 label: 'Check Rates',
                 url:
-                content.sectionHero.fields.room2actionUrl,
+                hero.room2actionUrl,
               },
             },
             {
-              url: content.sectionHero.fields.room3imageUrl,
-              caption: content.sectionHero.fields.room3caption,
+              url: hero.room3imageUrl,
+              caption: hero.room3caption,
               tertiaryAction: {
                 label: 'Check Rates',
                 url:
-                  content.sectionHero.fields.room3actionUrl
+                  hero.room3actionUrl
               },
             },
           ]}
         />
 
-       {/* GraphQL version of Hero will look more like this, much cleaner */}
+        {/* GraphQL version of Hero will look more like this, much cleaner */}
         <G2RoomOverviewCardCollectionSection
             rooms={
-              content.roomCollection.map((room) => {
+              roomCollection.map((entry) => {
+                  const room = entry.fields;
                   return (
                   {
-                      title: room.fields.title,
-                      keyValues: [room.fields.squareFeet, room.fields.bedType, room.fields.maxGuests],
-                      description: room.fields.shortDescription.content[0].content[0].value,
+                      title: room.title,
+                      keyValues: [room.squareFeet, room.bedType, room.maxGuests],
+                      description: room.shortDescription.content[0].content[0].value,
                       image: {
-                        url: room.fields.cardImageUrl,
+                        url: room.cardImageUrl,
                       },
                       primaryAction: {
-                        label: room.fields.primaryActionLabel,
-                        url: room.fields.primaryActionUrl,
+                        label: room.primaryActionLabel,
+                        url: room.primaryActionUrl,
                       },
                       secondaryAction: {
-                        label: room.fields.secondaryActionLabel,
-                        url: room.fields.secondaryActionUrl,
+                        label: room.secondaryActionLabel,
+                        url: room.secondaryActionUrl,
                       },
                       tertiaryAction: {
-                        label: room.fields.tertiaryActionLabel,
-                        url: room.fields.tertiaryActionUrl,
+                        label: room.tertiaryActionLabel,
+                        url: room.tertiaryActionUrl,
                       },
                   }
                 )
               })
           }
-          layout={content.roomCollectionLayout}
+          layout={roomCollectionLayout}
         />
 
         <G2HeroSection
-          premium={content.premiumSectionHero.fields.premium}
-          title={content.premiumSectionHero.fields.title}
-          description={content.premiumSectionHero.fields.description.content[0].content[0].value}
+          title={secondHero.title}
+          premium={secondHero.premium}
+          description={secondHero.description.content[0].content[0].value}
           images={[
             {
-              url: content.premiumSectionHero.fields.room1imageUrl
+              url: secondHero.room1imageUrl
             }
           ]}
         />
