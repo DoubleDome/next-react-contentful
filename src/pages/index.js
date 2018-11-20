@@ -15,6 +15,8 @@ class Index extends React.Component {
       include: 1
     });
 
+    {/* Todo: input validation, either here or Contentful */}
+    
     return { roomLandingPageProp: entries.items[0] };
   }
 
@@ -26,7 +28,7 @@ class Index extends React.Component {
       <Layout>
         <G2TextHeaderSection title={content.textHeader.fields.title} subtitle={content.textHeader.fields.subtitle}/>
 
-        {/* GraphQL needed for proper Contentful implementation of Hero*/}
+        {/* GraphQL needed for proper Contentful implementation of Hero */}
         <G2HeroSection
           title={content.sectionHero.fields.title}
           description={content.sectionHero.fields.description.content[0].content[0].value}
@@ -61,6 +63,7 @@ class Index extends React.Component {
           ]}
         />
 
+       {/* GraphQL version of Hero will look more like this, much cleaner */}
         <G2RoomOverviewCardCollectionSection
             rooms={
               content.roomCollection.map((room) => {
@@ -102,6 +105,7 @@ class Index extends React.Component {
           ]}
         />
 
+        {/* TODO: this should pull from Contentful */}
         <PromoCardsRowSection
           title={"Offers & Promos"}
           readMoreButton={{ label: 'View All Offers', url: '/' }}
