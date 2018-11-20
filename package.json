@@ -12,6 +12,7 @@
   },
   "scripts": {
     "dev": "concurrently --kill-others \"node server.js\" \"npm run start\"",
+    "next": "npm run dmp:build && node server.js",
     "start": "NODE_OPTIONS=--max_old_space_size=4096 npm run storybook:serve",
     "storybook:serve": "start-storybook -p 3001 -c storybook",
     "storybook:build": "build-storybook -c storybook -o storybook-dist",
@@ -48,6 +49,7 @@
     "@storybook/addon-viewport": "3.4.11",
     "@storybook/addons": "3.4.11",
     "@storybook/react": "3.4.11",
+    "add": "2.0.6",
     "apollo-server-express": "^2.2.2",
     "apolloclient": "0.0.2",
     "autoprefixer": "^8.2.0",
@@ -85,7 +87,8 @@
     "react-transition-group": "2.5.0",
     "sass-loader": "^6.0.7",
     "storybook-addon-docgen": "github:jack-sf/react-storybook-addon-docgen#e54d7cb",
-    "uuid": "3.3.2"
+    "uuid": "3.3.2",
+    "yarn": "1.12.3"
   },
   "devDependencies": {
     "autoprefixer": "9.2.1",

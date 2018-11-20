@@ -1,22 +1,22 @@
 {
-    "plugins": [
-      [
-        "module-resolver", {
-          "root": ["."],
-          "alias": {
-            "styles": "./styles"
-          },
-          "cwd": "babelrc"
-      }],
-      [
-        "wrap-in-js",
-        {
-          "extensions": ["css$", "scss$"]
-        }
-      ]
-    ],
-    "presets": [
-      "next/babel"
-    ],
-    "ignore": []
-  }
+  "presets": [
+    ["env", {
+      "targets": {
+        "browsers": [
+          "Chrome >= 52",
+          "FireFox >= 48",
+          "Safari >= 7",
+          "Explorer 11",
+          "last 4 Edge versions"
+        ]
+      },
+      "useBuiltIns": true
+    }],
+    "react"
+  ],
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-object-rest-spread",
+    "transform-class-properties"
+  ]
+}

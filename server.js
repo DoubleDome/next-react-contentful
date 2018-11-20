@@ -1,11 +1,10 @@
 const express = require('express');
 const next = require('next');
 const dev = process.env.NODE_ENV !== 'production';
-const app = next({dir: './src' , dev });
+const app = next({ dir: './dmp-dist/gen2/src', dev });
 const handle = app.getRequestHandler();
 
-app.prepare()
-  .then(() => {
+app.prepare().then(() => {
     const server = express();
 
     /** EXAMPLE ROUTE */
@@ -19,12 +18,12 @@ app.prepare()
       return handle(req, res);
     });
 
-    server.listen(3000, (err) => {
+    server.listen(3000, err => {
       if (err) throw err;
       console.log('> Ready on http://localhost:3000');
     });
   })
-  .catch((ex) => {
+  .catch(ex => {
     console.error(ex.stack);
     process.exit(1);
   });

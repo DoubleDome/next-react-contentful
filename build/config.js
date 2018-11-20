@@ -19,6 +19,14 @@ const TARGET_COMPONENTS_ROOT_DIR = `${TARGET_GEN2_SRC_BUILD_DIR}/components`;
 const TARGET_GEN2_DMP_BUILD_DIR = `${GEN2_BUILD_DIR}/dmp/`;
 const TARGET_DMP_DEPENDENCIES_DIR = `${TARGET_GEN2_DMP_BUILD_DIR}`;
 
+// Brand Theme - generated component
+const BRAND_THEME_COMPONENT_NAME = 'G2BrandTheme';
+const TARGET_BRAND_THEME_DIR = `${TARGET_GEN2_DMP_BUILD_DIR}/components/${BRAND_THEME_COMPONENT_NAME}`;
+const TARGET_STYLES_DIR = `${TARGET_BRAND_THEME_DIR}/themes`;
+
+// Next.js - Files
+const SOURCE_NEXT_DIR = path.join(__dirname, '../next');
+
 // Directories and files to copy over
 
 const SRC_TO_COPY = [
@@ -54,12 +62,15 @@ const SRC_TO_COPY = [
     SOURCE: path.join(__dirname, '../src/polyfills.js'),
     TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/polyfills.js`,
   },
+  {
+    SOURCE: TARGET_STYLES_DIR,
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/themes`,
+  },
+  {
+    SOURCE: SOURCE_NEXT_DIR,
+    TARGET: TARGET_GEN2_SRC_BUILD_DIR,
+  },
 ];
-
-// Brand Theme - generated component
-const BRAND_THEME_COMPONENT_NAME = 'G2BrandTheme';
-const TARGET_BRAND_THEME_DIR = `${TARGET_GEN2_DMP_BUILD_DIR}/components/${BRAND_THEME_COMPONENT_NAME}`;
-const TARGET_STYLES_DIR = `${TARGET_BRAND_THEME_DIR}/themes`;
 
 // Other
 
@@ -105,6 +116,7 @@ module.exports = {
   TARGET_DMP_DEPENDENCIES_DIR,
 
   SRC_TO_COPY,
+  SOURCE_NEXT_DIR,
 
   BRAND_THEME_COMPONENT_NAME,
   THEMES,

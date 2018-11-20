@@ -30,7 +30,7 @@ module.exports = {
         use: ['raw-loader', 'style-loader','postcss-loader',
           { loader: 'sass-loader',
             options: {
-              includePaths: ['./src/styles', 'node_modules']
+              includePaths: ['./dmp-dist/gen2/src/themes', 'node_modules']
                 .map((d) => path.join(__dirname, d))
                 .map((g) => glob.sync(g))
                 .reduce((a, c) => a.concat(c), [])
