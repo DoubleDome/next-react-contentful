@@ -144,7 +144,7 @@ class Index extends React.Component {
               title: card.title,
               description: card.description,
               status: {
-                color: card.statusColor,
+                color: card.statusColor? card.statusColor:'',
                 label: card.statusLabel,
               },
               primaryAction: {
