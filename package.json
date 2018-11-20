@@ -67,6 +67,7 @@
     "mobx": "4.5.0",
     "mobx-react": "5.2.3",
     "next": "^5.1.0",
+    "nextjs-dynamic-routes": "^2.2.1",
     "node-sass": "^4.9.0",
     "nprogress": "^0.2.0",
     "nuka-carousel": "github:jtomaszewski/nuka-carousel#cdef463",
