@@ -2,7 +2,7 @@ const express = require('express');
 const next = require('next');
 const Router = require('./src/routes/routes');
 const dev = process.env.NODE_ENV !== 'production';
-const app = next({dir: './src' , dev });
+const app = next({ dir: './dmp-dist/gen2/src', dev });
 const handle = Router.getRequestHandler(app);
 
 app.prepare()

@@ -54,7 +54,7 @@ class BrandThemeComponentBuilder extends AbstractBuilder {
 
   saveThemeCssFile(theme, themeCss) {
     const stylesTargetDir = this.config.TARGET_STYLES_DIR;
-    const targetfullPath = path.join(stylesTargetDir, `${theme}.scss`);
+    const targetfullPath = path.join(stylesTargetDir, `${theme}.css`);
 
     fs.writeFileSync(targetfullPath, themeCss);
   }
