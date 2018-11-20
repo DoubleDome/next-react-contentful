@@ -12,11 +12,26 @@
       },
       "useBuiltIns": true
     }],
-    "react"
+    "react",
+    "next/babel"
   ],
   "plugins": [
     "transform-decorators-legacy",
     "transform-object-rest-spread",
-    "transform-class-properties"
+    "transform-class-properties",
+    [
+      "module-resolver", {
+        "root": ["."],
+        "alias": {
+          "styles": "./src/styles"
+        },
+        "cwd": "babelrc"
+    }],
+    [
+      "wrap-in-js",
+      {
+        "extensions": ["css$", "scss$"]
+      }
+    ]
   ]
 }
