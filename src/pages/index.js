@@ -95,7 +95,7 @@ class Index extends React.Component {
                       },
                       secondaryAction: {
                         label: room.secondaryActionLabel,
-                        url: room.secondaryActionUrl,
+                        url: '/' + room.slug,
                       },
                       tertiaryAction: {
                         label: room.tertiaryActionLabel,
