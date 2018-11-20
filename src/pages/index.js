@@ -1,6 +1,5 @@
-import { createClient } from '../../common/contentful';
-
 import React from 'react';
+import { createClient } from '../../common/contentful';
 import Layout from '../components/layout';
 import G2TextHeaderSection from '../../dmp/components/G2TextHeaderSection/G2TextHeaderSection.component';
 import G2HeroSection  from '../../dmp/components/G2HeroSection/G2HeroSection.component';
@@ -55,27 +54,24 @@ class Index extends React.Component {
               url: hero.room1imageUrl,
               caption: hero.room1caption,
               tertiaryAction: {
-                label: 'Check Rates',
-                url:
-                  hero.room1actionUrl,
+                label: hero.tertiaryActionLabel,
+                url: hero.room1actionUrl,
               },
             },
             {
               url: hero.room2imageUrl,
               caption: hero.room2caption,
               tertiaryAction: {
-                label: 'Check Rates',
-                url:
-                hero.room2actionUrl,
+                label:  hero.tertiaryActionLabel,
+                url: hero.room2actionUrl,
               },
             },
             {
               url: hero.room3imageUrl,
               caption: hero.room3caption,
               tertiaryAction: {
-                label: 'Check Rates',
-                url:
-                  hero.room3actionUrl
+                label: hero.tertiaryActionLabel,
+                url: hero.room3actionUrl,
               },
             },
           ]}
@@ -123,7 +119,6 @@ class Index extends React.Component {
           ]}
         />
 
-        {/* TODO: this should pull from Contentful */}
         <PromoCardsRowSection
           title={promoSection.title}
           readMoreButton={{ label: promoSection.button.label, url: promoSection.button.url }}
@@ -152,12 +147,9 @@ class Index extends React.Component {
             })
           }
         />
-
       </Layout>
     );
   }
 }
-
-
 
 export default Index;
