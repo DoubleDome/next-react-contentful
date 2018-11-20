@@ -7,26 +7,28 @@ import PropertyFooter from './PropertyFooter/PropertyFooter.component';
 import MGMFooter from './MGMFooter/MGMFooter.component';
 import CopyrightFooter from './CopyrightFooter/CopyrightFooter.component';
 
-Router.onRouteChangeStart = (url) => {
+Router.onRouteChangeStart = url => {
   NProgress.start();
 };
 Router.onRouteChangeComplete = () => NProgress.done();
 Router.onRouteChangeError = () => NProgress.done();
 
 class Layout extends React.Component {
-
   componentDidMount() {
     window.$ = window.jQuery = require('jquery');
     require('bootstrap');
   }
 
   render() {
-    return  (
+    return (
       <div style={{ height: '100%' }}>
         <Head>
           <title>Next / Contentful / React</title>
           <meta charSet="utf-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+          />
           <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
         </Head>
 
@@ -174,9 +176,7 @@ class Layout extends React.Component {
         />
       </div>
     );
-
   }
 }
-
 
 export default Layout;
