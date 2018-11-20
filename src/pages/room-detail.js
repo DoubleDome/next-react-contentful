@@ -9,6 +9,8 @@ import G2RoomOverviewCardRowSection from '../../dmp/components/G2RoomOverviewCar
 
 class RoomDetail extends React.Component {
     static async getInitialProps({query}) {
+        // const client = createClient();
+        // const entries = await client.getEntry(query.id);
         return { roomDetailPageProp: "TBD" };
     }
 
