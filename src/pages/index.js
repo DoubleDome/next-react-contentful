@@ -26,8 +26,8 @@ class Index extends React.Component {
         promoSection: {
           title: entries.items[0].fields.promoSectionTitle,
           button: {
-            label: entries.items[0].fields.prromoSectionButtonLabel,
-            url: entries.items[0].fields.prromoSectionButtonUrl,
+            label: entries.items[0].fields.promoSectionButtonLabel,
+            url: entries.items[0].fields.promoSectionButtonUrl,
           },
           cards: entries.items[0].fields.promoCards.map((card) => {
             return card.fields;
