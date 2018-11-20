@@ -1,5 +1,6 @@
 import React from 'react';
 import { createClient } from '../../common/contentful';
+import { withRouter } from 'next/router';
 import G2RoomOverviewHeaderSection  from '../../dmp/components/G2RoomOverviewHeaderSection/G2RoomOverviewHeaderSection.component';
 import G2HighlightCarouselSection  from '../../dmp/components/G2HighlightCarouselSection/G2HighlightCarouselSection.component';
 import G2AccordionSection from '../../dmp/components/G2AccordionSection/G2AccordionSection.component';
@@ -8,7 +9,7 @@ import G2TwoColumnHeroSection from '../../dmp/components/G2TwoColumnHeroSection/
 import G2RoomOverviewCardRowSection from '../../dmp/components/G2RoomOverviewCardRowSection/G2RoomOverviewCardRowSection.component';
 
 class RoomDetail extends React.Component {
-    static async getInitialProps() {
+    static async getInitialProps({query}) {
         return { roomDetailPageProp: "TBD" };
     }
 
@@ -57,7 +58,6 @@ class RoomDetail extends React.Component {
                         },
                     },
                     },
-        
                     {
                     headline: {
                         title: 'Suite Details',
