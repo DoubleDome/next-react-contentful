@@ -12,183 +12,151 @@ class Index extends React.Component {
     const client = createClient();
     const entries = await client.getEntries({
       content_type: 'roomLandingPage',
-      include: 1
+      include: 1,
     });
 
-    return { roomLandingPageProp: entries.items[0] };
+    {
+      /* Todo: input validation, either here or Contentful */
+    }
+    return {
+      textHeader: entries.items[0].fields.textHeader.fields,
+      hero: entries.items[0].fields.sectionHero.fields,
+      roomCollection: entries.items[0].fields.roomCollection.map(room => {
+        return room.fields;
+      }),
+      roomCollectionLayout: entries.items[0].roomCollectionLayout,
+      secondHero: entries.items[0].fields.premiumSectionHero.fields,
+      promoSection: {
+        title: entries.items[0].fields.promoSectionTitle,
+        button: {
+          label: entries.items[0].fields.promoSectionButtonLabel,
+          url: entries.items[0].fields.promoSectionButtonUrl,
+        },
+        cards: entries.items[0].fields.promoCards.map(card => {
+          return card.fields;
+        }),
+      },
+    };
   }
 
   render() {
-    const content = this.props.roomLandingPageProp.fields;
-    const hero = content.sectionHero.fields;
+    const {
+      textHeader,
+      hero,
+      roomCollection,
+      roomCollectionLayout,
+      secondHero,
+      promoSection,
+    } = this.props;
 
     return (
       <Layout>
         <G2TextHeaderSection
-          title={content.textHeader.fields.title}
-          subtitle={content.textHeader.fields.subtitle}
+          title={textHeader.title}
+          subtitle={textHeader.subtitle}
         />
 
-        {/* GraphQL needed for proper Contentful implementation of Hero*/}
+        {/* GraphQL needed for proper Contentful implementation of Hero */}
         <G2HeroSection
-          title={content.sectionHero.fields.title}
-          description={
-            content.sectionHero.fields.description.content[0].content[0].value
-          }
+          title={hero.title}
+          premium={hero.premium}
+          description={hero.description.content[0].content[0].value}
           images={[
             {
-              url: content.sectionHero.fields.room1imageUrl,
-              caption: content.sectionHero.fields.room1caption,
+              url: hero.room1imageUrl,
+              caption: hero.room1caption,
               tertiaryAction: {
-                label: 'Check Rates',
-                url: content.sectionHero.fields.room1actionUrl
-              }
+                label: hero.tertiaryActionLabel,
+                url: hero.room1actionUrl,
+              },
             },
             {
-              url: content.sectionHero.fields.room2imageUrl,
-              caption: content.sectionHero.fields.room2caption,
+              url: hero.room2imageUrl,
+              caption: hero.room2caption,
               tertiaryAction: {
-                label: 'Check Rates',
-                url: content.sectionHero.fields.room2actionUrl
-              }
+                label: hero.tertiaryActionLabel,
+                url: hero.room2actionUrl,
+              },
             },
             {
-              url: content.sectionHero.fields.room3imageUrl,
-              caption: content.sectionHero.fields.room3caption,
+              url: hero.room3imageUrl,
+              caption: hero.room3caption,
               tertiaryAction: {
-                label: 'Check Rates',
-                url: content.sectionHero.fields.room3actionUrl
-              }
-            }
+                label: hero.tertiaryActionLabel,
+                url: hero.room3actionUrl,
+              },
+            },
           ]}
         />
 
+        {/* GraphQL version of Hero will look more like this, much cleaner */}
         <G2RoomOverviewCardCollectionSection
-          rooms={content.roomCollection.map(room => {
-            return {
-              title: room.fields.title,
-              keyValues: [
-                room.fields.squareFeet,
-                room.fields.bedType,
-                room.fields.maxGuests
-              ],
-              description:
-                room.fields.shortDescription.content[0].content[0].value,
-              image: {
-                url: room.fields.cardImageUrl
-              },
-              primaryAction: {
-                label: room.fields.primaryActionLabel,
-                url: room.fields.primaryActionUrl
-              },
-              secondaryAction: {
-                label: room.fields.secondaryActionLabel,
-                url: room.fields.secondaryActionUrl
-              },
-              tertiaryAction: {
-                label: room.fields.tertiaryActionLabel,
-                url: room.fields.tertiaryActionUrl
-              }
-            };
-          })}
-          layout={content.roomCollectionLayout}
+            rooms={
+              roomCollection.map((room) => {
+                  return (
+                  {
+                      title: room.title,
+                      keyValues: [room.squareFeet, room.bedType, room.maxGuests],
+                      description: room.shortDescription.content[0].content[0].value,
+                      image: {
+                        url: room.cardImageUrl
+                      },
+                      primaryAction: {
+                        label: room.primaryActionLabel,
+                        url: room.primaryActionUrl,
+                      },
+                      secondaryAction: {
+                        label: room.secondaryActionLabel,
+                        url: '/' + room.slug,
+                      },
+                      tertiaryAction: {
+                        label: room.tertiaryActionLabel,
+                        url: room.tertiaryActionUrl,
+                      },
+                  }
+                )
+              })
+          }
+          layout={roomCollectionLayout}
         />
 
         <G2HeroSection
-          premium={content.premiumSectionHero.fields.premium}
-          title={content.premiumSectionHero.fields.title}
-          description={
-            content.premiumSectionHero.fields.description.content[0].content[0]
-              .value
-          }
+          title={secondHero.title}
+          premium={secondHero.premium}
+          description={secondHero.description.content[0].content[0].value}
           images={[
             {
-              url: content.premiumSectionHero.fields.room1imageUrl
-            }
+              url: secondHero.room1imageUrl,
+            },
           ]}
         />
 
         <PromoCardsRowSection
-          title={'Offers & Promos'}
-          readMoreButton={{ label: 'View All Offers', url: '/' }}
-          cards={[
-            {
-              imageUrl:
-                'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/exterior/aria-hotel-exterior-campus-forbes-announcement.tif',
-              categoryName: 'Offers',
-              title: 'Warm up with 30% off your winter escape',
-              description:
-                'Book by November 15 and stay by September 30, 2019 to enjoy these special rates.',
+          title={promoSection.title}
+          readMoreButton={{
+            label: promoSection.button.label,
+            url: promoSection.button.url,
+          }}
+          cards={promoSection.cards.map(card => {
+            return {
+              imageUrl: card.imageUrl,
+              categoryName: card.categoryName,
+              title: card.title,
+              description: card.description,
               status: {
-                color: 'red',
-                label: 'Ends soon'
+                color: card.statusColor,
+                label: card.statusLabel,
               },
               primaryAction: {
-                label: 'Book now',
-                url:
-                  'https://www2.aria.com/en/booking/room-booking.html#/default?programId=279188f0-2e78-4f54-a4c2-703a2c52d0e6&selectedPropertyId=e2704b04-d515-45b0-8afd-4fa1424ff0a8'
+                label: card.primaryActionLabel,
+                url: card.primaryActionUrl,
               },
               tertiaryAction: {
-                label: 'Learn More',
-                url:
-                  'https://www2.aria.com/en/offers/offer-detail.html#/offerType=ROOM&offerId=279188f0-2e78-4f54-a4c2-703a2c52d0e6&programType=OpenLoop'
-              }
-            },
-            {
-              imageUrl:
-                'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/resort-club-lounge/resort-club-lounge-rooms/resort-club-lounge-queen/aria-hotel-deluxe-resort-club-lounge-queen-room.jpg',
-              categoryName: 'Offers',
-              title: 'Fall Savings Package',
-              description:
-                'Book by November 15 to enjoy these special rates plus bonus discounts.',
-              primaryAction: {
-                label: 'Book offer',
-                url:
-                  'https://www2.aria.com/en/booking/room-booking.html#/default?programId=580b66b8-f4db-4777-b93a-43bc9c32feb9&selectedPropertyId=e2704b04-d515-45b0-8afd-4fa1424ff0a8'
+                label: card.tertiaryActionLabel,
+                url: card.tertiaryActionUrl,
               },
-              tertiaryAction: {
-                label: 'Learn More',
-                url:
-                  'https://vacationsbymgmresorts.poweredbygps.com/g/pt/vacation-packages/?MDPCID=US.TPS.MGM.BRAND-ARIA.EPACKAGE&icid=DMP_Tile_BB_HO_EV_MGMVacations_09042018_LV_AR'
-              }
-            },
-            {
-              imageUrl:
-                'https://static.mgmresorts.com/content/dam/MGM/aria/corporate-initiatives/aria-hotel-resorts-vacations.tif',
-              categoryName: 'Offers',
-              title: 'Vacations by MGM Resorts',
-              description:
-                'Save more when you book your flight and hotel together!',
-              primaryAction: {
-                label: 'Book now',
-                url:
-                  'https://vacationsbymgmresorts.poweredbygps.com/g/pt/vacation-packages/?MDPCID=US.TPS.MGM.BRAND-ARIA.EPACKAGE&icid=DMP_Tile_BB_HO_EV_MGMVacations_09042018_LV_AR'
-              },
-              tertiaryAction: {
-                label: 'Learn More',
-                url:
-                  'https://vacationsbymgmresorts.poweredbygps.com/g/pt/vacation-packages/?MDPCID=US.TPS.MGM.BRAND-ARIA.EPACKAGE&icid=DMP_Tile_BB_HO_EV_MGMVacations_09042018_LV_AR'
-              }
-            },
-            {
-              imageUrl:
-                'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/exterior/lifestyle/aria-hotel-exterior-lifestyle-couple-evening-lumia.jpg',
-              categoryName: 'Offers',
-              title: 'Double the points, double the fun',
-              description:
-                'Earn double World of Hyatt Points on all eligible spend through December 29.',
-              primaryAction: {
-                label: 'Book now',
-                url:
-                  'https://world.hyatt.com/content/gp/en/wohpromotions/mgm-vegas-double-points-promotion.html'
-              },
-              tertiaryAction: {
-                label: 'Learn More',
-                url:
-                  'https://world.hyatt.com/content/gp/en/wohpromotions/mgm-vegas-double-points-promotion.html'
-              }
-            }
-          ]}
+            };
+          })}
         />
       </Layout>
     );
