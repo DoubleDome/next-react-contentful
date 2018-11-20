@@ -16,12 +16,12 @@ class RoomDetail extends React.Component {
           'fields.slug': query.id
         });
         
-        return { roomTitle: entries.items[0].fields.title };
+        return { room: entries.items[0].fields };
     }
 
   render() {
 
-    const { roomTitle } = this.props;
+    const { room } = this.props;
 
     {
       /* 
@@ -36,7 +36,7 @@ class RoomDetail extends React.Component {
           {...{
             header: {
               subtitle: 'Aria Tower Suites',
-              title: roomTitle,
+              title: room.title,
               primaryAction: {
                 label: 'Check Rates',
                 url: '/',
@@ -77,17 +77,17 @@ class RoomDetail extends React.Component {
                   {
                     type: 'inline-text',
                     label: 'size',
-                    text: '920 sqft',
+                    text: room.squareFeet,
                   },
                   {
                     type: 'inline-text',
                     label: 'beds',
-                    text: '1 King',
+                    text: room.bedType,
                   },
                   {
                     type: 'inline-text',
                     label: 'max guests',
-                    text: '4',
+                    text: room.maxGuests.substring(room.maxGuests.indexOf("Max Guests ")+11, room.maxGuests.length),
                   },
                 ],
               },
