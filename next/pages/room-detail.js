@@ -10,17 +10,24 @@ import G2RoomOverviewCardRowSection from '../../dmp/components/G2RoomOverviewCar
 
 class RoomDetail extends React.Component {
     static async getInitialProps({query}) {
-        // const client = createClient();
-        // const entries = await client.getEntry(query.id);
-        return { roomDetailPageProp: "TBD" };
+        const client = createClient();
+        const entries = await client.getEntries({
+          content_type: 'room',
+          'fields.slug': query.id
+        });
+        
+        return { roomTitle: entries.items[0].fields.title };
     }
 
   render() {
+
+    const { roomTitle } = this.props;
+
     {
       /* 
             One of these components is not wrapped in a div,
             so wrapping everything in a div instead of chanigng
-            original compnents.
+            original components.
         */
     }
     return (
@@ -29,7 +36,7 @@ class RoomDetail extends React.Component {
           {...{
             header: {
               subtitle: 'Aria Tower Suites',
-              title: 'Corner Suite',
+              title: roomTitle,
               primaryAction: {
                 label: 'Check Rates',
                 url: '/',
