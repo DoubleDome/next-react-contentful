@@ -40,7 +40,7 @@ class RoomDetail extends React.Component {
               },
             },
             main: {
-              title: 'The Suite Life!',
+              title: 'The Suite Life',
               content:
                 '<p>'+room.longDescription.content[0].content[0].value+'</p>',
               primaryAction: {
