@@ -29,7 +29,7 @@ class Layout extends React.Component {
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
           />
-          <style dangerouslySetInnerHTML={{ __html: theme }} />
+          <link rel="stylesheet" href="/themes/aria.css"></link>
         </Head>
 
         <div className="container-fluid" style={{ height: '100%' }}>

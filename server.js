@@ -19,6 +19,7 @@ app
     });
 
     server.use('/fonts/resources', express.static(path.join(__dirname, './dmp-dist/gen2/src/themes/fonts')));
+    server.use('/themes', express.static(path.join(__dirname, './dmp-dist/gen2/src/themes')));
     
     server.get('*', (req, res) => {
       return handle(req, res);
