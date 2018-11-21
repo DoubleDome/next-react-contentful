@@ -7,6 +7,7 @@ const IGNORE_REG_EXP = /.*\/\/\s*build-ignore-line\s?/g;
 // Directories - source
 const SOURCE_COMPONENTS_ROOT_DIR = path.join(__dirname, '../src/components');
 const SOURCE_SCSS_FILES_ROOT_DIR = path.join(__dirname, '../src/styles');
+const SOURCE_FONTS_FILES_ROOT_DIR = path.join(__dirname, '../src/styles/fonts');
 const SOURCE_DMP_DEPENDENCIES_DIR = path.join(__dirname, '../dmp');
 
 // Directories - target
@@ -70,6 +71,10 @@ const SRC_TO_COPY = [
     SOURCE: SOURCE_NEXT_DIR,
     TARGET: TARGET_GEN2_SRC_BUILD_DIR,
   },
+  {
+    SOURCE: SOURCE_FONTS_FILES_ROOT_DIR,
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/themes/fonts`,
+  },
 ];
 
 // Other
@@ -107,6 +112,7 @@ module.exports = {
 
   SOURCE_COMPONENTS_ROOT_DIR,
   SOURCE_SCSS_FILES_ROOT_DIR,
+  SOURCE_FONTS_FILES_ROOT_DIR,
   SOURCE_DMP_DEPENDENCIES_DIR,
 
   TARGET_COMPONENTS_ROOT_DIR,
