@@ -22,20 +22,13 @@ class RoomDetail extends React.Component {
   render() {
 
     const { room } = this.props;
-
-    {
-      /* 
-            One of these components is not wrapped in a div,
-            so wrapping everything in a div instead of chanigng
-            original components.
-        */
-    }
+ 
     return (
       <Layout>
         <G2RoomOverviewHeaderSection
           {...{
             header: {
-              subtitle: 'Aria Tower Suites',
+              subtitle: room.subtitle,
               title: room.title,
               primaryAction: {
                 label: 'Check Rates',
@@ -47,9 +40,9 @@ class RoomDetail extends React.Component {
               },
             },
             main: {
-              title: 'The Suite Life',
+              title: 'The Suite Life!',
               content:
-                '<p>Pamper yourself with 920 square feet dedicated to you. Decisions, decisions. Loving the view from the living room? Then the view from the bedroom will also make your jaw drop. Our 920-square-foot Corner Suites have awe-inspiring views of the mountains throughout your suite. And every detail—from the three LCD HD televisions to the custom-made beds—was designed to spoil you.</p>',
+                '<p>'+room.longDescription.content[0].content[0].value+'</p>',
               primaryAction: {
                 label: 'Check Rates',
                 url: '/',
@@ -65,7 +58,7 @@ class RoomDetail extends React.Component {
                   title: 'Type',
                   content: {
                     type: 'text',
-                    text: 'Aria Tower Suites',
+                    text: room.subtitle,
                   },
                 },
               },
@@ -144,105 +137,70 @@ class RoomDetail extends React.Component {
             ],
           }}
         />
-
-        <G2HighlightCarouselSection
-          title="Tower Suites Exclusive Services"
-          cards={[
-            {
-              imageUrl:
-                'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/tower-suites-lobby/lifestyle/aria-hotel-lifestyle-tower-suites-lounge-check-in.tif',
-              title: 'Tower Suites Lounge',
-              description:
-                'Check-in from the Tower Suites Lounge. Enjoy private access and complimentary drinks from a state-of-the-art LAMILL Coffee Machine.',
-            },
-            {
-              imageUrl:
-                'https://static.mgmresorts.com/content/dam/MGM/aria/amenities/floral/images/aria-amenities-floral-small.tif',
-              title: 'Concierge Services',
-              description:
-                'From greating you upon your arrival or suprising a loved one,  your personalized Concierge staff experts can make anything happen.',
-            },
-            {
-              imageUrl:
-                'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/tower-suites-lobby/aria-hotel-tower-suites-lounge-waiting.tif',
-              title: 'Access',
-              description:
-                'Tower Suites takes your Vegas stay to the next level. Enjoy special privileges such as enhanced turndown or priority line access for taxi service.',
-            },
-            {
-              imageUrl:
-                'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/lifestyle/aria-hotel-lifestyle-tower-suites-corner-tablet.tif',
-              title: 'Advanced Technology',
-              description:
-                'Countless indulgences are at your fingertips via our revolutionary new in-room tablets.',
-            },
-          ]}
-        />
-
-        <G2AccordionSection
-          {...{
-            title: 'Amenities to Love',
-            items: [
+        
+        {/* Needs GraphQL*/}
+        {room.highlightCarousel && 
+          <G2HighlightCarouselSection
+            title={room.highlightCarousel.fields.title}
+            cards={[
               {
-                title: 'Special Access',
-                listContents: [
-                  'Mobile Check-in',
-                  'Priority Line Access for Taxi Service',
-                  'Secluded Lounge with Complimentary Food & Beverage',
-                  'Concierge Pre-Arrival Contact',
-                  'ARIA Main Pool',
-                  'Curbside Meet and Greet (Hours vary)',
-                  'ARIA Fitness Center',
-                  'Private Lounge Check-In',
-                  'Preferred Tee Times to Shadow Creek Golf Course',
-                ],
+                imageUrl:
+                  'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/tower-suites-lobby/lifestyle/aria-hotel-lifestyle-tower-suites-lounge-check-in.tif',
+                title: 'Tower Suites Lounge',
+                description:
+                  'Check-in from the Tower Suites Lounge. Enjoy private access and complimentary drinks from a state-of-the-art LAMILL Coffee Machine.',
               },
               {
-                title: 'Room Features',
-                listContents: [
-                  'Mobile Check-in',
-                  'Priority Line Access for Taxi Service',
-                  'Secluded Lounge with Complimentary Food & Beverage',
-                  'Concierge Pre-Arrival Contact',
-                  'ARIA Main Pool',
-                  'Curbside Meet and Greet (Hours vary)',
-                  'ARIA Fitness Center',
-                  'Private Lounge Check-In',
-                  'Preferred Tee Times to Shadow Creek Golf Course',
-                ],
+                imageUrl:
+                  'https://static.mgmresorts.com/content/dam/MGM/aria/amenities/floral/images/aria-amenities-floral-small.tif',
+                title: 'Concierge Services',
+                description:
+                  'From greating you upon your arrival or suprising a loved one,  your personalized Concierge staff experts can make anything happen.',
               },
               {
-                title: 'Technology',
-                listContents: [
-                  'Mobile Check-in',
-                  'Priority Line Access for Taxi Service',
-                  'Secluded Lounge with Complimentary Food & Beverage',
-                  'Concierge Pre-Arrival Contact',
-                  'ARIA Main Pool',
-                  'Curbside Meet and Greet (Hours vary)',
-                  'ARIA Fitness Center',
-                  'Private Lounge Check-In',
-                  'Preferred Tee Times to Shadow Creek Golf Course',
-                ],
+                imageUrl:
+                  'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/tower-suites-lobby/aria-hotel-tower-suites-lounge-waiting.tif',
+                title: 'Access',
+                description:
+                  'Tower Suites takes your Vegas stay to the next level. Enjoy special privileges such as enhanced turndown or priority line access for taxi service.',
               },
               {
-                title: 'Bed & bath',
-                listContents: [
-                  'Mobile Check-in',
-                  'Priority Line Access for Taxi Service',
-                  'Secluded Lounge with Complimentary Food & Beverage',
-                  'Concierge Pre-Arrival Contact',
-                  'ARIA Main Pool',
-                  'Curbside Meet and Greet (Hours vary)',
-                  'ARIA Fitness Center',
-                  'Private Lounge Check-In',
-                  'Preferred Tee Times to Shadow Creek Golf Course',
-                ],
+                imageUrl:
+                  'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/lifestyle/aria-hotel-lifestyle-tower-suites-corner-tablet.tif',
+                title: 'Advanced Technology',
+                description:
+                  'Countless indulgences are at your fingertips via our revolutionary new in-room tablets.',
               },
-            ],
-          }}
-        />
-
+            ]}
+          />
+        }
+        
+        {/* Needs GraphQL */}
+        { room.accordion && 
+         <G2AccordionSection
+            {...{
+              title: room.accordion.fields.title,
+              items: room.accordion.fields.accordionItems.map((item) => {
+                return (
+                  {
+                    title: 'Sample title',
+                    listContents: [
+                      'Mobile Check-in',
+                      'Priority Line Access for Taxi Service',
+                      'Secluded Lounge with Complimentary Food & Beverage',
+                      'Concierge Pre-Arrival Contact',
+                      'ARIA Main Pool',
+                      'Curbside Meet and Greet (Hours vary)',
+                      'ARIA Fitness Center',
+                      'Private Lounge Check-In',
+                      'Preferred Tee Times to Shadow Creek Golf Course',
+                    ]
+                  }
+                )
+              }),
+            }}
+          />
+        }
         <G2GallerySection
           title="Experience The Room"
           virtualTourHero={{
@@ -344,81 +302,43 @@ class RoomDetail extends React.Component {
             },
           ]}
         />
-
+        {room.similarRooms &&
         <G2RoomOverviewCardRowSection
           title="More Tower Suites"
           readMoreButton={{
             url: '/',
             label: 'View All Tower Suites',
           }}
-          rooms={[
+          rooms={room.similarRooms.map((entry) => {
+            const room = entry.fields;
+            return (
             {
-              title: 'Deluxe King Room',
-              keyValues: ['520 Sqft', '1 King Bed', 'Max Guests 2'],
+              title: room.title,
+              keyValues: [room.squareFeet, room.bedType, room.maxGuests],
               description:
-                'Deluxe Rooms at ARIA average 520 sq ft with unparalleled amenities, corner views and state of the art technology.',
+              room.shortDescription.content[0].content[0].value,
               image: {
                 url:
-                  'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/deluxe-room/aria-deluxe-king-bed-dusk.tif',
+                  room.cardImageUrl,
               },
               primaryAction: {
-                label: 'Check Rates',
-                url: '/',
+                label: room.primaryActionLabel,
+                url: room.primaryActionUrl,
               },
               secondaryAction: {
-                label: 'Room Details',
-                url: '/',
+                label: room.secondaryActionLabel,
+                url: '/' + room.slug,
               },
               tertiaryAction: {
-                label: 'Compare',
-                url: '/',
+                label: room.tertiaryActionLabel,
+                url: room.tertiaryActionUrl,
               },
-            },
-            {
-              title: 'Tower Suite',
-              keyValues: ['1,000 Sqft', '1 King Bed', 'Corner Max Guests  4'],
-              description: 'Soak your cares away in an open-air whirlpool tub.',
-              image: {
-                url:
-                  'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/tower-suite/aria-hotel-tower-suite-bedroom-tablet.tif',
-              },
-              primaryAction: {
-                label: 'Check Rates',
-                url: '/',
-              },
-              secondaryAction: {
-                label: 'Room Details',
-                url: '/',
-              },
-              tertiaryAction: {
-                label: 'Compare',
-                url: '/',
-              },
-            },
-            {
-              title: 'Center Suite Strip View',
-              keyValues: ['1,075 Sqft', '2 Queen Beds', 'Max Guests 4'],
-              description:
-                'Panoramic views of The Strip and spacious living and bedroom areas.',
-              image: {
-                url:
-                  'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/crystals-center-suite/aria-hotel-crystals-suite-living-room-centerpiece-purple-flowers.tif',
-              },
-              primaryAction: {
-                label: 'Check Rates',
-                url: '/',
-              },
-              secondaryAction: {
-                label: 'Room Details',
-                url: '/',
-              },
-              tertiaryAction: {
-                label: 'Compare',
-                url: '/',
-              },
-            },
-          ]}
+            }
+            )
+          })
+          }  
         />
+        }
       </Layout>
     );
   }
