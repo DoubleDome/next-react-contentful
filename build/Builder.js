@@ -8,6 +8,7 @@ const Component = require('./Component.js');
 const BrandThemeComponentBuilder = require('./builders/BrandThemeComponentBuilder.js');
 
 const ComponentBuilder = require('./builders/ComponentBuilder.js');
+const ComponentListBuilder = require('../next/build/ComponentListBuilder');
 
 class Builder extends AbstractBuilder {
   constructor(config) {
@@ -15,6 +16,7 @@ class Builder extends AbstractBuilder {
     this.brandThemeComponent = null;
     this.brandThemeComponentBuilder = new BrandThemeComponentBuilder(config);
     this.componentBuilder = new ComponentBuilder(config);
+    this.listBuilder = new ComponentListBuilder();
   }
 
   removeOldBuild() {
@@ -35,6 +37,13 @@ class Builder extends AbstractBuilder {
     });
 
     return this.components;
+  }
+
+  syncWithContentful() {
+    const list = this.components.map(component => component.getName());
+    this.listBuilder.pull().then(() => {
+      this.listBuilder.sync(list);
+    });
   }
 
   buildBrandThemeComponent() {
