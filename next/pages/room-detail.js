@@ -1,5 +1,5 @@
 import React from 'react';
-import { createClient } from '../integrations/contentful/index';
+import { createDeliveryClient } from '../integrations/contentful/index';
 import Layout from '../layouts/layout';
 import G2RoomOverviewHeaderSection from '../../dmp/components/G2RoomOverviewHeaderSection/G2RoomOverviewHeaderSection.component';
 import G2HighlightCarouselSection from '../../dmp/components/G2HighlightCarouselSection/G2HighlightCarouselSection.component';
@@ -10,7 +10,7 @@ import G2RoomOverviewCardRowSection from '../../dmp/components/G2RoomOverviewCar
 
 class RoomDetail extends React.Component {
     static async getInitialProps({query}) {
-        const client = createClient();
+        const client = createDeliveryClient();
         const entries = await client.getEntries({
           content_type: 'room',
           'fields.slug': query.id
