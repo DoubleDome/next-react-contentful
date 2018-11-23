@@ -11,8 +11,7 @@ const delivery = contentful.createDeliveryClient({
 const management = contentful.createManagementClient();
 
 class ComponentListBuilder {
-  constructor() {
-  }
+  constructor() {}
 
   pull() {
     return delivery
@@ -28,26 +27,28 @@ class ComponentListBuilder {
     this.items = response.items.map(item => item.fields.name);
   }
 
-  sync(items){
+  sync(items) {
     const result = items.filter(item => !this.exists(item));
     result.map(item => this.add(item));
   }
 
   add(name) {
-    return management
-      .getSpace(commonSpaceID)
-      .then(space =>
-        space.createEntry(componentContentID, {
-          fields: {
-            name: {
-              'en-US': name,
+    return (
+      management
+        .getSpace(commonSpaceID)
+        .then(space =>
+          space.createEntry(componentContentID, {
+            fields: {
+              name: {
+                'en-US': name,
+              },
             },
-          },
-        }),
-      )
-      .then(entry => entry.publish())
-      // .then(entry => console.log(`Entry ${name} - ${entry.sys.id} published.`))
-      .catch(console.error);
+          }),
+        )
+        .then(entry => entry.publish())
+        // .then(entry => console.log(`Entry ${name} - ${entry.sys.id} published.`))
+        .catch(console.error)
+    );
   }
 
   exists(name) {
