@@ -1,4 +1,5 @@
 import { createDeliveryClient } from '../integrations/contentful';
+import config from '../integrations/contentful/config';
 
 import React from 'react';
 import Layout from '../layouts/layout';
@@ -9,7 +10,7 @@ import PromoCardsRowSection from '../../src/components/PromoCardsRowSection/Prom
 
 class Index extends React.Component {
   static async getInitialProps() {
-    const client = createDeliveryClient();
+    const client = createDeliveryClient(config.spaces.rooms);
     const entries = await client.getEntries({
       content_type: 'roomLandingPage',
       include: 1,

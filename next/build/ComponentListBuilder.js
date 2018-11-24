@@ -3,12 +3,10 @@ const commonAccessToken =
   'e47e54822455d3275ad2b4d6e88e102c7803f2c6f37d92fe12eb54d9f4df3e35';
 const componentContentID = 'component';
 
+const config = require('../integrations/contentful/config');
 const contentful = require('../integrations/contentful');
-const delivery = contentful.createDeliveryClient({
-  space: commonSpaceID,
-  accessToken: commonAccessToken,
-});
-const management = contentful.createManagementClient();
+const delivery = contentful.createDeliveryClient(config.spaces.common);
+const management = contentful.createManagementClient(config.management.common);
 
 class ComponentListBuilder {
   constructor() {}
