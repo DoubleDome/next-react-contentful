@@ -7,7 +7,7 @@ class Nav extends Component {
     this.state = {};
   }
   render() {
-    return <iframe className="static-nav" src="/static/nav/nav.html" />;
+    return <iframe className="static-nav" src="/static/nav/" />;
   }
 }
 
