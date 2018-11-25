@@ -64,12 +64,20 @@ const SRC_TO_COPY = [
     TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/polyfills.js`,
   },
   {
-    SOURCE: TARGET_STYLES_DIR,
-    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/themes`,
+    SOURCE: `${SOURCE_NEXT_DIR}/integrations`,
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/integrations`,
   },
   {
-    SOURCE: SOURCE_NEXT_DIR,
-    TARGET: TARGET_GEN2_SRC_BUILD_DIR,
+    SOURCE: `${SOURCE_NEXT_DIR}/layouts`,
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/layouts`,
+  },
+  {
+    SOURCE: `${SOURCE_NEXT_DIR}/pages`,
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/pages`,
+  },
+  {
+    SOURCE: TARGET_STYLES_DIR,
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/themes`,
   },
   {
     SOURCE: SOURCE_FONTS_FILES_ROOT_DIR,
