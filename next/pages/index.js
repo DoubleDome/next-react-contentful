@@ -7,7 +7,6 @@ import G2TextHeaderSection from '../../dmp/components/G2TextHeaderSection/G2Text
 import G2HeroSection from '../../dmp/components/G2HeroSection/G2HeroSection.component';
 import G2RoomOverviewCardCollectionSection from '../../dmp/components/G2RoomOverviewCardCollectionSection/G2RoomOverviewCardCollectionSection.component';
 import PromoCardsRowSection from '../../src/components/PromoCardsRowSection/PromoCardsRowSection.component';
-import Nav from '../../src/components/Nav/Nav.component';
 
 class Index extends React.Component {
   static async getInitialProps() {
@@ -39,10 +38,6 @@ class Index extends React.Component {
         }),
       },
     };
-  }
-
-  createNav(){
-    return <Nav></Nav>
   }
 
   createTextHeader(data) {
@@ -136,7 +131,6 @@ class Index extends React.Component {
   render() {
     // This approach allows to reorder the components depending on data coming from the CMS
     const components = [
-      this.createNav(),
       this.createTextHeader(this.props.textHeader),
       this.createHero(this.props.hero, 3),
       this.createRoomOverview(
