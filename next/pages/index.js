@@ -7,6 +7,7 @@ import G2TextHeaderSection from '../../dmp/components/G2TextHeaderSection/G2Text
 import G2HeroSection from '../../dmp/components/G2HeroSection/G2HeroSection.component';
 import G2RoomOverviewCardCollectionSection from '../../dmp/components/G2RoomOverviewCardCollectionSection/G2RoomOverviewCardCollectionSection.component';
 import PromoCardsRowSection from '../../src/components/PromoCardsRowSection/PromoCardsRowSection.component';
+import "isomorphic-fetch";
 
 class Index extends React.Component {
   static async getInitialProps() {
@@ -16,6 +17,28 @@ class Index extends React.Component {
       include: 1,
     });
 
+    const accessToken = "cdf1047b43a2276fae263f23b3fabc384e4a7f9493d9e68cd917309a748ecda5";
+    const spaceId = "bdtysnvzs3h8";
+    const query = `
+
+    `;
+
+    fetch(
+    `https://graphql.contentful.com/content/v1/spaces/${spaceId}/environments/master`,
+    {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${accessToken}`
+      },
+      body: JSON.stringify({
+        query
+      })
+    } )
+      .then(res => res.json())
+      .then(response => {
+        console.log(response);
+      });
     {
       /* Todo: input validation, either here or Contentful */
     }

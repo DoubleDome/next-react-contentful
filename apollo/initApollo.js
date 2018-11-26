@@ -1,20 +1,3 @@
-Skip to content
- 
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- @cma224 Sign out
-1
-7 0 benawad/hello-world-nextjs
- Code  Issues 0  Pull requests 0  Projects 0  Wiki  Insights
-hello-world-nextjs/apollo/initApollo.js
-9dbb8c3  on Jun 24, 2017
-@benawad benawad Added graphql
-     
-39 lines (32 sloc)  1.09 KB
 import { ApolloClient, createNetworkInterface } from "react-apollo";
 import fetch from "isomorphic-fetch";
 
@@ -30,7 +13,7 @@ function create(headers, initialState) {
     initialState,
     ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
     networkInterface: createNetworkInterface({
-      uri: "https://graphql.contentful.com" + process.env.CTF_SPACE_ID + '?access_token=' + process.env.CTF_CDA_TOKEN, // Server URL (must be absolute)
+      uri: "https://graphql.contentful.com/content/v1/spaces/bdtysnvzs3h8?access_token=cdf1047b43a2276fae263f23b3fabc384e4a7f9493d9e68cd917309a748ecda5", // Server URL (must be absolute)
       opts: {
         // Additional fetch() options like `credentials` or `headers`
         credentials: "same-origin"
