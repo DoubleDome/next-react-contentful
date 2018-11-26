@@ -2,10 +2,10 @@
 import Head from 'next/head';
 import React from 'react';
 import Router from 'next/router';
-import theme from '../themes/aria.css';
 import PropertyFooter from '../components/PropertyFooter/PropertyFooter.component';
 import MGMFooter from '../components/MGMFooter/MGMFooter.component';
 import CopyrightFooter from '../components/CopyrightFooter/CopyrightFooter.component';
+import Nav from '../../src/components/Nav/Nav.component';
 
 Router.onRouteChangeStart = url => {
   NProgress.start();
@@ -31,7 +31,7 @@ class Layout extends React.Component {
           />
           <link rel="stylesheet" href="/themes/aria.css"></link>
         </Head>
-
+        <Nav></Nav>
         <div className="container-fluid" style={{ height: '100%' }}>
           {this.props.children}
         </div>
