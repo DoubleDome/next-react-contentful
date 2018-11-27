@@ -7,7 +7,10 @@ For list of supported browsers, see `.babelrc` .
 ## Development environment
 
 - Install project dependencies: `yarn`
-- Run Storybook locally: `npm run start`
+- Run NextJs locally on port 3000: `npm run next`
+- Run Storybook locally on port 3001: `npm run start`
+- Run GraphiQL locally on port 3002: `npm run graphiql`
+- Run all of the above locally: `npm run dev`
 
 While it is possible to develop without eslint - editor integration, consider doing so:
 
