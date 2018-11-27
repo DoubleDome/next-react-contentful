@@ -28,7 +28,7 @@ class Index extends React.Component {
               const room = entry.fields;
               return ({
                 url: room.cardImageUrl,
-                caption: 'needs content field',
+                caption: room.title,
                 tertiaryAction: {
                   label: room.tertiaryActionLabel,
                   url: room.tertiaryActionUrl
@@ -68,7 +68,6 @@ class Index extends React.Component {
               const room = entry.fields;
               return ({
                 url: room.cardImageUrl,
-                caption: 'needs content field',
                 tertiaryAction: {
                   label: room.tertiaryActionLabel,
                   url: room.tertiaryActionUrl
