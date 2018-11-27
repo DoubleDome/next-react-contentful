@@ -7,7 +7,6 @@ import G2HeroSection from '../../dmp/components/G2HeroSection/G2HeroSection.comp
 import G2RoomOverviewCardCollectionSection from '../../dmp/components/G2RoomOverviewCardCollectionSection/G2RoomOverviewCardCollectionSection.component';
 import PromoCardsRowSection from '../../src/components/PromoCardsRowSection/PromoCardsRowSection.component';
 
-
 class Index extends React.Component {
   static async getInitialProps() {
     let pageComponents;
@@ -18,7 +17,6 @@ class Index extends React.Component {
     }).then((res) => {
         const entries = res.items[0].fields;
         pageComponents = {
-          all: entries,
           textHeader: {
             title: entries.textHeaderTitle,
             subtitle: entries.textHeaderSubtitle,
@@ -74,7 +72,7 @@ class Index extends React.Component {
                 tertiaryAction: {
                   label: room.tertiaryActionLabel,
                   url: room.tertiaryActionUrl
-                }, 
+                },
               });
             }),
             description: entries.secondSecondHeroDescription,
@@ -120,7 +118,7 @@ class Index extends React.Component {
   createTextHeader(data) {
     return <G2TextHeaderSection title={data.title} subtitle={data.subtitle} />;
   }
-  
+
   createHero(data) {
     return (
       <G2HeroSection
