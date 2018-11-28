@@ -13,7 +13,7 @@ import G2RoomOverviewCardRowSection from '../../dmp/components/G2RoomOverviewCar
 class RoomDetail extends React.Component {
     static async getInitialProps({query}) {
         const client = createDeliveryClient(config.spaces.rooms);
-        const entries = await client.getEntries({
+        const entries = await client.getEntries({ // eslint-disable-line no-unused-vars
           content_type: 'roomDetailPage',
           'fields.slug': query.id
         });

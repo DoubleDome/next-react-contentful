@@ -1,6 +1,6 @@
+import React from 'react';
 import { createDeliveryClient } from '../integrations/contentful';
 import config from '../integrations/contentful/config';
-import React from 'react';
 import Layout from '../layouts/layout';
 import G2TextHeaderSection from '../../dmp/components/G2TextHeaderSection/G2TextHeaderSection.component';
 import G2HeroSection from '../../dmp/components/G2HeroSection/G2HeroSection.component';
@@ -11,7 +11,7 @@ class Index extends React.Component {
   static async getInitialProps() {
     let pageComponents;
     const client = createDeliveryClient(config.spaces.rooms);
-    const content = await client.getEntries({
+    const content = await client.getEntries({ // eslint-disable-line no-unused-vars
       content_type: 'roomLandingPage',
       include: 1,
     }).then((res) => {
@@ -129,6 +129,7 @@ class Index extends React.Component {
       />
     );
   }
+
   createRoomOverview(collection, layout) {
     return (
       <G2RoomOverviewCardCollectionSection
