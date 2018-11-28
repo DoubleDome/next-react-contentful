@@ -30,7 +30,7 @@ class Index extends React.Component {
                 url: room.cardImageUrl,
                 caption: room.title,
                 tertiaryAction: {
-                  label: room.tertiaryActionLabel,
+                  label: entries.roomPrimaryActionLabels || 'Check Rates',
                   url: room.tertiaryActionUrl
                 },
               });
@@ -47,15 +47,15 @@ class Index extends React.Component {
                 url: room.cardImageUrl,
               },
               primaryAction: {
-                label: room.primaryActionLabel,
+                label: entries.roomPrimaryActionLabels || 'Check Rates',
                 url: room.primaryActionUrl,
               },
               secondaryAction: {
-                label: room.secondaryActionLabel,
+                label: entries.roomSecondaryActionLabels || 'View Room Details',
                 url: '/',
               },
               tertiaryAction: {
-                label: room.tertiaryActionLabel,
+                label: entries.roomTertiaryActionLabels || 'Compare',
                 url: room.tertiaryActionUrl,
               },
             };
@@ -69,7 +69,7 @@ class Index extends React.Component {
               return ({
                 url: room.cardImageUrl,
                 tertiaryAction: {
-                  label: room.tertiaryActionLabel,
+                  label: entries.roomTertiaryActionLabels || 'Compare',
                   url: room.tertiaryActionUrl
                 },
               });
