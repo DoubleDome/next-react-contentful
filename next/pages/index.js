@@ -41,7 +41,7 @@ class Index extends React.Component {
             const room = entry.fields;
             return {
               title: room.title,
-              keyValues: [room.squareFeet, room.bedType, room.maxGuests],
+              keyValues: [room.squareFeet + ' Sqft', room.bedType, 'Max Guests ' + room.maxGuests],
               description: room.shortDescription.content[0].content[0].value,
               image: {
                 url: room.cardImageUrl,

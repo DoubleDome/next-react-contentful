@@ -1,7 +1,6 @@
 import React from 'react';
 import { createDeliveryClient } from '../integrations/contentful/index';
 import config from '../integrations/contentful/config';
-
 import Layout from '../layouts/layout';
 import G2RoomOverviewHeaderSection from '../../dmp/components/G2RoomOverviewHeaderSection/G2RoomOverviewHeaderSection.component';
 import G2HighlightCarouselSection from '../../dmp/components/G2HighlightCarouselSection/G2HighlightCarouselSection.component';
@@ -60,7 +59,7 @@ class RoomDetail extends React.Component {
                            title: (content.sidebarSectionHeadlineText && content.sidebarSectionHeadlineTitle) ? content.sidebarSectionHeadlineTitle : 'Type',
                            content: {
                              type: 'text',
-                             text: (content.sidebarSectionHeadlineText && content.sidebarSectionHeadlineTitle) ? content.sidebarSectionHeadelineText : room.brand,
+                             text: (content.sidebarSectionHeadlineText && content.sidebarSectionHeadlineTitle) ? content.sidebarSectionHeadlineText : room.brand,
                            },
                          },
                        },
@@ -73,17 +72,17 @@ class RoomDetail extends React.Component {
                            {
                              type: 'inline-text',
                              label: 'size',
-                             text: '920 sqft',
+                             text: room.squareFeet + 'Sqft',
                            },
                            {
                              type: 'inline-text',
                              label: 'beds',
-                             text: '1 King',
+                             text: room.bedType,
                            },
                            {
                              type: 'inline-text',
                              label: 'max guests',
-                             text: '4',
+                             text: room.maxGuests,
                            },
                          ],
                        },
