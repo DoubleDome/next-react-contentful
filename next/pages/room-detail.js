@@ -43,7 +43,7 @@ class RoomDetail extends React.Component {
                      main: {
                        title: room.tagline,
                        content:
-                         '<p>' + room.longDescription.content[0].content[0].value + '</p>',
+                         `<p>${  room.longDescription.content[0].content[0].value  }</p>`,
                        primaryAction: {
                          label: content.overviewBodyPrimaryActionLabel || 'Check Rates',
                          url: content.overviewBodyPrimaryActionUrl || '/',
@@ -72,7 +72,7 @@ class RoomDetail extends React.Component {
                            {
                              type: 'inline-text',
                              label: 'size',
-                             text: room.squareFeet + 'Sqft',
+                             text: `${room.squareFeet  }Sqft`,
                            },
                            {
                              type: 'inline-text',
