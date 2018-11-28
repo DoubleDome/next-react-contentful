@@ -49,5 +49,4 @@
       "coverage": "istanbul cover tape 'test/**/*.js'",
       "codecov": "cat coverage/coverage.json | codecov"
     }
-  }
-  
+}

@@ -11,8 +11,9 @@
     "fe-react-storybook-gen2-build": "./bin/dmp-fe-build.js"
   },
   "scripts": {
-    "dev": "concurrently --kill-others \"npm run next\" \"npm run start\"",
+    "dev": "concurrently --kill-others \"npm run next\" \"npm run start\" \"npm run graphiql\"",
     "next": "npm run dmp:build && node server.js",
+    "graphiql": "cd cf-graphql/dev && node server.js",
     "setup": "node bin/setup.js",
     "start": "NODE_OPTIONS=--max_old_space_size=4096 npm run storybook:serve",
     "storybook:serve": "start-storybook -p 3001 -c storybook",
@@ -113,7 +114,7 @@
     "enzyme-adapter-react-16": "1.6.0",
     "eslint": "^5.9.0",
     "eslint-config-airbnb": "17.1.0",
-    "eslint-config-prettier": "3.1.0",
+    "eslint-config-prettier": "^3.3.0",
     "eslint-config-react-app": "3.0.0",
     "eslint-loader": "2.1.1",
     "eslint-plugin-flowtype": "2.49.3",
