@@ -1,5 +1,5 @@
 import React from 'react';
-import { createDeliveryClient } from '../integrations/contentful';
+import { createDeliveryClient, queryContent } from '../integrations/contentful';
 import config from '../integrations/contentful/config';
 import Layout from '../layouts/layout';
 import G2TextHeaderSection from '../../dmp/components/G2TextHeaderSection/G2TextHeaderSection.component';
@@ -11,13 +11,48 @@ import "isomorphic-fetch";
 class Index extends React.Component {
   static async getInitialProps() {
     let pageComponents;
-    const client = createDeliveryClient(config.spaces.rooms);
-    const content = await client.getEntries({ // eslint-disable-line no-unused-vars
-      content_type: 'roomLandingPage',
-      include: 1,
-    }).then((res) => {
-        const entries = res.items[0].fields;
-        pageComponents = {
+    
+    // Hard coding in the only room landing page ID we have right now
+    const query = `
+      query rlpQuery {
+        roomLandingPage(id: "4dxYMm3HWEaoA0qocm4SaQ") {
+          title
+          textHeaderTitle
+          textHeaderSubtitle
+          firstSectionHeroPremium
+          firstSectionHeroTitle
+          firstSectionHeroDescription
+          firstSectionHeroRoomsCollection {
+            items {
+              ... on Room {
+                title
+                cardImageUrl
+              }
+            }
+          }
+          firstSectionHeroLogoUrl
+          roomCollectionCollection {
+            items {
+              ... on Room {
+                title
+                squareFeet
+                bedType
+                maxGuests
+                shortDescription {
+                  json
+                }
+              }
+            }
+          }
+        }
+      }
+    `;
+
+    const gqlClient = await queryContent(query, config.spaces.rooms)
+    .then((res) => {
+      const entries = res.data.roomLandingPage;
+      console.log(entries);
+      pageComponents = {
           textHeader: {
             title: entries.textHeaderTitle,
             subtitle: entries.textHeaderSubtitle,
@@ -25,14 +60,13 @@ class Index extends React.Component {
           hero: {
             premium: entries.firstSectionHeroPremium,
             title: entries.firstSectionHeroTitle,
-            images: entries.firstSectionHeroRooms.map((entry) => {
-              const room = entry.fields;
+            images: entries.firstSectionHeroRoomsCollection.items.map((room) => {
               return ({
                 url: room.cardImageUrl,
                 caption: room.title,
                 tertiaryAction: {
                   label: entries.roomPrimaryActionLabels || 'Check Rates',
-                  url: room.tertiaryActionUrl
+                  url: '/',
                 },
               });
             }),
@@ -49,7 +83,7 @@ class Index extends React.Component {
               },
               primaryAction: {
                 label: entries.roomPrimaryActionLabels || 'Check Rates',
-                url: room.primaryActionUrl,
+                url: '/',
               },
               secondaryAction: {
                 label: entries.roomSecondaryActionLabels || 'View Room Details',
@@ -57,7 +91,7 @@ class Index extends React.Component {
               },
               tertiaryAction: {
                 label: entries.roomTertiaryActionLabels || 'Compare',
-                url: room.tertiaryActionUrl,
+                url: '/',
               },
             };
          }),
@@ -71,7 +105,7 @@ class Index extends React.Component {
                 url: room.cardImageUrl,
                 tertiaryAction: {
                   label: entries.roomTertiaryActionLabels || 'Compare',
-                  url: room.tertiaryActionUrl
+                  url: '/'
                 },
               });
             }),
@@ -110,7 +144,10 @@ class Index extends React.Component {
             })
           },
         };
+    }).catch(err => {
+      console.log(err);
     });
+    
 
     return pageComponents;
 
