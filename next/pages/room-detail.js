@@ -12,48 +12,55 @@ import G2RoomOverviewCardRowSection from '../../dmp/components/G2RoomOverviewCar
 
 class RoomDetail extends React.Component {
     static async getInitialProps({query}) {
+        let content;
+        let room;
         const client = createDeliveryClient(config.spaces.rooms);
         const entries = await client.getEntries({ // eslint-disable-line no-unused-vars
           content_type: 'roomDetailPage',
           'fields.slug': query.id
+        }).then((res) => {
+          // Using this approach in case we have to query a level deeper
+          content = res.items[0].fields;
+          room = content.room.fields;
         });
-
+    
         // dummyRoom object until data fed in from Contentful
-        return { room: 'entries.items[0].fields.room',
-                 dummyRoom: {
+        return { devRoom: content,
+                  sampleRoom: room,
+                  room: {
                    overviewHeader: {
                      header: {
-                       subtitle: 'Aria Tower Suites',
-                       title: 'Corner Suite',
+                       subtitle: room.brand,
+                       title: room.title,
                        primaryAction: {
-                         label: 'Check Rates',
-                         url: '/',
+                         label: content.overviewHeaderPrimaryActionLabel || 'Check Rates',
+                         url: content.overviewHeaderPrimaryActionUrl || '/',
                        },
                        secondaryAction: {
-                         label: 'Compare',
-                         url: '/',
+                         label: content.overviewHeaderSecondaryActionLabel || 'Compare',
+                         url: content.overviewHeaderSecondaryAction || '/',
                        },
                      },
                      main: {
-                       title: 'The Suite Life',
+                       title: room.tagline,
                        content:
-                         '<p>Pamper yourself with 920 square feet dedicated to you. Decisions, decisions. Loving the view from the living room? Then the view from the bedroom will also make your jaw drop. Our 920-square-foot Corner Suites have awe-inspiring views of the mountains throughout your suite. And every detail—from the three LCD HD televisions to the custom-made beds—was designed to spoil you.</p>',
+                         '<p>' + room.longDescription.content[0].content[0].value + '</p>',
                        primaryAction: {
-                         label: 'Check Rates',
-                         url: '/',
+                         label: content.overviewBodyPrimaryActionLabel || 'Check Rates',
+                         url: content.overviewBodyPrimaryActionUrl || '/',
                        },
                        tertiaryAction: {
-                         label: 'Compare',
-                         url: '/',
+                         label: content.overviewBodyTertiaryActionLabel || 'Check Rates',
+                         url: content.overviewBodyTertiaryActionUrl || '/',
                        },
                      },
                      sidebarSections: [
                        {
                          headline: {
-                           title: 'Type',
+                           title: (content.sidebarSectionHeadlineText && content.sidebarSectionHeadlineTitle) ? content.sidebarSectionHeadlineTitle : 'Type',
                            content: {
                              type: 'text',
-                             text: 'Aria Tower Suites',
+                             text: (content.sidebarSectionHeadlineText && content.sidebarSectionHeadlineTitle) ? content.sidebarSectionHeadelineText : room.brand,
                            },
                          },
                        },
@@ -469,12 +476,12 @@ class RoomDetail extends React.Component {
   render() {
     // This approach allows to reorder the components depending on data coming from the CMS
     const components = [
-      this.createOverviewHeader(this.props.dummyRoom.overviewHeader),
-      this.createHighlightCarousel(this.props.dummyRoom.highlightCarousel),
-      this.createGallery(this.props.dummyRoom.gallerySection),
-      this.createAccordion(this.props.dummyRoom.accordion),
-      this.createCardRow(this.props.dummyRoom.cardRow),
-      this.createTwoColumnHero(this.props.dummyRoom.twoColumnHero),
+      this.createOverviewHeader(this.props.room.overviewHeader),
+      this.createHighlightCarousel(this.props.room.highlightCarousel),
+      this.createGallery(this.props.room.gallerySection),
+      this.createAccordion(this.props.room.accordion),
+      this.createCardRow(this.props.room.cardRow),
+      this.createTwoColumnHero(this.props.room.twoColumnHero),
     ];
 
     return (
