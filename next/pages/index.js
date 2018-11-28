@@ -7,7 +7,6 @@ import G2HeroSection from '../../dmp/components/G2HeroSection/G2HeroSection.comp
 import G2RoomOverviewCardCollectionSection from '../../dmp/components/G2RoomOverviewCardCollectionSection/G2RoomOverviewCardCollectionSection.component';
 import PromoCardsRowSection from '../../src/components/PromoCardsRowSection/PromoCardsRowSection.component';
 import "isomorphic-fetch";
-
 class Index extends React.Component {
   static async getInitialProps() {
     let pageComponents;
@@ -38,15 +37,39 @@ class Index extends React.Component {
                 squareFeet
                 bedType
                 maxGuests
+                cardImageUrl
                 shortDescription {
                   json
                 }
               }
             }
           }
+          secondSectionHeroRoomsCollection {
+            items {
+              ... on Room {
+                cardImageUrl
+              }
+            }
+          }
+          promoCardsCollection {
+            items {
+              ... on PromoCard {
+                imageUrl
+                title
+                description
+                categoryName
+                statusColor
+                statusLabel
+                primaryActionUrl
+                primaryActionLabel
+                tertiaryActionUrl
+                tertiaryActionLabel
+              }
+            }
+          }
         }
-      }
-    `;
+      }    
+  `;
 
     const gqlClient = await queryContent(query, config.spaces.rooms)
     .then((res) => {
@@ -72,12 +95,11 @@ class Index extends React.Component {
             }),
             description: entries.firstSectionHeroDescription
           },
-          roomCollection: entries.roomCollection.map(entry => {
-            const room = entry.fields;
+          roomCollection: entries.roomCollectionCollection.items.map(room => {
             return {
               title: room.title,
-              keyValues: [`${room.squareFeet  } Sqft`, room.bedType, `Max Guests ${  room.maxGuests}`],
-              description: room.shortDescription.content[0].content[0].value,
+              keyValues: [`${room.squareFeet} Sqft`, room.bedType, `Max Guests ${room.maxGuests}`],
+              description: room.shortDescription.json.content[0].content[0].value,
               image: {
                 url: room.cardImageUrl,
               },
@@ -99,8 +121,7 @@ class Index extends React.Component {
           secondHero: {
             premium: true,
             title: entries.secondSectionHeroTitle,
-            images: entries.secondSectionHeroRooms.map((entry) => {
-              const room = entry.fields;
+            images: entries.secondSectionHeroRoomsCollection.items.map((room) => {
               return ({
                 url: room.cardImageUrl,
                 tertiaryAction: {
@@ -121,8 +142,7 @@ class Index extends React.Component {
               label: entries.promoSectionButtonLabel,
               url: entries.promoSectionButtonUrl,
             },
-            cards: entries.promoCards.map(promoCard => {
-            const card = promoCard.fields;
+            cards: entries.promoCardsCollection.items.map(card => {
               return {
                 imageUrl: card.imageUrl,
                 categoryName: card.categoryName,
