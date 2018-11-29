@@ -17,7 +17,7 @@ module.exports = {
     },
   },
   management: {
-    common:
+    component:
       'CFPAT-35025baaf2329876e2b1e1f67bd21b888329b0b581205a9e4d5d9d9df6eae1c0',
   },
   hosts: {

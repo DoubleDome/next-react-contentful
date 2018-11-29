@@ -5,8 +5,8 @@ const componentContentID = 'component';
 
 const config = require('../integrations/contentful/config');
 const contentful = require('../integrations/contentful');
-const delivery = contentful.createDeliveryClient(config.spaces.common);
-const management = contentful.createManagementClient(config.management.common);
+const delivery = contentful.createDeliveryClient(config.spaces.rooms);
+const management = contentful.createManagementClient(config.management.component);
 
 class ComponentListBuilder {
   constructor() {}
@@ -33,7 +33,7 @@ class ComponentListBuilder {
   add(name) {
     return (
       management
-        .getSpace(commonSpaceID)
+        .getSpace(config.spaces.rooms.id)
         .then(space =>
           space.createEntry(componentContentID, {
             fields: {
