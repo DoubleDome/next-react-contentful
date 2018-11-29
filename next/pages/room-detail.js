@@ -19,6 +19,7 @@ class RoomDetail extends React.Component {
           roomDetailPageCollection(where: {slug: "${query.id}"}) {
             items {
               ... on RoomDetailPage {
+                componentOrder
                 overviewHeaderPrimaryActionLabel
                 overviewHeaderPrimaryActionUrl
                 overviewHeaderSecondaryActionLabel
@@ -50,9 +51,14 @@ class RoomDetail extends React.Component {
         await queryContent(gqlQuery, config.spaces.rooms) // eslint-disable-line no-use-before-define
         .then((res) => {
           /*
-            Can't destructure these due to the names of the actual endpoints
+            Can't destructure these due to the names of the actual endpoints.
             This would destructure the room declaration but it's confusing:
+              
               ({room:room} = page); // eslint-disable-line no-useless-rename
+              
+            "..When Not To Use It...If you want to be able to access
+            array indices or object properties directly..."
+            https://eslint.org/docs/rules/prefer-destructuring
           */
           page = res.data.roomDetailPageCollection.items[0]; // eslint-disable-line prefer-destructuring
           room = page.room; // eslint-disable-line prefer-destructuring
@@ -60,6 +66,7 @@ class RoomDetail extends React.Component {
     
         return { 
                   room: {
+                   componentOrder: page.componentOrder,
                    overviewHeader: {
                      header: {
                        subtitle: room.brand,
@@ -506,15 +513,28 @@ class RoomDetail extends React.Component {
     }
 
   render() {
+    const components = [];
     // This approach allows to reorder the components depending on data coming from the CMS
-    const components = [
-      this.createOverviewHeader(this.props.room.overviewHeader),
-      this.createHighlightCarousel(this.props.room.highlightCarousel),
-      this.createGallery(this.props.room.gallerySection),
-      this.createAccordion(this.props.room.accordion),
-      this.createCardRow(this.props.room.cardRow),
-      this.createTwoColumnHero(this.props.room.twoColumnHero),
-    ];
+    this.props.room.componentOrder.forEach((component) => {
+        if(component === "Overview") {
+            components.push(this.createOverviewHeader(this.props.room.overviewHeader));
+        }
+        else if(component === "Highlights") {
+            components.push(this.createHighlightCarousel(this.props.room.highlightCarousel));
+        }
+        else if(component === "Gallery") {
+            components.push(this.createGallery(this.props.room.gallerySection));
+        }
+        else if(component === "Accordion") {
+            components.push(this.createAccordion(this.props.room.accordion));
+        }
+        else if(component === "Two Column Section Hero") {
+            components.push(this.createTwoColumnHero(this.props.room.twoColumnHero));
+        }
+        else if(component === "Similar Rooms") {
+            components.push(this.createCardRow(this.props.room.cardRow));
+        }
+    });
 
     return (
       <Layout>

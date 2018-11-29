@@ -19,6 +19,7 @@ class Index extends React.Component {
         title
         textHeaderTitle
         textHeaderSubtitle
+        componentOrder
         firstSectionHeroPremium
         firstSectionHeroTitle
         firstSectionHeroDescription
@@ -84,6 +85,7 @@ class Index extends React.Component {
     .then((res) => {
       const page = res.data.roomLandingPage;
       pageComponents = {
+          componentOrder: page.componentOrder,
           textHeader: {
             title: page.textHeaderTitle,
             subtitle: page.textHeaderSubtitle,
@@ -212,16 +214,28 @@ class Index extends React.Component {
 
   render() {
     // This approach allows to reorder the components depending on data coming from the CMS
-    const components = [
-      this.createTextHeader(this.props.textHeader),
-      this.createHero(this.props.hero),
-      this.createRoomOverview(
-        this.props.roomCollection,
-        this.props.roomCollectionLayout,
-      ),
-      this.createHero(this.props.secondHero, 1),
-      this.createPromoSection(this.props.promoSection),
-    ];
+    const components = [];
+    
+    this.props.componentOrder.forEach((component) => {
+        if(component === "Text Header") {
+            components.push(this.createTextHeader(this.props.textHeader));
+        }
+        else if(component === "Section Hero") {
+            components.push(this.createHero(this.props.hero));
+        }
+        else if(component === "Room Cards") {
+            components.push(this.createRoomOverview(
+              this.props.roomCollection,
+              this.props.roomCollectionLayout,
+            ));
+        }
+        else if(component === "Premium Hero") {
+            components.push(this.createHero(this.props.secondHero, 1));
+        }
+        else if(component === "Promotions") {
+            components.push(this.createPromoSection(this.props.promoSection));
+        }
+    });
 
     return (
       <Layout>
