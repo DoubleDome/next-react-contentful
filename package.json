@@ -85,7 +85,8 @@
     "react-test-renderer": "16.6.0",
     "react-transition-group": "2.5.0",
     "sass-loader": "^6.0.7",
-    "storybook-addon-docgen": "github:jack-sf/react-storybook-addon-docgen#e54d7cb"
+    "storybook-addon-docgen": "github:jack-sf/react-storybook-addon-docgen#e54d7cb",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "babel-core": "6.26.3",
