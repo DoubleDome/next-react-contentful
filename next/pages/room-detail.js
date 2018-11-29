@@ -15,37 +15,71 @@ class RoomDetail extends React.Component {
         let page;
         let room;
         const gqlQuery = `
-        query roomDetailPageQuery {
-          roomDetailPageCollection(where: {slug: "${query.id}"}) {
+query roomDetailPageQuery {
+  roomDetailPageCollection(where: {slug: "${query.id}"}) {
+    items {
+      ... on RoomDetailPage {
+        componentOrder
+        overviewHeaderPrimaryActionLabel
+        overviewHeaderPrimaryActionUrl
+        overviewHeaderSecondaryActionLabel
+        overviewHeaderSecondaryActionUrl
+        overviewBodyPrimaryActionLabel
+        overviewBodyPrimaryActionUrl
+        overviewBodyTertiaryActionLabel
+        overviewBodyTertiaryActionUrl
+        sidebarSectionHeadlineTitle
+        sidebarSectionHeadlineText
+        sidebarSectionHeadlineText
+        highlightCarouselTitle
+        room {
+          subtitle
+          brand
+          title
+          squareFeet
+          bedType
+          maxGuests
+          highlightsCollection {
             items {
-              ... on RoomDetailPage {
-                componentOrder
-                overviewHeaderPrimaryActionLabel
-                overviewHeaderPrimaryActionUrl
-                overviewHeaderSecondaryActionLabel
-                overviewHeaderSecondaryActionUrl
-                overviewBodyPrimaryActionLabel
-                overviewBodyPrimaryActionUrl
-                overviewBodyTertiaryActionLabel
-                overviewBodyTertiaryActionUrl
-                sidebarSectionHeadlineTitle
-                sidebarSectionHeadlineText
-                sidebarSectionHeadlineText
-                room {
-                  subtitle
-                  brand
-                  title
-                  squareFeet
-                  bedType
-                  maxGuests
-                  longDescription {
-                    json
+              title
+              description
+              imageUrl
+            }
+          }
+          galleryImageUrls
+          longDescription {
+            json
+          }
+          lounge {
+            title
+            loungeHours
+          }
+          similarRoomsCollection {
+            items {
+              ... on Room {
+                squareFeet
+                bedType
+                title
+                maxGuests
+                shortDescription {
+                  json
+                }
+                cardImageUrl
+                linkedFrom {
+                  roomDetailPageCollection {
+                    items {
+                      slug
+                    }
                   }
                 }
               }
             }
           }
-        }        
+        }
+      }
+    }
+  }
+}
          `;
 
         await queryContent(gqlQuery, config.spaces.rooms) // eslint-disable-line no-use-before-define
@@ -139,77 +173,29 @@ class RoomDetail extends React.Component {
                            },
                          ],
                        },
-
-                       {
+                        (room.lounge &&   {
                          headline: {
                            title: 'Lounge Hours',
                          },
-                         items: [
-                           {
-                             type: 'inline-text',
-                             label: 'sun - wed',
-                             text: '6:00 AM - 12:00 AM',
-                           },
-                           {
-                             type: 'inline-text',
-                             label: 'thu - sat',
-                             text: '6:00 AM - 1:00 AM',
-                           },
-                           {
-                             type: 'inline-text',
-                             label: 'beverages & light snacks',
-                             text: '7:00 AM - 10:00 PM',
-                           },
-                         ],
-                       },
+                         items: room.lounge.loungeHours.map((hourItem) => ({
+                                type: 'inline-text',
+                                label: hourItem.label,
+                                text: hourItem.text,
+                             })),
+                       }),
                      ],
-                     heroImages: [
-                       {
-                         url:
-                           'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/corner-suite/aria-hotel-corner-suite-bedroom.tif',
-                       },
-                       {
-                         url:
-                           'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/corner-suite/aria-corner-suite-bath-purple-orchids.tif',
-                       },
-                       {
-                         url:
-                           'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/corner-suite/aria-hotel-corner-living.tif',
-                       },
-                     ],
+                     heroImages: room.galleryImageUrls.map((image) => ({
+                            url: image
+                        })),
                    },
                    highlightCarousel: {
-                     title: 'Tower Suites Exclusive Services',
-                     cards: [
-                       {
-                         imageUrl:
-                           'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/tower-suites-lobby/lifestyle/aria-hotel-lifestyle-tower-suites-lounge-check-in.tif',
-                         title: 'Tower Suites Lounge',
-                         description:
-                           'Check-in from the Tower Suites Lounge. Enjoy private access and complimentary drinks from a state-of-the-art LAMILL Coffee Machine.',
-                       },
-                       {
-                         imageUrl:
-                           'https://static.mgmresorts.com/content/dam/MGM/aria/amenities/floral/images/aria-amenities-floral-small.tif',
-                         title: 'Concierge Services',
-                         description:
-                           'From greating you upon your arrival or suprising a loved one,  your personalized Concierge staff experts can make anything happen.',
-                       },
-                       {
-                         imageUrl:
-                           'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/tower-suites-lobby/aria-hotel-tower-suites-lounge-waiting.tif',
-                         title: 'Access',
-                         description:
-                           'Tower Suites takes your Vegas stay to the next level. Enjoy special privileges such as enhanced turndown or priority line access for taxi service.',
-                       },
-                       {
-                         imageUrl:
-                           'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/lifestyle/aria-hotel-lifestyle-tower-suites-corner-tablet.tif',
-                         title: 'Advanced Technology',
-                         description:
-                           'Countless indulgences are at your fingertips via our revolutionary new in-room tablets.',
-                       },
-                     ]
+                     title: page.highlightCarouselTitle,
+                     cards: room.highlightsCollection.items.map(highlight => ({
+                            imageUrl: highlight.imageUrl,
+                             title: highlight.title,
+                             description:
+                               'Check-in from the Tower Suites Lounge. Enjoy private access and complimentary drinks from a state-of-the-art LAMILL Coffee Machine.',
+                         })), 
                    },
                    gallerySection: {
                      title: "Experience The Room",
@@ -326,73 +312,26 @@ class RoomDetail extends React.Component {
                        url: '/',
                        label: 'View All Tower Suites',
                      },
-                     rooms: [
-                       {
-                         title: 'Deluxe King Room',
-                         keyValues: ['520 Sqft', '1 King Bed', 'Max Guests 2'],
-                         description:
-                           'Deluxe Rooms at ARIA average 520 sq ft with unparalleled amenities, corner views and state of the art technology.',
-                         image: {
-                           url:
-                             'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/deluxe-room/aria-deluxe-king-bed-dusk.tif',
-                         },
-                         primaryAction: {
-                           label: 'Check Rates',
-                           url: '/',
-                         },
-                         secondaryAction: {
-                           label: 'Room Details',
-                           url: '/',
-                         },
-                         tertiaryAction: {
-                           label: 'Compare',
-                           url: '/',
-                         },
-                       },
-                       {
-                         title: 'Tower Suite',
-                         keyValues: ['1,000 Sqft', '1 King Bed', 'Corner Max Guests  4'],
-                         description: 'Soak your cares away in an open-air whirlpool tub.',
-                         image: {
-                           url:
-                             'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/tower-suite/aria-hotel-tower-suite-bedroom-tablet.tif',
-                         },
-                         primaryAction: {
-                           label: 'Check Rates',
-                           url: '/',
-                         },
-                         secondaryAction: {
-                           label: 'Room Details',
-                           url: '/',
-                         },
-                         tertiaryAction: {
-                           label: 'Compare',
-                           url: '/',
-                         },
-                       },
-                       {
-                         title: 'Center Suite Strip View',
-                         keyValues: ['1,075 Sqft', '2 Queen Beds', 'Max Guests 4'],
-                         description:
-                           'Panoramic views of The Strip and spacious living and bedroom areas.',
-                         image: {
-                           url:
-                             'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/crystals-center-suite/aria-hotel-crystals-suite-living-room-centerpiece-purple-flowers.tif',
-                         },
-                         primaryAction: {
-                           label: 'Check Rates',
-                           url: '/',
-                         },
-                         secondaryAction: {
-                           label: 'Room Details',
-                           url: '/',
-                         },
-                         tertiaryAction: {
-                           label: 'Compare',
-                           url: '/',
-                         },
-                       },
-                     ],
+                     rooms: room.similarRoomsCollection.items.map((similarRoom) => ({
+                            title: similarRoom.title,
+                             keyValues: [similarRoom.squareFeet, similarRoom.bedType, `Max Guests ${similarRoom.maxGuests}`],
+                             description: similarRoom.shortDescription.json.content[0].content[0].content[0].content[0].value,
+                             image: {
+                               url: similarRoom.cardImageUrl,
+                             },
+                             primaryAction: {
+                               label: 'Check Rates',
+                               url: '/',
+                             },
+                             secondaryAction: {
+                               label: 'Room Details',
+                               url: `/${  similarRoom.linkedFrom.roomDetailPageCollection.items.slug}`,
+                             },
+                             tertiaryAction: {
+                               label: 'Compare',
+                               url: '/',
+                             },
+                        })),
                    },
                    twoColumnHero: {
                     title: 'Elevate Your Tower Suites Experience',
