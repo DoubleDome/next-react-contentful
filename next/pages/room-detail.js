@@ -1,5 +1,5 @@
 import React from 'react';
-import { createDeliveryClient } from '../integrations/contentful/index';
+import { queryContent } from '../integrations/contentful/index';
 import config from '../integrations/contentful/config';
 import Layout from '../layouts/layout';
 import G2RoomOverviewHeaderSection from '../../dmp/components/G2RoomOverviewHeaderSection/G2RoomOverviewHeaderSection.component';
@@ -8,58 +8,91 @@ import G2AccordionSection from '../../dmp/components/G2AccordionSection/G2Accord
 import G2GallerySection from '../../dmp/components/G2GallerySection/G2GallerySection.component';
 import G2TwoColumnHeroSection from '../../dmp/components/G2TwoColumnHeroSection/G2TwoColumnHeroSection.component';
 import G2RoomOverviewCardRowSection from '../../dmp/components/G2RoomOverviewCardRowSection/G2RoomOverviewCardRowSection.component';
+import "isomorphic-fetch";
 
 class RoomDetail extends React.Component {
     static async getInitialProps({query}) {
-        let content;
+        let page;
         let room;
-        const client = createDeliveryClient(config.spaces.rooms);
-        const entries = await client.getEntries({ // eslint-disable-line no-unused-vars
-          content_type: 'roomDetailPage',
-          'fields.slug': query.id
-        }).then((res) => {
-          // Using this approach in case we have to query a level deeper
-          content = res.items[0].fields;
-          room = content.room.fields;
+        const gqlQuery = `
+        query roomDetailPageQuery {
+          roomDetailPageCollection(where: {slug: "${query.id}"}) {
+            items {
+              ... on RoomDetailPage {
+                overviewHeaderPrimaryActionLabel
+                overviewHeaderPrimaryActionUrl
+                overviewHeaderSecondaryActionLabel
+                overviewHeaderSecondaryActionUrl
+                overviewBodyPrimaryActionLabel
+                overviewBodyPrimaryActionUrl
+                overviewBodyTertiaryActionLabel
+                overviewBodyTertiaryActionUrl
+                sidebarSectionHeadlineTitle
+                sidebarSectionHeadlineText
+                sidebarSectionHeadlineText
+                room {
+                  subtitle
+                  brand
+                  title
+                  squareFeet
+                  bedType
+                  maxGuests
+                  longDescription {
+                    json
+                  }
+                }
+              }
+            }
+          }
+        }        
+         `;
+
+        await queryContent(gqlQuery, config.spaces.rooms) // eslint-disable-line no-use-before-define
+        .then((res) => {
+          /*
+            Can't destructure these due to the names of the actual endpoints
+            This would destructure the room declaration but it's confusing:
+              ({room:room} = page); // eslint-disable-line no-useless-rename
+          */
+          page = res.data.roomDetailPageCollection.items[0]; // eslint-disable-line prefer-destructuring
+          room = page.room; // eslint-disable-line prefer-destructuring
         });
     
-        // dummyRoom object until data fed in from Contentful
-        return { devRoom: content,
-                  sampleRoom: room,
+        return { 
                   room: {
                    overviewHeader: {
                      header: {
                        subtitle: room.brand,
                        title: room.title,
                        primaryAction: {
-                         label: content.overviewHeaderPrimaryActionLabel || 'Check Rates',
-                         url: content.overviewHeaderPrimaryActionUrl || '/',
+                         label: page.overviewHeaderPrimaryActionLabel || 'Check Rates',
+                         url: page.overviewHeaderPrimaryActionUrl || '/',
                        },
                        secondaryAction: {
-                         label: content.overviewHeaderSecondaryActionLabel || 'Compare',
-                         url: content.overviewHeaderSecondaryAction || '/',
+                         label: page.overviewHeaderSecondaryActionLabel || 'Compare',
+                         url: page.overviewHeaderSecondaryAction || '/',
                        },
                      },
                      main: {
-                       title: room.tagline,
+                       title: room.subtitle,
                        content:
-                         `<p>${  room.longDescription.content[0].content[0].value  }</p>`,
+                         `<p>${  room.longDescription.json.content[0].content[0].value  }</p>`,
                        primaryAction: {
-                         label: content.overviewBodyPrimaryActionLabel || 'Check Rates',
-                         url: content.overviewBodyPrimaryActionUrl || '/',
+                         label: page.overviewBodyPrimaryActionLabel || 'Check Rates',
+                         url: page.overviewBodyPrimaryActionUrl || '/',
                        },
                        tertiaryAction: {
-                         label: content.overviewBodyTertiaryActionLabel || 'Check Rates',
-                         url: content.overviewBodyTertiaryActionUrl || '/',
+                         label: page.overviewBodyTertiaryActionLabel || 'Check Rates',
+                         url: page.overviewBodyTertiaryActionUrl || '/',
                        },
                      },
                      sidebarSections: [
                        {
                          headline: {
-                           title: (content.sidebarSectionHeadlineText && content.sidebarSectionHeadlineTitle) ? content.sidebarSectionHeadlineTitle : 'Type',
+                           title: (page.sidebarSectionHeadlineText && page.sidebarSectionHeadlineTitle) ? page.sidebarSectionHeadlineTitle : 'Type',
                            content: {
                              type: 'text',
-                             text: (content.sidebarSectionHeadlineText && content.sidebarSectionHeadlineTitle) ? content.sidebarSectionHeadlineText : room.brand,
+                             text: (page.sidebarSectionHeadlineText && page.sidebarSectionHeadlineTitle) ? page.sidebarSectionHeadlineText : room.brand,
                            },
                          },
                        },
@@ -72,7 +105,7 @@ class RoomDetail extends React.Component {
                            {
                              type: 'inline-text',
                              label: 'size',
-                             text: `${room.squareFeet  }Sqft`,
+                             text: `${room.squareFeet} Sqft`,
                            },
                            {
                              type: 'inline-text',
