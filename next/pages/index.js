@@ -1,5 +1,5 @@
 import React from 'react';
-import { createDeliveryClient, queryContent } from '../integrations/contentful';
+import { queryContent } from '../integrations/contentful';
 import config from '../integrations/contentful/config';
 import Layout from '../layouts/layout';
 import G2TextHeaderSection from '../../dmp/components/G2TextHeaderSection/G2TextHeaderSection.component';
@@ -7,96 +7,101 @@ import G2HeroSection from '../../dmp/components/G2HeroSection/G2HeroSection.comp
 import G2RoomOverviewCardCollectionSection from '../../dmp/components/G2RoomOverviewCardCollectionSection/G2RoomOverviewCardCollectionSection.component';
 import PromoCardsRowSection from '../../src/components/PromoCardsRowSection/PromoCardsRowSection.component';
 import "isomorphic-fetch";
+
 class Index extends React.Component {
   static async getInitialProps() {
     let pageComponents;
     
     // Hard coding in the only room landing page ID we have right now
-    const query = `
-      query rlpQuery {
-        roomLandingPage(id: "4dxYMm3HWEaoA0qocm4SaQ") {
-          title
-          textHeaderTitle
-          textHeaderSubtitle
-          firstSectionHeroPremium
-          firstSectionHeroTitle
-          firstSectionHeroDescription
-          firstSectionHeroRoomsCollection {
-            items {
-              ... on Room {
-                title
-                cardImageUrl
-              }
+    const gqlQuery = `
+    query roomLandingPageQuery {
+      roomLandingPage(id: "4dxYMm3HWEaoA0qocm4SaQ") {
+        title
+        textHeaderTitle
+        textHeaderSubtitle
+        firstSectionHeroPremium
+        firstSectionHeroTitle
+        firstSectionHeroDescription
+        firstSectionHeroRoomsCollection {
+          items {
+            ... on Room {
+              title
+              cardImageUrl
             }
           }
-          firstSectionHeroLogoUrl
-          roomCollectionCollection {
-            items {
-              ... on Room {
-                title
-                squareFeet
-                bedType
-                maxGuests
-                cardImageUrl
-                shortDescription {
-                  json
-                }
-              }
-            }
-          }
-          secondSectionHeroRoomsCollection {
-            items {
-              ... on Room {
-                cardImageUrl
-              }
-            }
-          }
-          promoCardsCollection {
-            items {
-              ... on PromoCard {
-                imageUrl
-                title
-                description
-                categoryName
-                statusColor
-                statusLabel
-                primaryActionUrl
-                primaryActionLabel
-                tertiaryActionUrl
-                tertiaryActionLabel
+        }
+        firstSectionHeroLogoUrl
+        roomCollectionLayout
+        roomCollectionCollection {
+          items {
+            ... on Room {
+              title
+              squareFeet
+              bedType
+              maxGuests
+              cardImageUrl
+              shortDescription {
+                json
               }
             }
           }
         }
-      }    
-  `;
+        secondSectionHeroRoomsCollection {
+          items {
+            ... on Room {
+              cardImageUrl
+            }
+          }
+        }
+        secondSectionHeroTitle
+        secondSectionHeroDescription
+        secondSectionHeroSecondaryActionLabel
+        secondSectionHeroSecondaryActionUrl
+        promoSectionTitle
+        promoSectionButtonLabel
+        promoSectionButtonUrl
+        promoCardsCollection {
+          items {
+            ... on PromoCard {
+              imageUrl
+              title
+              description
+              categoryName
+              statusColor
+              statusLabel
+              primaryActionUrl
+              primaryActionLabel
+              tertiaryActionUrl
+              tertiaryActionLabel
+            }
+          }
+        }
+      }
+    }    
+    `;
 
-    const gqlClient = await queryContent(query, config.spaces.rooms)
+    await queryContent(gqlQuery, config.spaces.rooms) // eslint-disable-line no-use-before-define
     .then((res) => {
-      const entries = res.data.roomLandingPage;
-      console.log(entries);
+      const page = res.data.roomLandingPage;
       pageComponents = {
           textHeader: {
-            title: entries.textHeaderTitle,
-            subtitle: entries.textHeaderSubtitle,
+            title: page.textHeaderTitle,
+            subtitle: page.textHeaderSubtitle,
           },
           hero: {
-            premium: entries.firstSectionHeroPremium,
-            title: entries.firstSectionHeroTitle,
-            images: entries.firstSectionHeroRoomsCollection.items.map((room) => {
-              return ({
+            premium: page.firstSectionHeroPremium,
+            title: page.firstSectionHeroTitle,
+            images: page.firstSectionHeroRoomsCollection.items.map((room) => ({
                 url: room.cardImageUrl,
                 caption: room.title,
                 tertiaryAction: {
-                  label: entries.roomPrimaryActionLabels || 'Check Rates',
+                  label: page.roomPrimaryActionLabels || 'Check Rates',
                   url: '/',
                 },
-              });
-            }),
-            description: entries.firstSectionHeroDescription
+              })),
+            description: page.firstSectionHeroDescription
           },
-          roomCollection: entries.roomCollectionCollection.items.map(room => {
-            return {
+          roomCollection: page.roomCollectionCollection.items.map(room => ({
               title: room.title,
               keyValues: [`${room.squareFeet} Sqft`, room.bedType, `Max Guests ${room.maxGuests}`],
               description: room.shortDescription.json.content[0].content[0].value,
@@ -104,46 +109,42 @@ class Index extends React.Component {
                 url: room.cardImageUrl,
               },
               primaryAction: {
-                label: entries.roomPrimaryActionLabels || 'Check Rates',
+                label: page.roomPrimaryActionLabels || 'Check Rates',
                 url: '/',
               },
               secondaryAction: {
-                label: entries.roomSecondaryActionLabels || 'View Room Details',
+                label: page.roomSecondaryActionLabels || 'View Room Details',
                 url: '/',
               },
               tertiaryAction: {
-                label: entries.roomTertiaryActionLabels || 'Compare',
+                label: page.roomTertiaryActionLabels || 'Compare',
                 url: '/',
               },
-            };
-         }),
-          roomCollectionLayout: entries.roomCollectionLayout,
+            })),
+          roomCollectionLayout: page.roomCollectionLayout,
           secondHero: {
             premium: true,
-            title: entries.secondSectionHeroTitle,
-            images: entries.secondSectionHeroRoomsCollection.items.map((room) => {
-              return ({
+            title: page.secondSectionHeroTitle,
+            images: page.secondSectionHeroRoomsCollection.items.map((room) => ({
                 url: room.cardImageUrl,
                 tertiaryAction: {
-                  label: entries.roomTertiaryActionLabels || 'Compare',
+                  label: page.roomTertiaryActionLabels || 'Compare',
                   url: '/'
                 },
-              });
-            }),
-            description: entries.secondSecondHeroDescription,
+              })),
+            description: page.secondSecondHeroDescription,
             secondaryAction: {
-              label: entries.secondSectionHeroSecondaryActionLabel,
-              url: entries.secondSectionHeroSecondaryActionUrl,
+              label: page.secondSectionHeroSecondaryActionLabel,
+              url: page.secondSectionHeroSecondaryActionUrl,
             }
           },
           promoSection: {
-            title: entries.promoSectionTitle,
+            title: page.promoSectionTitle,
             button: {
-              label: entries.promoSectionButtonLabel,
-              url: entries.promoSectionButtonUrl,
+              label: page.promoSectionButtonLabel,
+              url: page.promoSectionButtonUrl,
             },
-            cards: entries.promoCardsCollection.items.map(card => {
-              return {
+            cards: page.promoCardsCollection.items.map(card => ({
                 imageUrl: card.imageUrl,
                 categoryName: card.categoryName,
                 title: card.title,
@@ -160,15 +161,13 @@ class Index extends React.Component {
                   label: card.tertiaryActionLabel,
                   url: card.tertiaryActionUrl,
                 },
-              };
-            })
+              }))
           },
         };
     }).catch(err => {
       console.log(err);
     });
-    
-
+  
     return pageComponents;
 
   }
