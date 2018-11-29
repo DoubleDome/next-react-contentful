@@ -14,72 +14,79 @@ class Index extends React.Component {
     
     // Hard coding in the only room landing page ID we have right now
     const gqlQuery = `
-    query roomLandingPageQuery {
-      roomLandingPage(id: "4dxYMm3HWEaoA0qocm4SaQ") {
-        title
-        textHeaderTitle
-        textHeaderSubtitle
-        componentOrder
-        firstSectionHeroPremium
-        firstSectionHeroTitle
-        firstSectionHeroDescription
-        firstSectionHeroRoomsCollection {
-          items {
-            ... on Room {
-              title
-              cardImageUrl
+     query roomLandingPageQuery {
+        roomLandingPage(id: "4dxYMm3HWEaoA0qocm4SaQ") {
+          title
+          textHeaderTitle
+          textHeaderSubtitle
+          componentOrder
+          firstSectionHeroPremium
+          firstSectionHeroTitle
+          firstSectionHeroDescription
+          firstSectionHeroRoomsCollection {
+            items {
+              ... on Room {
+                title
+                cardImageUrl
+              }
             }
           }
-        }
-        firstSectionHeroLogoUrl
-        roomCollectionLayout
-        roomCollectionCollection {
-          items {
-            ... on Room {
-              title
-              squareFeet
-              bedType
-              maxGuests
-              cardImageUrl
-              shortDescription {
-                json
+          firstSectionHeroLogoUrl
+          roomCollectionLayout
+          roomCollectionCollection {
+            items {
+              ... on Room {
+                title
+                squareFeet
+                bedType
+                maxGuests
+                cardImageUrl
+                linkedFrom {
+                  roomDetailPageCollection {
+                    items {
+                      slug
+                    }
+                  }
+                }
+                shortDescription {
+                  json
+                }
+              }
+            }
+          }
+          secondSectionHeroRoomsCollection {
+            items {
+              ... on Room {
+                cardImageUrl
+              }
+            }
+          }
+          secondSectionHeroTitle
+          secondSectionHeroDescription
+          secondSectionHeroSecondaryActionLabel
+          secondSectionHeroSecondaryActionUrl
+          promoSectionTitle
+          promoSectionButtonLabel
+          promoSectionButtonUrl
+          promoCardsCollection {
+            items {
+              ... on PromoCard {
+                imageUrl
+                title
+                description
+                categoryName
+                statusColor
+                statusLabel
+                primaryActionUrl
+                primaryActionLabel
+                tertiaryActionUrl
+                tertiaryActionLabel
               }
             }
           }
         }
-        secondSectionHeroRoomsCollection {
-          items {
-            ... on Room {
-              cardImageUrl
-            }
-          }
-        }
-        secondSectionHeroTitle
-        secondSectionHeroDescription
-        secondSectionHeroSecondaryActionLabel
-        secondSectionHeroSecondaryActionUrl
-        promoSectionTitle
-        promoSectionButtonLabel
-        promoSectionButtonUrl
-        promoCardsCollection {
-          items {
-            ... on PromoCard {
-              imageUrl
-              title
-              description
-              categoryName
-              statusColor
-              statusLabel
-              primaryActionUrl
-              primaryActionLabel
-              tertiaryActionUrl
-              tertiaryActionLabel
-            }
-          }
-        }
-      }
-    }    
-    `;
+      }     
+      `;
 
     await queryContent(gqlQuery, config.spaces.rooms) // eslint-disable-line no-use-before-define
     .then((res) => {
@@ -116,7 +123,7 @@ class Index extends React.Component {
               },
               secondaryAction: {
                 label: page.roomSecondaryActionLabels || 'View Room Details',
-                url: '/',
+                url: room.linkedFrom.roomDetailPageCollection.items[0].slug,
               },
               tertiaryAction: {
                 label: page.roomTertiaryActionLabels || 'Compare',
