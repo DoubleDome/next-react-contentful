@@ -15,71 +15,103 @@ class RoomDetail extends React.Component {
         let page;
         let room;
         const gqlQuery = `
-query roomDetailPageQuery {
-  roomDetailPageCollection(where: {slug: "${query.id}"}) {
-    items {
-      ... on RoomDetailPage {
-        componentOrder
-        overviewHeaderPrimaryActionLabel
-        overviewHeaderPrimaryActionUrl
-        overviewHeaderSecondaryActionLabel
-        overviewHeaderSecondaryActionUrl
-        overviewBodyPrimaryActionLabel
-        overviewBodyPrimaryActionUrl
-        overviewBodyTertiaryActionLabel
-        overviewBodyTertiaryActionUrl
-        sidebarSectionHeadlineTitle
-        sidebarSectionHeadlineText
-        sidebarSectionHeadlineText
-        highlightCarouselTitle
-        room {
-          subtitle
-          brand
-          title
-          squareFeet
-          bedType
-          maxGuests
-          highlightsCollection {
-            items {
-              title
-              description
-              imageUrl
-            }
-          }
-          galleryImageUrls
-          longDescription {
-            json
-          }
-          lounge {
-            title
-            loungeHours
-          }
-          similarRoomsCollection {
-            items {
-              ... on Room {
-                squareFeet
-                bedType
-                title
-                maxGuests
-                shortDescription {
-                  json
-                }
-                cardImageUrl
-                linkedFrom {
-                  roomDetailPageCollection {
-                    items {
-                      slug
+            query roomDetailPageQuery {
+              roomDetailPageCollection(where: {slug: "${query.id}"}) {
+                items {
+                  ... on RoomDetailPage {
+                    componentOrder
+                    overviewHeaderPrimaryActionLabel
+                    overviewHeaderPrimaryActionUrl
+                    overviewHeaderSecondaryActionLabel
+                    overviewHeaderSecondaryActionUrl
+                    overviewBodyPrimaryActionLabel
+                    overviewBodyPrimaryActionUrl
+                    overviewBodyTertiaryActionLabel
+                    overviewBodyTertiaryActionUrl
+                    sidebarSectionHeadlineTitle
+                    sidebarSectionHeadlineText
+                    sidebarSectionHeadlineText
+                    highlightCarouselTitle
+                    twoColumnHeroTitle
+                    twoColumnHeroImageUrl
+                    twoColumnHeroSubtitle
+                    twoColumnHeroBody
+                    twoColumnHeroActionLink
+                    twoColumnHeroSidebarHeadline
+                    similarRoomsSectionTitle
+                    similarRoomsActionText
+                    twoColumnHeroSidebarContent
+                    accordionTitle
+                    accordionItemsCollection {
+                      items {
+                        ... on AccordionItem {
+                          title
+                          itemList
+                        }
+                      }
+                    }
+                    contact {
+                      ... on ContactInformation {
+                        phoneNumber
+                        emailAddress
+                      }
+                    }
+                    room {
+                      subtitle
+                      secondaryCopy
+                      brand
+                      cardImageUrl
+                      title
+                      squareFeet
+                      bedType
+                      maxGuests
+                      unifiedGalleryCollection {
+                        items {
+                          title
+                          imageUrl
+                        }
+                      }
+                      highlightsCollection {
+                        items {
+                          title
+                          description
+                          imageUrl
+                        }
+                      }
+                      galleryImageUrls
+                      longDescription {
+                        json
+                      }
+                      lounge {
+                        title
+                        loungeHours
+                      }
+                      similarRoomsCollection {
+                        items {
+                          ... on Room {
+                            squareFeet
+                            bedType
+                            title
+                            maxGuests
+                            shortDescription {
+                              json
+                            }
+                            cardImageUrl
+                            linkedFrom {
+                              roomDetailPageCollection {
+                                items {
+                                  slug
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                 }
               }
             }
-          }
-        }
-      }
-    }
-  }
-}
          `;
 
         await queryContent(gqlQuery, config.spaces.rooms) // eslint-disable-line no-use-before-define
@@ -137,7 +169,6 @@ query roomDetailPageQuery {
                            },
                          },
                        },
-
                        {
                          headline: {
                            title: 'Suite Details',
@@ -160,7 +191,6 @@ query roomDetailPageQuery {
                            },
                          ],
                        },
-
                        {
                          headline: {
                            title: 'Featured Amenities',
@@ -193,8 +223,7 @@ query roomDetailPageQuery {
                      cards: room.highlightsCollection.items.map(highlight => ({
                             imageUrl: highlight.imageUrl,
                              title: highlight.title,
-                             description:
-                               'Check-in from the Tower Suites Lounge. Enjoy private access and complimentary drinks from a state-of-the-art LAMILL Coffee Machine.',
+                             description: highlight.description,
                          })), 
                    },
                    gallerySection: {
@@ -202,11 +231,9 @@ query roomDetailPageQuery {
                      virtualTourHero: {
                        tours: [
                          {
-                           imageUrl:
-                             'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/corner-suite/aria-hotel-corner-living.tif',
-                           title: 'Corner Suite Virtual Tour',
-                           description:
-                             'Indulge your desires at ARIA Tower Suites, a luxurious AAA Five Diamond retreat high above the Las Vegas Strip.',
+                           imageUrl: room.cardImageUrl,
+                           title: `${room.title} Virtual Tour`,
+                           description: room.secondaryCopy,
                            button: {
                              label: 'Take Virtual Tour',
                              url: '/',
@@ -214,107 +241,27 @@ query roomDetailPageQuery {
                          },
                        ],
                      },
-                     items: [
-                       {
-                         imageUrl:
-                           'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/corner-suite/aria-corner-suite-bath-purple-orchids.tif',
-                         caption: "Experience ARIA's Corner Suites.",
-                       },
-                       {
-                         imageUrl:
-                           'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/technology/aria-hotel-details-bedside-tablet.tif',
-                         caption: "Experience ARIA's in-room tablets.",
-                       },
-                       {
-                         imageUrl:
-                           'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/in-room-amenities/aria-amenities-floral-three-dozen-roses.tif',
-                         caption:
-                           "Whether it's celebrating a special occasion or just to put a surprised smile on her face, trust the Concierge at ARIA with all your floral needs.",
-                       },
-                       {
-                         imageUrl:
-                           'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/tower-suites-lobby/aria-hotel-tower-suites-lounge-waiting.tif',
-                         caption:
-                           'Catered to your every desire with the VIP treatment you deserve—it’s luxury at its finest.',
-                       },
-                       {
-                         imageUrl:
-                           'https://static.mgmresorts.com/content/dam/MGM/aria/amenities/concierge/aria-amenities-concierge-flower-petals.tif',
-                         caption:
-                           'The Concierge will help bring your ideas to life and ensure that every detail of your vision is executed flawlessly.',
-                       },
-                     ]
+                     items: room.unifiedGalleryCollection.items.map((item)=>({
+                                imageUrl: item.imageUrl,
+                                caption: item.title,
+                        })),
                    },
                    accordion: {
-                     title:'Amenities to Love',
-                     items: [
-                       {
-                         title: 'Special Access',
-                         listContents: [
-                           'Mobile Check-in',
-                           'Priority Line Access for Taxi Service',
-                           'Secluded Lounge with Complimentary Food & Beverage',
-                           'Concierge Pre-Arrival Contact',
-                           'ARIA Main Pool',
-                           'Curbside Meet and Greet (Hours vary)',
-                           'ARIA Fitness Center',
-                           'Private Lounge Check-In',
-                           'Preferred Tee Times to Shadow Creek Golf Course',
-                         ],
-                       },
-                       {
-                         title: 'Room Features',
-                         listContents: [
-                           'Mobile Check-in',
-                           'Priority Line Access for Taxi Service',
-                           'Secluded Lounge with Complimentary Food & Beverage',
-                           'Concierge Pre-Arrival Contact',
-                           'ARIA Main Pool',
-                           'Curbside Meet and Greet (Hours vary)',
-                           'ARIA Fitness Center',
-                           'Private Lounge Check-In',
-                           'Preferred Tee Times to Shadow Creek Golf Course',
-                         ],
-                       },
-                       {
-                         title: 'Technology',
-                         listContents: [
-                           'Mobile Check-in',
-                           'Priority Line Access for Taxi Service',
-                           'Secluded Lounge with Complimentary Food & Beverage',
-                           'Concierge Pre-Arrival Contact',
-                           'ARIA Main Pool',
-                           'Curbside Meet and Greet (Hours vary)',
-                           'ARIA Fitness Center',
-                           'Private Lounge Check-In',
-                           'Preferred Tee Times to Shadow Creek Golf Course',
-                         ],
-                       },
-                       {
-                         title: 'Bed & bath',
-                         listContents: [
-                           'Mobile Check-in',
-                           'Priority Line Access for Taxi Service',
-                           'Secluded Lounge with Complimentary Food & Beverage',
-                           'Concierge Pre-Arrival Contact',
-                           'ARIA Main Pool',
-                           'Curbside Meet and Greet (Hours vary)',
-                           'ARIA Fitness Center',
-                           'Private Lounge Check-In',
-                           'Preferred Tee Times to Shadow Creek Golf Course',
-                         ],
-                       },
-                     ],
+                     title: page.accordionTitle,
+                     items: page.accordionItemsCollection.items.map((item) => ({
+                            title: item.title,
+                            listContents: item.itemList,
+                         }))
                    },
                    cardRow: {
-                     title: "Elevate Your Tower Suites Experience",
+                     title: page.similarRoomsSectionTitle,
                      readMoreButton: {
                        url: '/',
-                       label: 'View All Tower Suites',
+                       label: page.similarRoomsActionText || 'View All',
                      },
                      rooms: room.similarRoomsCollection.items.map((similarRoom) => ({
                             title: similarRoom.title,
-                             keyValues: [similarRoom.squareFeet, similarRoom.bedType, `Max Guests ${similarRoom.maxGuests}`],
+                             keyValues: [`${similarRoom.squareFeet} Sqft`, similarRoom.bedType, `Max Guests ${similarRoom.maxGuests}`],
                              description: similarRoom.shortDescription.json.content[0].content[0].content[0].content[0].value,
                              image: {
                                url: similarRoom.cardImageUrl,
@@ -334,52 +281,40 @@ query roomDetailPageQuery {
                         })),
                    },
                    twoColumnHero: {
-                    title: 'Elevate Your Tower Suites Experience',
+                    title: page.twoColumnHeroTitle,
                     image: {
-                      url:
-                        'https://static.mgmresorts.com/content/dam/MGM/aria/hotel/aria/tower-suites-lobby/lifestyle/aria-hotel-lifestyle-exterior-tower-suites-curb.tif',
+                      url: page.twoColumnHeroImageUrl,
                     },
-                    subtitle: 'Offer Details',
+                    subtitle: page.twoColumnHeroSubtitle,
                     actions: [
                       {
                         variant: 'secondary',
                         label: 'Learn More',
-                        url:
-                          'https://www.aria.com/en/offers/tower-suites-vip-experience.html',
+                        url: page.twoColumnHeroActionLink,
                       },
                     ],
-                    contentHTML: `
-                      <p>Elevate your Tower Suites stay by adding the Tower Suites VIP Arrival Experience to your reservation. Add-on includes the following amenities:</p>
-                      <ul>
-                        <li>Roundtrip Luxury Airport Transfer</li>
-                        <li>Welcome Cocktail at Lobby Bar for Two (2)</li>
-                        <li>In-suite Welcome Amenity</li>
-                        <li>In-suite American Breakfast for Two (2)</li>
-                      </ul>
-                      <p>Purchase this package for a one-time fee of $250 when you add-on to any Tower Suites booking on Aria.com. *</p>
-                      <p class="micro-text">* Prices subject to change during holidays and peak periods. Additional taxes may apply. Please contact Tower Suites Concierge for more information. Terms and conditions apply.</p>
-                    `,
+                    contentHTML: page.twoColumnHeroBody,
                     sidebarSections: [
                       {
                         headline: {
-                          title: 'Add VIP Package',
+                          title: page.twoColumnHeroSidebarHeadline,
                         },
                         items: [
                           {
                             type: 'content',
                             contentHTML:
-                              '<p>If you would like to add this package on any existing Tower Suites reservation please contact Tower Suites.</p>',
+                              page.twoColumnHeroSidebarContent,
                           },
                           {
                             type: 'inline-text',
                             label: 'Phone',
-                            text: '702 590 9599',
+                            text: page.contact.phoneNumber,
                           },
                           {
                             type: 'inline-link',
                             label: 'Email',
-                            linkText: 'towersuites@aria.com',
-                            linkUrl: 'mailto:towersuites@aria.com',
+                            linkText: page.contact.emailAddress,
+                            linkUrl: `mailto:${page.contact.emailAddress}`,
                           },
                         ],
                       },
@@ -482,6 +417,5 @@ query roomDetailPageQuery {
     );
   }
 }
-
 
 export default RoomDetail;
