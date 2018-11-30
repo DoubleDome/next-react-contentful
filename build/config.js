@@ -33,56 +33,56 @@ const SOURCE_NEXT_DIR = path.join(__dirname, '../next');
 const SRC_TO_COPY = [
   {
     SOURCE: path.join(__dirname, '../src/config'),
-    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/config`,
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/config`
   },
   {
     SOURCE: path.join(__dirname, '../src/initializers'),
-    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/initializers`,
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/initializers`
   },
   {
     SOURCE: path.join(__dirname, '../src/shared'),
-    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/shared`,
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/shared`
   },
   {
     SOURCE: path.join(__dirname, '../src/stores'),
-    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/stores`,
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/stores`
   },
   {
     SOURCE: path.join(__dirname, '../src/services'),
-    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/services`,
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/services`
   },
   {
     SOURCE: path.join(__dirname, '../src/utils'),
-    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/utils`,
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/utils`
   },
   {
     SOURCE: path.join(__dirname, '../src/init.js'),
-    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/init.js`,
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/init.js`
   },
   {
     SOURCE: path.join(__dirname, '../src/polyfills.js'),
-    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/polyfills.js`,
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/polyfills.js`
   },
   {
     SOURCE: `${SOURCE_NEXT_DIR}/integrations`,
-    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/integrations`,
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/integrations`
   },
   {
     SOURCE: `${SOURCE_NEXT_DIR}/layouts`,
-    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/layouts`,
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/layouts`
   },
   {
     SOURCE: `${SOURCE_NEXT_DIR}/pages`,
-    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/pages`,
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/pages`
   },
   {
     SOURCE: TARGET_STYLES_DIR,
-    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/themes`,
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/themes`
   },
   {
     SOURCE: SOURCE_FONTS_FILES_ROOT_DIR,
-    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/themes/fonts`,
-  },
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/themes/fonts`
+  }
 ];
 
 // Other
@@ -108,7 +108,7 @@ const THEMES = [
   'parkMgm',
   'signature',
   'springfield',
-  'vdara',
+  'vdara'
 ];
 
 module.exports = {
@@ -134,5 +134,5 @@ module.exports = {
 
   BRAND_THEME_COMPONENT_NAME,
   THEMES,
-  COMMENT,
+  COMMENT
 };
