@@ -24,9 +24,7 @@ class Builder extends AbstractBuilder {
   }
 
   findComponents() {
-    const files = this.findComponentFiles(
-      this.config.SOURCE_COMPONENTS_ROOT_DIR,
-    );
+    const files = this.findComponentFiles(this.config.SOURCE_COMPONENTS_ROOT_DIR);
 
     files.forEach(file => {
       const component = Component.fromPath(file);

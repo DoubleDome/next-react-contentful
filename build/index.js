@@ -27,7 +27,7 @@ function run() {
   info('Building gen2 components...');
   builder.buildComponents();
 
-  info('Moving src');
+  info('Moving src...');
   builder.copySrc();
 
   info('Moving gen2 aem wrapper components...');
