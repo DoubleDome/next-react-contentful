@@ -42,14 +42,6 @@ class RoomDetail extends React.Component {
                     similarRoomsActionText
                     twoColumnHeroSidebarContent
                     accordionTitle
-                    accordionItemsCollection {
-                      items {
-                        ... on AccordionItem {
-                          title
-                          itemList
-                        }
-                      }
-                    }
                     contact {
                       ... on ContactInformation {
                         phoneNumber
@@ -65,9 +57,18 @@ class RoomDetail extends React.Component {
                       squareFeet
                       bedType
                       maxGuests
+                      otherAmenitiesCollection {
+                        items {
+                          ... on RoomAmenity {
+                            title
+                            itemList
+                            featuredAmenity
+                          }
+                        }
+                      }
                       unifiedGalleryCollection {
                         items {
-                          title
+                          description
                           imageUrl
                         }
                       }
@@ -191,7 +192,7 @@ class RoomDetail extends React.Component {
                            },
                          ],
                        },
-                       {
+                       (room.otherAmenitiesCollection.items && {
                          headline: {
                            title: 'Featured Amenities',
                          },
@@ -199,10 +200,13 @@ class RoomDetail extends React.Component {
                            {
                              type: 'content',
                              contentHTML:
-                               '<ul><li>Strip View</li><li>Pre-Arrival Concierge</li><li>Lounge Access</li></ul>',
+                               `<ul>${room.otherAmenitiesCollection.items.map((amenity) => { // eslint-disable-line consistent-return
+                                   if(amenity.featuredAmenity) {
+                                       return `<li>${amenity.title}</li>`;}})
+                               }</ul>`,
                            },
                          ],
-                       },
+                       }),
                         (room.lounge &&   {
                          headline: {
                            title: 'Lounge Hours',
@@ -243,15 +247,19 @@ class RoomDetail extends React.Component {
                      },
                      items: room.unifiedGalleryCollection.items.map((item)=>({
                                 imageUrl: item.imageUrl,
-                                caption: item.title,
+                                caption: item.description,
                         })),
                    },
                    accordion: {
                      title: page.accordionTitle,
-                     items: page.accordionItemsCollection.items.map((item) => ({
-                            title: item.title,
-                            listContents: item.itemList,
-                         }))
+                     items: room.otherAmenitiesCollection.items.map((item) => { // eslint-disable-line consistent-return
+                          if(item.itemList){   
+                              return({
+                                title: item.title,
+                                listContents: item.itemList,
+                             });
+                         }
+                        })
                    },
                    cardRow: {
                      title: page.similarRoomsSectionTitle,
