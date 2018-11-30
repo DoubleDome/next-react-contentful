@@ -6,12 +6,12 @@ import G2TextHeaderSection from '../../dmp/components/G2TextHeaderSection/G2Text
 import G2HeroSection from '../../dmp/components/G2HeroSection/G2HeroSection.component';
 import G2RoomOverviewCardCollectionSection from '../../dmp/components/G2RoomOverviewCardCollectionSection/G2RoomOverviewCardCollectionSection.component';
 import PromoCardsRowSection from '../../src/components/PromoCardsRowSection/PromoCardsRowSection.component';
-import "isomorphic-fetch";
+import 'isomorphic-fetch';
 
 class Index extends React.Component {
   static async getInitialProps() {
     let pageComponents;
-    
+
     // Hard coding in the only room landing page ID we have right now
     const gqlQuery = `
      query roomLandingPageQuery {
@@ -99,96 +99,102 @@ class Index extends React.Component {
       `;
 
     await queryContent(gqlQuery, config.spaces.rooms) // eslint-disable-line no-use-before-define
-    .then((res) => {
-      const page = res.data.roomLandingPage;
-      pageComponents = {
+      .then(res => {
+        const page = res.data.roomLandingPage;
+
+        pageComponents = {
           componentOrder: page.componentOrder,
+          componentsCollection: page.componentsCollection.items,
           textHeader: {
             title: page.textHeaderTitle,
-            subtitle: page.textHeaderSubtitle,
+            subtitle: page.textHeaderSubtitle
           },
           hero: {
             premium: page.firstSectionHeroPremium,
             title: page.firstSectionHeroTitle,
-            images: page.firstSectionHeroRoomsCollection.items.map((room) => ({
-                url: room.cardImageUrl,
-                caption: room.title,
-                tertiaryAction: {
-                  label: page.roomPrimaryActionLabels || 'Check Rates',
-                  url: '/',
-                },
-              })),
+            images: page.firstSectionHeroRoomsCollection.items.map(room => ({
+              url: room.cardImageUrl,
+              caption: room.title,
+              tertiaryAction: {
+                label: page.roomPrimaryActionLabels || 'Check Rates',
+                url: '/'
+              }
+            })),
             description: page.firstSectionHeroDescription
           },
           roomCollection: page.roomCollectionCollection.items.map(room => ({
-              title: room.title,
-              keyValues: [`${room.squareFeet} Sqft`, room.bedType, `Max Guests ${room.maxGuests}`],
-              description: room.shortDescription.json.content[0].content[0].value,
-              image: {
-                url: room.cardImageUrl,
-              },
-              primaryAction: {
-                label: page.roomPrimaryActionLabels || 'Check Rates',
-                url: '/',
-              },
-              secondaryAction: {
-                label: page.roomSecondaryActionLabels || 'View Room Details',
-                url: `/${  room.linkedFrom.roomDetailPageCollection.items[0].slug}`,
-              },
-              tertiaryAction: {
-                label: page.roomTertiaryActionLabels || 'Compare',
-                url: '/',
-              },
-            })),
+            title: room.title,
+            keyValues: [
+              `${room.squareFeet} Sqft`,
+              room.bedType,
+              `Max Guests ${room.maxGuests}`
+            ],
+            description: room.shortDescription.json.content[0].content[0].value,
+            image: {
+              url: room.cardImageUrl
+            },
+            primaryAction: {
+              label: page.roomPrimaryActionLabels || 'Check Rates',
+              url: '/'
+            },
+            secondaryAction: {
+              label: page.roomSecondaryActionLabels || 'View Room Details',
+              url: `/${room.linkedFrom.roomDetailPageCollection.items[0].slug}`
+            },
+            tertiaryAction: {
+              label: page.roomTertiaryActionLabels || 'Compare',
+              url: '/'
+            }
+          })),
           roomCollectionLayout: page.roomCollectionLayout,
           secondHero: {
             premium: true,
             title: page.secondSectionHeroTitle,
-            images: page.secondSectionHeroRoomsCollection.items.map((room) => ({
-                url: room.cardImageUrl,
-                tertiaryAction: {
-                  label: page.roomTertiaryActionLabels || 'Compare',
-                  url: '/'
-                },
-              })),
+            images: page.secondSectionHeroRoomsCollection.items.map(room => ({
+              url: room.cardImageUrl,
+              tertiaryAction: {
+                label: page.roomTertiaryActionLabels || 'Compare',
+                url: '/'
+              }
+            })),
             description: page.secondSecondHeroDescription,
             secondaryAction: {
               label: page.secondSectionHeroSecondaryActionLabel,
-              url: page.secondSectionHeroSecondaryActionUrl,
+              url: page.secondSectionHeroSecondaryActionUrl
             }
           },
           promoSection: {
             title: page.promoSectionTitle,
             button: {
               label: page.promoSectionButtonLabel,
-              url: page.promoSectionButtonUrl,
+              url: page.promoSectionButtonUrl
             },
             cards: page.promoCardsCollection.items.map(card => ({
-                imageUrl: card.imageUrl,
-                categoryName: card.categoryName,
-                title: card.title,
-                description: card.description,
-                status: {
-                  color: card.statusColor ? card.statusColor : '',
-                  label: card.statusLabel,
-                },
-                primaryAction: {
-                  label: card.primaryActionLabel,
-                  url: card.primaryActionUrl,
-                },
-                tertiaryAction: {
-                  label: card.tertiaryActionLabel,
-                  url: card.tertiaryActionUrl,
-                },
-              }))
-          },
+              imageUrl: card.imageUrl,
+              categoryName: card.categoryName,
+              title: card.title,
+              description: card.description,
+              status: {
+                color: card.statusColor ? card.statusColor : '',
+                label: card.statusLabel
+              },
+              primaryAction: {
+                label: card.primaryActionLabel,
+                url: card.primaryActionUrl
+              },
+              tertiaryAction: {
+                label: card.tertiaryActionLabel,
+                url: card.tertiaryActionUrl
+              }
+            }))
+          }
         };
-    }).catch(err => {
-      console.log(err);
-    });
-  
-    return pageComponents;
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
+    return pageComponents;
   }
 
   createTextHeader(data) {
@@ -209,10 +215,7 @@ class Index extends React.Component {
 
   createRoomOverview(collection, layout) {
     return (
-      <G2RoomOverviewCardCollectionSection
-        rooms={collection}
-        layout={layout}
-      />
+      <G2RoomOverviewCardCollectionSection rooms={collection} layout={layout} />
     );
   }
 
@@ -222,43 +225,59 @@ class Index extends React.Component {
         title={data.title}
         readMoreButton={{
           label: data.button.label,
-          url: data.button.url,
+          url: data.button.url
         }}
         cards={data.cards}
       />
     );
   }
 
+  santizeComponentCollection(collection) {
+    const result = [];
+    this.props.componentsCollection.forEach(component => {
+      result.push({
+        name: component.component.name,
+        dataField: component.dataField
+      });
+    });
+    return result;
+  }
+
   render() {
     // This approach allows to reorder the components depending on data coming from the CMS
     const components = [];
-    
-    this.props.componentOrder.forEach((component) => {
-        if(component === "Text Header") {
-            components.push(this.createTextHeader(this.props.textHeader));
-        }
-        else if(component === "Section Hero") {
-            components.push(this.createHero(this.props.hero));
-        }
-        else if(component === "Room Cards") {
-            components.push(this.createRoomOverview(
-              this.props.roomCollection,
-              this.props.roomCollectionLayout,
-            ));
-        }
-        else if(component === "Premium Hero") {
-            components.push(this.createHero(this.props.secondHero, 1));
-        }
-        else if(component === "Promotions") {
-            components.push(this.createPromoSection(this.props.promoSection));
-        }
+
+    const sanitizedCollection = this.santizeComponentCollection(
+      this.props.componentsCollection
+    );
+
+    sanitizedCollection.forEach(component => {
+      switch (component.name) {
+        case 'G2TextHeaderSection':
+          components.push(
+            this.createTextHeader(this.props[component.dataField])
+          );
+          break;
+        case 'G2HeroSection':
+          components.push(this.createHero(this.props[component.dataField]));
+          break;
+        case 'G2RoomOverviewCardCollectionSection':
+          components.push(
+            this.createRoomOverview(
+              this.props[component.dataField],
+              this.props.roomCollectionLayout
+            )
+          );
+          break;
+        case 'PromoCardsRowSection':
+          components.push(
+            this.createPromoSection(this.props[component.dataField])
+          );
+          break;
+      }
     });
 
-    return (
-      <Layout>
-        {components.map(component => component)}
-      </Layout>
-    );
+    return <Layout>{components.map(component => component)}</Layout>;
   }
 }
 

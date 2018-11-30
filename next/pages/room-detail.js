@@ -87,7 +87,7 @@ class RoomDetail extends React.Component {
                         title
                         loungeHours
                       }
-                      similarRoomsCollection {
+                      similarRoomsCollection(limit:1) {
                         items {
                           ... on Room {
                             squareFeet
