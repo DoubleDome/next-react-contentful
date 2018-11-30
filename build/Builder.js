@@ -62,7 +62,7 @@ class Builder extends AbstractBuilder {
   buildBrandThemeComponent() {
     this.brandThemeComponentBuilder.build(
       this.brandThemeComponent,
-      this.components,
+      this.components
     );
   }
 
@@ -81,14 +81,14 @@ class Builder extends AbstractBuilder {
   moveDmpDependencies() {
     fse.copySync(
       this.config.SOURCE_DMP_DEPENDENCIES_DIR,
-      this.config.TARGET_DMP_DEPENDENCIES_DIR,
+      this.config.TARGET_DMP_DEPENDENCIES_DIR
     );
   }
 
   findComponentFiles(path) {
     return glob.sync(this.config.COMPONENTS_GLOB_PATTERN, {
       cwd: path,
-      absolute: true,
+      absolute: true
     });
   }
 }
