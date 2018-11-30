@@ -202,7 +202,10 @@ class RoomDetail extends React.Component {
                              contentHTML:
                                `<ul>${room.otherAmenitiesCollection.items.map((amenity) => { // eslint-disable-line consistent-return
                                    if(amenity.featuredAmenity) {
-                                       return `<li>${amenity.title}</li>`;}})
+                                       return `<li>${amenity.title}</li>`;
+                                       
+                                   }
+                               })
                                }</ul>`,
                            },
                          ],
