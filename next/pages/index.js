@@ -20,6 +20,16 @@ class Index extends React.Component {
           textHeaderTitle
           textHeaderSubtitle
           componentOrder
+          componentsCollection {
+            items {
+              ... on ComponentPlacement {
+                component {
+                  name
+                }
+                dataField
+              }
+            }
+          }
           firstSectionHeroPremium
           firstSectionHeroTitle
           firstSectionHeroDescription
