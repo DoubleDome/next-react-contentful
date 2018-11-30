@@ -24,7 +24,9 @@ class Builder extends AbstractBuilder {
   }
 
   findComponents() {
-    const files = this.findComponentsFiles();
+    const files = this.findComponentFiles(
+      this.config.SOURCE_COMPONENTS_ROOT_DIR,
+    );
 
     files.forEach(file => {
       const component = Component.fromPath(file);
@@ -39,8 +41,23 @@ class Builder extends AbstractBuilder {
     return this.components;
   }
 
+  findG2Components() {
+    const files = this.findComponentFiles(
+      `${this.config.SOURCE_DMP_DEPENDENCIES_DIR}/components`,
+    );
+    const g2Components = [];
+
+    files.forEach(file => {
+      const component = Component.fromPath(file);
+      g2Components.push(component);
+    });
+
+    return g2Components;
+  }
+
   syncWithContentful() {
-    const list = this.components.map(component => component.getName());
+    const allComponents = [].concat(this.findG2Components(), this.components);
+    const list = allComponents.map(component => component.getName());
     this.listBuilder.pull().then(() => {
       this.listBuilder.sync(list);
     });
@@ -72,9 +89,9 @@ class Builder extends AbstractBuilder {
     );
   }
 
-  findComponentsFiles() {
+  findComponentFiles(path) {
     return glob.sync(this.config.COMPONENTS_GLOB_PATTERN, {
-      cwd: this.config.SOURCE_COMPONENTS_ROOT_DIR,
+      cwd: path,
       absolute: true,
     });
   }
