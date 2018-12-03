@@ -94,7 +94,7 @@ class RoomDetail extends React.Component {
                            },
                          ],
                        },
-                       (room.otherAmenitiesCollection.items && {
+                       (room.featuredAmenitiesCollection.items && {
                          headline: {
                            title: 'Featured Amenities',
                          },
@@ -102,11 +102,10 @@ class RoomDetail extends React.Component {
                            {
                              type: 'content',
                              contentHTML:
-                               `<ul>${room.otherAmenitiesCollection.items.map((amenity) => { // eslint-disable-line consistent-return
-                                   if(amenity.featuredAmenity === true) {
+                               `<ul>${
+                               room.featuredAmenitiesCollection.items.map((amenity) => { // eslint-disable-line consistent-return
                                        return `<li>${amenity.title}</li>`;
-                                   }
-                               })
+                               }).toString().replace(',','')
                                }</ul>`,
                            },
                          ],
