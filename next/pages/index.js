@@ -7,103 +7,18 @@ import G2HeroSection from '../../dmp/components/G2HeroSection/G2HeroSection.comp
 import G2RoomOverviewCardCollectionSection from '../../dmp/components/G2RoomOverviewCardCollectionSection/G2RoomOverviewCardCollectionSection.component';
 import PromoCardsRowSection from '../../src/components/PromoCardsRowSection/PromoCardsRowSection.component';
 import 'isomorphic-fetch';
+import { gqlQuery } from '../queries/index.query';
 
 class Index extends React.Component {
   static async getInitialProps() {
     let pageComponents;
 
     // Hard coding in the only room landing page ID we have right now
-    const gqlQuery = `
-     query roomLandingPageQuery {
-        roomLandingPage(id: "4dxYMm3HWEaoA0qocm4SaQ") {
-          title
-          textHeaderTitle
-          textHeaderSubtitle
-          componentOrder
-          componentsCollection {
-            items {
-              ... on ComponentPlacement {
-                component {
-                  name
-                }
-                dataField
-              }
-            }
-          }
-          firstSectionHeroPremium
-          firstSectionHeroTitle
-          firstSectionHeroDescription
-          firstSectionHeroRoomsCollection {
-            items {
-              ... on Room {
-                title
-                cardImageUrl
-              }
-            }
-          }
-          firstSectionHeroLogoUrl
-          roomCollectionLayout
-          roomCollectionCollection {
-            items {
-              ... on Room {
-                title
-                squareFeet
-                bedType
-                maxGuests
-                cardImageUrl
-                linkedFrom {
-                  roomDetailPageCollection {
-                    items {
-                      slug
-                    }
-                  }
-                }
-                shortDescription {
-                  json
-                }
-              }
-            }
-          }
-          secondSectionHeroRoomsCollection {
-            items {
-              ... on Room {
-                cardImageUrl
-              }
-            }
-          }
-          secondSectionHeroTitle
-          secondSectionHeroDescription
-          secondSectionHeroSecondaryActionLabel
-          secondSectionHeroSecondaryActionUrl
-          promoSectionTitle
-          promoSectionButtonLabel
-          promoSectionButtonUrl
-          promoCardsCollection {
-            items {
-              ... on PromoCard {
-                imageUrl
-                title
-                description
-                categoryName
-                statusColor
-                statusLabel
-                primaryActionUrl
-                primaryActionLabel
-                tertiaryActionUrl
-                tertiaryActionLabel
-              }
-            }
-          }
-        }
-      }     
-      `;
-
-    await queryContent(gqlQuery, config.spaces.rooms) // eslint-disable-line no-use-before-define
+    await queryContent(gqlQuery('4dxYMm3HWEaoA0qocm4SaQ'), config.spaces.rooms) // eslint-disable-line no-use-before-define
       .then(res => {
         const page = res.data.roomLandingPage;
 
         pageComponents = {
-          componentOrder: page.componentOrder,
           componentsCollection: page.componentsCollection.items,
           textHeader: {
             title: page.textHeaderTitle,

@@ -9,113 +9,13 @@ import G2GallerySection from '../../dmp/components/G2GallerySection/G2GallerySec
 import G2TwoColumnHeroSection from '../../dmp/components/G2TwoColumnHeroSection/G2TwoColumnHeroSection.component';
 import G2RoomOverviewCardRowSection from '../../dmp/components/G2RoomOverviewCardRowSection/G2RoomOverviewCardRowSection.component';
 import "isomorphic-fetch";
-
+import { gqlQuery } from '../queries/room-detail.query'
 class RoomDetail extends React.Component {
+
     static async getInitialProps({query}) {
         let page;
         let room;
-        const gqlQuery = `
-            query roomDetailPageQuery {
-              roomDetailPageCollection(where: {slug: "${query.id}"}) {
-                items {
-                  ... on RoomDetailPage {
-                    componentOrder
-                    overviewHeaderPrimaryActionLabel
-                    overviewHeaderPrimaryActionUrl
-                    overviewHeaderSecondaryActionLabel
-                    overviewHeaderSecondaryActionUrl
-                    overviewBodyPrimaryActionLabel
-                    overviewBodyPrimaryActionUrl
-                    overviewBodyTertiaryActionLabel
-                    overviewBodyTertiaryActionUrl
-                    sidebarSectionHeadlineTitle
-                    sidebarSectionHeadlineText
-                    sidebarSectionHeadlineText
-                    highlightCarouselTitle
-                    twoColumnHeroTitle
-                    twoColumnHeroImageUrl
-                    twoColumnHeroSubtitle
-                    twoColumnHeroBody
-                    twoColumnHeroActionLink
-                    twoColumnHeroSidebarHeadline
-                    similarRoomsSectionTitle
-                    similarRoomsActionText
-                    twoColumnHeroSidebarContent
-                    accordionTitle
-                    contact {
-                      ... on ContactInformation {
-                        phoneNumber
-                        emailAddress
-                      }
-                    }
-                    room {
-                      subtitle
-                      secondaryCopy
-                      brand
-                      cardImageUrl
-                      title
-                      squareFeet
-                      bedType
-                      maxGuests
-                      otherAmenitiesCollection {
-                        items {
-                          ... on RoomAmenity {
-                            title
-                            itemList
-                            featuredAmenity
-                          }
-                        }
-                      }
-                      unifiedGalleryCollection {
-                        items {
-                          description
-                          imageUrl
-                        }
-                      }
-                      highlightsCollection {
-                        items {
-                          title
-                          description
-                          imageUrl
-                        }
-                      }
-                      galleryImageUrls
-                      longDescription {
-                        json
-                      }
-                      lounge {
-                        title
-                        loungeHours
-                      }
-                      similarRoomsCollection(limit:1) {
-                        items {
-                          ... on Room {
-                            squareFeet
-                            bedType
-                            title
-                            maxGuests
-                            shortDescription {
-                              json
-                            }
-                            cardImageUrl
-                            linkedFrom {
-                              roomDetailPageCollection {
-                                items {
-                                  slug
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-         `;
-
-        await queryContent(gqlQuery, config.spaces.rooms) // eslint-disable-line no-use-before-define
+        await queryContent(gqlQuery(query.id), config.spaces.rooms) // eslint-disable-line no-use-before-define
         .then((res) => {
           /*
             Can't destructure these due to the names of the actual endpoints.
@@ -128,12 +28,14 @@ class RoomDetail extends React.Component {
             https://eslint.org/docs/rules/prefer-destructuring
           */
           page = res.data.roomDetailPageCollection.items[0]; // eslint-disable-line prefer-destructuring
-          room = page.room; // eslint-disable-line prefer-destructuring
+          room = page.room;
         });
-    
+        
         return { 
+                  componentsCollection: page.componentsListCollection.items,
                   room: {
                    componentOrder: page.componentOrder,
+                   
                    overviewHeader: {
                      header: {
                        subtitle: room.brand,
@@ -201,9 +103,8 @@ class RoomDetail extends React.Component {
                              type: 'content',
                              contentHTML:
                                `<ul>${room.otherAmenitiesCollection.items.map((amenity) => { // eslint-disable-line consistent-return
-                                   if(amenity.featuredAmenity) {
+                                   if(amenity.featuredAmenity === true) {
                                        return `<li>${amenity.title}</li>`;
-                                       
                                    }
                                })
                                }</ul>`,
@@ -214,7 +115,7 @@ class RoomDetail extends React.Component {
                          headline: {
                            title: 'Lounge Hours',
                          },
-                         items: room.lounge.loungeHours.map((hourItem) => ({
+                         items:room.lounge.loungeHours.map((hourItem) => ({
                                 type: 'inline-text',
                                 label: hourItem.label,
                                 text: hourItem.text,
@@ -332,7 +233,7 @@ class RoomDetail extends React.Component {
                     ],
                   }
                  },
-                 };
+            };
       }
 
 
@@ -396,29 +297,60 @@ class RoomDetail extends React.Component {
         />
       )
     }
+    
+    santizeComponentCollection(collection) {
+        const result = [];
+        this.props.componentsCollection.forEach(component => {
+          result.push({
+            name: component.component.name,
+            dataField: component.dataField
+          });
+        });
+        return result;
+   }
 
   render() {
-    const components = [];
+      
     // This approach allows to reorder the components depending on data coming from the CMS
-    this.props.room.componentOrder.forEach((component) => {
-        if(component === "Overview") {
-            components.push(this.createOverviewHeader(this.props.room.overviewHeader));
-        }
-        else if(component === "Highlights") {
-            components.push(this.createHighlightCarousel(this.props.room.highlightCarousel));
-        }
-        else if(component === "Gallery") {
-            components.push(this.createGallery(this.props.room.gallerySection));
-        }
-        else if(component === "Accordion") {
-            components.push(this.createAccordion(this.props.room.accordion));
-        }
-        else if(component === "Two Column Section Hero") {
-            components.push(this.createTwoColumnHero(this.props.room.twoColumnHero));
-        }
-        else if(component === "Similar Rooms") {
-            components.push(this.createCardRow(this.props.room.cardRow));
-        }
+    const components = [];
+    
+    const sanitizedCollection = this.santizeComponentCollection(
+      this.props.componentsCollection
+    );
+    
+     sanitizedCollection.forEach(component => {
+      switch (component.name) {
+        case 'G2RoomOverviewHeaderSection':
+              components.push(
+                this.createOverviewHeader(this.props.room[component.dataField])
+              );
+              break;
+        case 'G2HighlightCarouselSection':
+              components.push(
+                this.createHighlightCarousel(this.props.room[component.dataField])
+              );
+              break;
+        case 'G2AccordionSection':
+              components.push(
+                this.createAccordion(this.props.room[component.dataField])
+              );
+              break;
+        case 'G2GallerySection':
+              components.push(
+                this.createGallery(this.props.room[component.dataField])
+              );
+              break;
+        case 'G2TwoColumnHeroSection':
+              components.push(
+                this.createTwoColumnHero(this.props.room[component.dataField])
+              );
+              break;
+          case 'G2RoomOverviewCardRowSection':
+              components.push(
+                this.createCardRow(this.props.room[component.dataField])
+              );
+              break;
+      }
     });
 
     return (
