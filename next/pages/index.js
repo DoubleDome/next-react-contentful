@@ -54,7 +54,7 @@ class Index extends React.Component {
             },
             secondaryAction: {
               label: page.roomSecondaryActionLabels || 'View Room Details',
-              url: `/`
+              url: `/${room.linkedFrom.roomDetailPageCollection.items[0].slug}`
             },
             tertiaryAction: {
               label: page.roomTertiaryActionLabels || 'Compare',
