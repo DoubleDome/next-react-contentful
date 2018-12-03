@@ -147,7 +147,7 @@ class Index extends React.Component {
     );
   }
 
-  santizeComponentCollection(collection) {
+  santizeComponentCollection() {
     const result = [];
     this.props.componentsCollection.forEach(component => {
       result.push({
@@ -167,7 +167,7 @@ class Index extends React.Component {
     );
 
     sanitizedCollection.forEach(component => {
-      switch (component.name) {
+      switch (component.name) { // eslint-disable-line default-case
         case 'G2TextHeaderSection':
           components.push(
             this.createTextHeader(this.props[component.dataField])

@@ -10,6 +10,7 @@ import G2TwoColumnHeroSection from '../../dmp/components/G2TwoColumnHeroSection/
 import G2RoomOverviewCardRowSection from '../../dmp/components/G2RoomOverviewCardRowSection/G2RoomOverviewCardRowSection.component';
 import "isomorphic-fetch";
 import { gqlQuery } from '../queries/room-detail.query'
+
 class RoomDetail extends React.Component {
 
     static async getInitialProps({query}) {
@@ -28,7 +29,7 @@ class RoomDetail extends React.Component {
             https://eslint.org/docs/rules/prefer-destructuring
           */
           page = res.data.roomDetailPageCollection.items[0]; // eslint-disable-line prefer-destructuring
-          room = page.room;
+          room = page.room; // eslint-disable-line prefer-destructuring
         });
         
         return { 
@@ -103,9 +104,9 @@ class RoomDetail extends React.Component {
                              type: 'content',
                              contentHTML:
                                `<ul>${
-                               room.featuredAmenitiesCollection.items.map((amenity) => { // eslint-disable-line consistent-return
-                                       return `<li>${amenity.title}</li>`;
-                               }).toString().replace(',','')
+                               room.featuredAmenitiesCollection.items.map((amenity) =>  // eslint-disable-line consistent-return
+                                        `<li>${amenity.title}</li>`
+                               ).toString().replace(',','')
                                }</ul>`,
                            },
                          ],
@@ -297,7 +298,7 @@ class RoomDetail extends React.Component {
       )
     }
     
-    santizeComponentCollection(collection) {
+    santizeComponentCollection() {
         const result = [];
         this.props.componentsCollection.forEach(component => {
           result.push({
@@ -318,7 +319,7 @@ class RoomDetail extends React.Component {
     );
     
      sanitizedCollection.forEach(component => {
-      switch (component.name) {
+      switch (component.name) { // eslint-disable-line default-case
         case 'G2RoomOverviewHeaderSection':
               components.push(
                 this.createOverviewHeader(this.props.room[component.dataField])
