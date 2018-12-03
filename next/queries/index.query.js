@@ -17,6 +17,7 @@ module.exports = {
               }
             }
           }
+      
           firstSectionHeroPremium
           firstSectionHeroTitle
           firstSectionHeroDescription
@@ -39,7 +40,7 @@ module.exports = {
                 maxGuests
                 cardImageUrl
                 linkedFrom {
-                  roomDetailPageCollection {
+                  roomDetailPageCollection(limit:1) {
                     items {
                       slug
                     }
