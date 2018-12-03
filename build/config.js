@@ -76,6 +76,10 @@ const SRC_TO_COPY = [
     TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/pages`
   },
   {
+    SOURCE: `${SOURCE_NEXT_DIR}/queries`,
+    TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/queries`
+  },
+  {
     SOURCE: TARGET_STYLES_DIR,
     TARGET: `${TARGET_GEN2_SRC_BUILD_DIR}/themes`
   },
