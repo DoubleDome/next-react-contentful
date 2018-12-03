@@ -81,7 +81,7 @@ class RoomDetail extends React.Component {
                            {
                              type: 'inline-text',
                              label: 'size',
-                             text: `${room.squareFeet} Sqft`,
+                             text: `${room.squareFeet.toLocaleString('en')} Sqft`,
                            },
                            {
                              type: 'inline-text',
@@ -173,7 +173,7 @@ class RoomDetail extends React.Component {
                      },
                      rooms: room.similarRoomsCollection.items.map((similarRoom) => ({
                             title: similarRoom.title,
-                             keyValues: [`${similarRoom.squareFeet} Sqft`, similarRoom.bedType, `Max Guests ${similarRoom.maxGuests}`],
+                             keyValues: [`${similarRoom.squareFeet.toLocaleString('en')} Sqft`, similarRoom.bedType, `Max Guests ${similarRoom.maxGuests}`],
                              description: similarRoom.shortDescription.json.content[0].content[0].content[0].content[0].value,
                              image: {
                                url: similarRoom.cardImageUrl,
@@ -184,7 +184,7 @@ class RoomDetail extends React.Component {
                              },
                              secondaryAction: {
                                label: 'Room Details',
-                               url: `/${similarRoom.linkedFrom.roomDetailPageCollection.items.slug}`,
+                               url: `/${similarRoom.linkedFrom.roomDetailPageCollection.items[0].slug}`,
                              },
                              tertiaryAction: {
                                label: 'Compare',
@@ -265,7 +265,6 @@ class RoomDetail extends React.Component {
         />
       )
     }
-
     createAccordion(data) {
       return (
         <G2AccordionSection

@@ -17,7 +17,7 @@ class Index extends React.Component {
     await queryContent(gqlQuery('4dxYMm3HWEaoA0qocm4SaQ'), config.spaces.rooms) // eslint-disable-line no-use-before-define
       .then(res => {
         const page = res.data.roomLandingPage;
-
+  
         pageComponents = {
           componentsCollection: page.componentsCollection.items,
           textHeader: {
@@ -40,7 +40,7 @@ class Index extends React.Component {
           roomCollection: page.roomCollectionCollection.items.map(room => ({
             title: room.title,
             keyValues: [
-              `${room.squareFeet} Sqft`,
+              `${room.squareFeet.toLocaleString('en')} Sqft`,
               room.bedType,
               `Max Guests ${room.maxGuests}`
             ],
