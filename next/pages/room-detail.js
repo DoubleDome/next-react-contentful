@@ -184,7 +184,7 @@ class RoomDetail extends React.Component {
                              },
                              secondaryAction: {
                                label: 'Room Details',
-                               url: `/${  similarRoom.linkedFrom.roomDetailPageCollection.items.slug}`,
+                               url: `/`,
                              },
                              tertiaryAction: {
                                label: 'Compare',
