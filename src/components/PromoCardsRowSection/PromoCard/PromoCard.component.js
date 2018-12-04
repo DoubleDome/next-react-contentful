@@ -11,7 +11,7 @@ export const PromoCardPropTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
   status: PropTypes.shape({
-    color: PropTypes.oneOf(['red']),
+    color: PropTypes.oneOf(['red','']),
     label: PropTypes.string,
   }),
   primaryAction: PropTypes.shape({
