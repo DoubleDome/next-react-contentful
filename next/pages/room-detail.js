@@ -8,6 +8,7 @@ import G2AccordionSection from '../../dmp/components/G2AccordionSection/G2Accord
 import G2GallerySection from '../../dmp/components/G2GallerySection/G2GallerySection.component';
 import G2TwoColumnHeroSection from '../../dmp/components/G2TwoColumnHeroSection/G2TwoColumnHeroSection.component';
 import G2RoomOverviewCardRowSection from '../../dmp/components/G2RoomOverviewCardRowSection/G2RoomOverviewCardRowSection.component';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 import "isomorphic-fetch";
 import { gqlQuery } from '../queries/room-detail.query'
 
@@ -53,7 +54,7 @@ class RoomDetail extends React.Component {
                      main: {
                        title: room.subtitle,
                        content:
-                         `<p>${  room.longDescription.json.content[0].content[0].value  }</p>`,
+                         documentToHtmlString(room.longDescription.json),
                        primaryAction: {
                          label: page.overviewBodyPrimaryActionLabel || 'Check Rates',
                          url: page.overviewBodyPrimaryActionUrl || '/',
