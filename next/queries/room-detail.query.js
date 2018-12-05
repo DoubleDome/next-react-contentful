@@ -3,108 +3,135 @@ module.exports = {
      return( 
         `   
           query roomDetailPageQuery {
-            roomDetailPageCollection(where: {slug: "tower-suite"}) {
+            roomDetailPageCollection(where: {slug: "${id}"}) {
               items {
                 ... on RoomDetailPage {
-                  componentsListCollection {
-                    items {
-                      ... on ComponentPlacement {
-                        component {
-                          name
-                        }
-                        dataField
-                      }
-                    }
-                  }
-                  overviewHeaderPrimaryActionLabel
-                  overviewHeaderPrimaryActionUrl
-                  overviewHeaderSecondaryActionLabel
-                  overviewHeaderSecondaryActionUrl
-                  overviewBodyPrimaryActionLabel
-                  overviewBodyPrimaryActionUrl
-                  overviewBodyTertiaryActionLabel
-                  overviewBodyTertiaryActionUrl
-                  sidebarSectionHeadlineTitle
-                  sidebarSectionHeadlineText
-                  sidebarSectionHeadlineText
-                  highlightCarouselTitle
-                  twoColumnHeroTitle
-                  twoColumnHeroImageUrl
-                  twoColumnHeroSubtitle
-                  twoColumnHeroBody
-                  twoColumnHeroActionLink
-                  twoColumnHeroSidebarHeadline
-                  similarRoomsSectionTitle
-                  similarRoomsActionText
-                  twoColumnHeroSidebarContent
-                  accordionTitle
-                  contact {
-                    ... on ContactInformation {
-                      phoneNumber
-                      emailAddress
-                    }
-                  }
+                  ...componentList
+                  ...overview
+                  ...overviewSidebar
+                  ...componentLabels
+                  ...twoColumnHero
                   room {
-                    subtitle
-                    brand
-                    cardImageUrl
-                    title
-                    squareFeet
-                    bedType
-                    maxGuests
-                    otherAmenitiesCollection {
+                    ...generalRoomDetails
+                    ...otherAmenities
+                    ...featuredAmenities
+                    ...unifiedGallery
+                    ...highlights
+                    ...lounge
+                    ...similarRooms
+                  }
+                }
+              }
+            }
+          }
+          
+          fragment componentList on RoomDetailPage {
+            componentsListCollection {
+              items {
+                ... on ComponentPlacement {
+                  component {
+                    name
+                  }
+                  dataField
+                }
+              }
+            }
+          }
+          
+          fragment overview on RoomDetailPage {
+            overviewHeaderPrimaryActionLabel
+            overviewHeaderPrimaryActionUrl
+            overviewHeaderSecondaryActionLabel
+            overviewHeaderSecondaryActionUrl
+            overviewBodyPrimaryActionLabel
+            overviewBodyPrimaryActionUrl
+            overviewBodyTertiaryActionLabel
+            overviewBodyTertiaryActionUrl
+          }
+          
+          fragment componentLabels on RoomDetailPage {
+            similarRoomsSectionTitle
+            similarRoomsActionText
+            accordionTitle
+            highlightCarouselTitle
+          }
+          
+          fragment overviewSidebar on RoomDetailPage {
+            sidebarSectionHeadlineTitle
+            sidebarSectionHeadlineText
+            sidebarSectionHeadlineText
+            contact {
+              ... on ContactInformation {
+                phoneNumber
+                emailAddress
+              }
+            }
+          }
+          
+          fragment twoColumnHero on RoomDetailPage {
+            twoColumnHeroTitle
+            twoColumnHeroImageUrl
+            twoColumnHeroSubtitle
+            twoColumnHeroBody
+            twoColumnHeroActionLink
+            twoColumnHeroSidebarHeadline
+            twoColumnHeroSidebarContent
+          }
+          
+          fragment featuredAmenities on Room {
+            featuredAmenitiesCollection {
+              items {
+                ... on RoomAmenity {
+                  title
+                }
+              }
+            }
+          }
+          
+          fragment unifiedGallery on Room {
+            unifiedGalleryCollection {
+              items {
+                caption: description
+                imageUrl
+              }
+            }
+          }
+          
+          fragment highlights on Room {
+            highlightsCollection {
+              items {
+                title
+                description
+                imageUrl
+              }
+            }
+          }
+          
+          fragment otherAmenities on Room {
+            otherAmenitiesCollection {
+              items {
+                ... on RoomAmenity {
+                  title
+                  listContents: itemList
+                }
+              }
+            }
+          }
+          
+          fragment similarRooms on Room {
+            similarRoomsCollection(limit: 1) {
+              items {
+                ... on Room {
+                  squareFeet
+                  bedType
+                  title
+                  maxGuests
+                  shortDescription
+                  cardImageUrl
+                  linkedFrom {
+                    roomDetailPageCollection(limit: 1) {
                       items {
-                        ... on RoomAmenity {
-                          title
-                          itemList
-                        }
-                      }
-                    }
-                    featuredAmenitiesCollection {
-                      items {
-                        ... on RoomAmenity {
-                          title
-                        }
-                      }
-                    }
-                    unifiedGalleryCollection {
-                      items {
-                        description
-                        imageUrl
-                      }
-                    }
-                    highlightsCollection {
-                      items {
-                        title
-                        description
-                        imageUrl
-                      }
-                    }
-                    galleryImageUrls
-                    longDescription {
-                      json
-                    }
-                    lounge {
-                      title
-                      loungeHours
-                    }
-                    similarRoomsCollection {
-                      items {
-                        ... on Room {
-                          squareFeet
-                          bedType
-                          title
-                          maxGuests
-                          shortDescription
-                          cardImageUrl
-                          linkedFrom {
-                            roomDetailPageCollection(limit: 1) {
-                              items {
-                                slug
-                              }
-                            }
-                          }
-                        }
+                        slug
                       }
                     }
                   }
@@ -112,7 +139,27 @@ module.exports = {
               }
             }
           }
-
+          
+          fragment lounge on Room {
+            lounge {
+              title
+              loungeHours
+            }
+          }
+          
+          fragment generalRoomDetails on Room {
+            subtitle
+            brand
+            cardImageUrl
+            title
+            squareFeet
+            bedType
+            maxGuests
+            galleryImageUrls
+            longDescription {
+              json
+            }
+          }
       `
     );
   },
@@ -204,9 +251,8 @@ module.exports = {
                            title: 'Lounge Hours',
                          },
                          items:room.lounge.loungeHours.map((hourItem) => ({
-                                type: 'inline-text',
-                                label: hourItem.label,
-                                text: hourItem.text,
+                                ...hourItem,
+                                type: 'inline-text'
                              })),
                        }),
                      ],
@@ -216,11 +262,7 @@ module.exports = {
                    },
                    highlightCarousel: {
                      title: page.highlightCarouselTitle,
-                     cards: room.highlightsCollection.items.map(highlight => ({
-                            imageUrl: highlight.imageUrl,
-                             title: highlight.title,
-                             description: highlight.description,
-                         })), 
+                     cards: room.highlightsCollection.items, 
                    },
                    gallerySection: {
                      title: "Experience The Room",
@@ -237,21 +279,11 @@ module.exports = {
                          },
                        ],
                      },
-                     items: room.unifiedGalleryCollection.items.map((item)=>({
-                                imageUrl: item.imageUrl,
-                                caption: item.description,
-                        })),
+                     items: room.unifiedGalleryCollection.items,
                    },
                    accordion: {
                      title: page.accordionTitle,
-                     items: room.otherAmenitiesCollection.items.map((item) => { // eslint-disable-line consistent-return
-                          if(item.itemList){   
-                              return({
-                                title: item.title,
-                                listContents: item.itemList,
-                             });
-                         }
-                        })
+                     items: room.otherAmenitiesCollection.items
                    },
                    cardRow: {
                      title: page.similarRoomsSectionTitle,

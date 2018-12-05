@@ -2,65 +2,24 @@ module.exports = {
     gqlQuery(id) {
      return( 
       `
-        query roomLandingPageQuery {roomLandingPage(id: "${id}") {
-          title
+        query roomLandingPageQuery {
+          roomLandingPage(id: "${id}") {
+            title
+            ...textHeader
+            ...componentList
+            ...firstSectionHero
+            ...roomSelection
+            ...secondSectionHero
+            ...promoSection
+          }
+        }
+        
+        fragment textHeader on RoomLandingPage {
           textHeaderTitle
           textHeaderSubtitle
-          componentOrder
-          componentsCollection {
-            items {
-              ... on ComponentPlacement {
-                component {
-                  name
-                }
-                dataField
-              }
-            }
-          }
-      
-          firstSectionHeroPremium
-          firstSectionHeroTitle
-          firstSectionHeroDescription
-          firstSectionHeroRoomsCollection {
-            items {
-              ... on Room {
-                title
-                cardImageUrl
-              }
-            }
-          }
-          firstSectionHeroLogoUrl
-          roomCollectionLayout
-          roomCollectionCollection {
-            items {
-              ... on Room {
-                title
-                squareFeet
-                bedType
-                maxGuests
-                cardImageUrl
-                linkedFrom {
-                  roomDetailPageCollection(limit:1) {
-                    items {
-                      slug
-                    }
-                  }
-                }
-                shortDescription
-              }
-            }
-          }
-          secondSectionHeroRoomsCollection {
-            items {
-              ... on Room {
-                cardImageUrl
-              }
-            }
-          }
-          secondSectionHeroTitle
-          secondSectionHeroDescription
-          secondSectionHeroSecondaryActionLabel
-          secondSectionHeroSecondaryActionUrl
+        }
+        
+        fragment promoSection on RoomLandingPage {
           promoSectionTitle
           promoSectionButtonLabel
           promoSectionButtonUrl
@@ -80,7 +39,72 @@ module.exports = {
               }
             }
           }
+        }
+        
+        fragment componentList on RoomLandingPage {
+          componentOrder
+          componentsCollection {
+            items {
+              ... on ComponentPlacement {
+                component {
+                  name
+                }
+                dataField
+              }
+            }
           }
+        }
+        
+        fragment firstSectionHero on RoomLandingPage {
+          firstSectionHeroPremium
+          firstSectionHeroTitle
+          firstSectionHeroDescription
+          firstSectionHeroRoomsCollection {
+            items {
+              ... on Room {
+                caption: title
+                url: cardImageUrl
+              }
+            }
+          }
+          firstSectionHeroLogoUrl
+        }
+        
+        fragment roomSelection on RoomLandingPage {
+          roomCollectionLayout
+          roomCollection: roomCollectionCollection {
+            items {
+              ... on Room {
+                title
+                squareFeet
+                bedType
+                maxGuests
+                cardImageUrl
+                linkedFrom {
+                  roomDetailPageCollection(limit: 1) {
+                    items {
+                      slug
+                    }
+                  }
+                }
+                shortDescription
+              }
+            }
+          }
+        }
+        
+        fragment secondSectionHero on RoomLandingPage {
+          secondSectionHeroRoomsCollection {
+            items {
+              ... on Room {
+                url: cardImageUrl
+              }
+            }
+          }
+          secondSectionHeroTitle
+          secondSectionHeroDescription
+          secondSectionHeroSecondaryActionLabel
+          secondSectionHeroSecondaryActionUrl
         }
       `
     );
@@ -98,8 +122,7 @@ module.exports = {
             premium: page.firstSectionHeroPremium,
             title: page.firstSectionHeroTitle,
             images: page.firstSectionHeroRoomsCollection.items.map(room => ({
-              url: room.cardImageUrl,
-              caption: room.title,
+              ...room,
               tertiaryAction: {
                 label: page.roomPrimaryActionLabels || 'Check Rates',
                 url: '/'
@@ -107,14 +130,13 @@ module.exports = {
             })),
             description: page.firstSectionHeroDescription
           },
-          roomCollection: page.roomCollectionCollection.items.map(room => ({
-            title: room.title,
+          roomCollection: page.roomCollection.items.map(room => ({
+            ...room,
             keyValues: [
               `${room.squareFeet.toLocaleString('en')} Sqft`,
               room.bedType,
               `Max Guests ${room.maxGuests}`
             ],
-            description: room.shortDescription,
             image: {
               url: room.cardImageUrl
             },
@@ -136,7 +158,7 @@ module.exports = {
             premium: true,
             title: page.secondSectionHeroTitle,
             images: page.secondSectionHeroRoomsCollection.items.map(room => ({
-              url: room.cardImageUrl,
+              ...room,
               tertiaryAction: {
                 label: page.roomTertiaryActionLabels || 'Compare',
                 url: '/'
@@ -155,10 +177,7 @@ module.exports = {
               url: page.promoSectionButtonUrl
             },
             cards: page.promoCardsCollection.items.map(card => ({
-              imageUrl: card.imageUrl,
-              categoryName: card.categoryName,
-              title: card.title,
-              description: card.description,
+              ...card,
               status: {
                 color: card.statusColor ? card.statusColor : '',
                 label: card.statusLabel
