@@ -6,7 +6,6 @@ import G2TextHeaderSection from '../../dmp/components/G2TextHeaderSection/G2Text
 import G2HeroSection from '../../dmp/components/G2HeroSection/G2HeroSection.component';
 import G2RoomOverviewCardCollectionSection from '../../dmp/components/G2RoomOverviewCardCollectionSection/G2RoomOverviewCardCollectionSection.component';
 import PromoCardsRowSection from '../../src/components/PromoCardsRowSection/PromoCardsRowSection.component';
-import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 import 'isomorphic-fetch';
 import { gqlQuery, translateResponse } from '../queries/index.query';
 

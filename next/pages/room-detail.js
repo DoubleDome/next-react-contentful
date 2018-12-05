@@ -52,6 +52,7 @@ class RoomDetail extends React.Component {
         />
       )
     }
+
     createAccordion(data) {
       return (
         <G2AccordionSection
