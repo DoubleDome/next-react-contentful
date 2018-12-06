@@ -74,10 +74,14 @@ module.exports = {
             twoColumnHeroTitle
             twoColumnHeroImageUrl
             twoColumnHeroSubtitle
-            twoColumnHeroBody
+            twoColumnHeroBody {
+              html: json
+            }
             twoColumnHeroActionLink
             twoColumnHeroSidebarHeadline
-            twoColumnHeroSidebarContent
+            twoColumnHeroSidebarContent {
+              html: json
+            }
           }
           
           fragment featuredAmenities on Room {
@@ -327,7 +331,7 @@ module.exports = {
                         url: page.twoColumnHeroActionLink,
                       },
                     ],
-                    contentHTML: page.twoColumnHeroBody,
+                    contentHTML: documentToHtmlString(page.twoColumnHeroBody.html),
                     sidebarSections: [
                       {
                         headline: {
@@ -337,7 +341,7 @@ module.exports = {
                           {
                             type: 'content',
                             contentHTML:
-                              page.twoColumnHeroSidebarContent,
+                              documentToHtmlString(page.twoColumnHeroSidebarContent.html),
                           },
                           {
                             type: 'inline-text',
