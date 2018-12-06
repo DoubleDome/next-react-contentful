@@ -87,7 +87,7 @@ module.exports = {
                     }
                   }
                 }
-                shortDescription
+                description:shortDescription
               }
             }
           }
