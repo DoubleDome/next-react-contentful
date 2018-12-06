@@ -23,7 +23,7 @@ class Layout extends React.Component {
     return (
       <div style={{ height: '100%' }}>
         <Head>
-          <title>Next / Contentful / React</title>
+          <title>FOR PREVIEW PURPOSES ONLY</title>
           <meta charSet="utf-8" />
           <meta
             name="viewport"
