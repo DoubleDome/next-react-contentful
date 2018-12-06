@@ -5,7 +5,7 @@ module.exports = {
      return( 
         `   
           query roomDetailPageQuery {
-            roomDetailPageCollection(where: {slug: "${id}"}) {
+            roomDetailPageCollection(where: {slug: "${id}"}, preview: true) {
               items {
                 ... on RoomDetailPage {
                   ...componentList

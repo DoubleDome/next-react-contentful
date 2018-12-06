@@ -48,7 +48,7 @@ module.exports = {
         method: "POST",
         headers: {
           "content-type": "application/json",
-          authorization: `Bearer ${tokens.delivery}`
+          authorization: `Bearer ${tokens.preview}`
         },
         body: JSON.stringify({
           query

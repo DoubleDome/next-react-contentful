@@ -3,7 +3,7 @@ module.exports = {
      return( 
       `
         query roomLandingPageQuery {
-          roomLandingPage(id: "${id}") {
+          roomLandingPage(id: "${id}", preview: true) {
             title
             ...textHeader
             ...componentList
