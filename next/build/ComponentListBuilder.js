@@ -5,6 +5,7 @@ const componentContentID = 'component';
 
 const config = require('../integrations/contentful/config');
 const contentful = require('../integrations/contentful');
+
 const delivery = contentful.createDeliveryClient(config.spaces.rooms);
 const management = contentful.createManagementClient(config.management.component);
 

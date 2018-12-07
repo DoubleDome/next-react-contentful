@@ -42,7 +42,7 @@ module.exports = {
       throw new Error('Contentful Space ID must be defined!');
     }
 
-    let response = await fetch(
+    const response = await fetch(
       `https://graphql.contentful.com/content/v1/spaces/${tokens.id}/environments/master`,
       {
         method: "POST",
@@ -56,7 +56,7 @@ module.exports = {
       }
     );
     
-    let data = await response.json()
+    const data = await response.json()
     .then(res => {
       result = res;
     })
