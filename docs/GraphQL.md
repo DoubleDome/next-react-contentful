@@ -12,10 +12,10 @@
 >Send a GraphQL query to your API and get exactly what you need, nothing more and nothing less. GraphQL queries always return predictable results. Apps using GraphQL are fast and stable because they control the data they get, not the server.
 ### Only one endpoint:
 >GraphQL queries access not just the properties of one resource but also smoothly follow references between them. While typical REST APIs require loading from multiple URLs, GraphQL APIs get all the data your app needs in a single request. 
-## BYOD (Bring Your Own Data)
+### BYOD (Bring Your Own Data)
 >GraphQL creates a uniform API across your entire application without being limited by a specific storage engine. Write GraphQL APIs that leverage your existing data and code with GraphQL engines available in many languages.
 *[Source](https://graphql.org/)*
 
 ## Our conventions, thus far:
-To be filled in
+TBA
 
