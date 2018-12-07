@@ -1,16 +1,26 @@
 # Contentful
-This proof of concept leverages the abilities of Contentful to populate page content. From a content management perspective, however, there's a few issues we discovered.
+This proof of concept leverages the abilities of Contentful to populate page content. From a content management perspective, however, there's a few issues we discovered, along with some great advantages.
 
 ## Context
 When creating content, Contentful considers "Draft" content and "Published" content as two separate buckets of content. A staging environment configured with Contentful preview tokens will show draft/unpublished content, but a production environment configured with Contentful delivery tokens will only show published content.
 
+## Pros
+### Migrating spaces
+- Migrating content, content types, assets, etc. is easy to do with Contentful's CLI.
+### Bulk changes
+- Making changes to a field across multiple rooms is quick with Contentful's command line tool, which allows you to export your Contentful space into JSON format. This allows you to sidestep Contentful's sometimes-slow UI in favor of simple copy-paste work.
+### User Roles
+- Custom user roles can be defined, and once defined, work like they should. For example, you can have authors with the ability to publish content to a production environment as opposed to just a preview environment.
+
 ## Gotchas
+Everything below in a nutshell: it needs to be decided very early on what Contentful should and should not allow authors of varying roles to do. UI component data fields should be designed based on GraphQL responses (aka *"GraphQL First"*) to avoid the need for code-based interpretation of anything fed in from Contentful.
+
 ### Validation
 - Circular References: when creating a Room, in the "Similar Rooms" field, there is nothing stopping a content author from linking the same room. In practice, this can be problematic when it comes to GraphQL queries.
 - Image previews: when specifying the URL to an image in Contentful using an image URL field, there is nothing to stop its publishing.
 ### Setup Overhead
 - Setting up the validation rules that Contentful *does* support is time consuming.
-### User Privileges
+### User Roles
 - Certain options appear in the Contentful UI even though a user may not have the right privileges to use that option. Instead, nothing happens when those options are clicked. For example "Create Room and Link" when making a Room Detail Page.
 ### Digital Asset Management
 - The project's current build pipeline appends to image URL's to fetch the image from MGM's servers at a different resolution. Contentful does not support this.
