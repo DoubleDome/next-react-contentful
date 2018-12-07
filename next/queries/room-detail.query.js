@@ -125,7 +125,7 @@ module.exports = {
           }
           
           fragment similarRooms on Room {
-            similarRoomsCollection(limit: 1) {
+            similarRoomsCollection {
               items {
                 ... on Room {
                   squareFeet
