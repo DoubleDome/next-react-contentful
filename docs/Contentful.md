@@ -14,4 +14,8 @@ When creating content, Contentful considers "Draft" content and "Published" cont
 - The project's current build pipeline appends to image URL's to fetch the image from MGM's servers at a different resolution. Contentful does not support this.
 - In Contentful, one can, however, resize and/or crop an image.
 ### Reuse of Content Models
-- You cannot conditionally require a field. For example, assume that the Room Amenity content type does not always have to have an image. When linking the amenity to the part of a Room Detail page that requires an image, there is nothing in Contentful to conditionally require that any linked amenities should be ones with images. 
+- You cannot conditionally require a field. For example, assume that the Room Amenity content type does not always have to have an image. When linking the amenity to the part of a Room Detail page that requires an image, there is nothing in Contentful to conditionally require that any linked amenities of that content type should be ones with images. 
+### Untitled Everything
+- Any time you click a button on Contentful with the word "Create", something gets saved no matter what. This happens even if you don't fill in any fields, and even if you immediately click away. Content gets saved as "Untitled" if no title is specified and automatically gets put into Draft status. Anything unwanted __must explicitly be deleted__ using the site's Content tab.
+### Fetching Content
+- If components are not designed with GraphQL in mind, some translation of GraphQL responses needs to happen in order to shoehorn fetched data into component props. There's a few ways to do this, with the main way being "aliasing" GraphQL responses. In this project's /next/queries folder, there is a function for each page called translateResponse that illustrates this issue.
