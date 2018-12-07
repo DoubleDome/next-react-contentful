@@ -145,7 +145,7 @@ module.exports = {
         },
         secondaryAction: {
           label: page.roomSecondaryActionLabels || 'View Room Details',
-          url: `/${room.linkedFrom.roomDetailPageCollection.items[0].slug}`
+          url: `/room-detail/${room.linkedFrom.roomDetailPageCollection.items[0].slug}`
         },
         tertiaryAction: {
           label: page.roomTertiaryActionLabels || 'Compare',

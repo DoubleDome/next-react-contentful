@@ -12,7 +12,7 @@ app
     const server = express();
 
     /** ROOM DETAIL ROUTE */
-    server.get('/:id', (req, res) => {
+    server.get('/room-detail/:id', (req, res) => {
       const actualPage = '/room-detail';
       const queryParams = { id: req.params.id };
       app.render(req, res, actualPage, queryParams);

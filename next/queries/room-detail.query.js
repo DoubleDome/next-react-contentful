@@ -300,7 +300,7 @@ module.exports = {
             },
             secondaryAction: {
               label: 'Room Details',
-              url: `/${similarRoom.linkedFrom.roomDetailPageCollection.items[0].slug}`,
+              url: `/room-detail/${similarRoom.linkedFrom.roomDetailPageCollection.items[0].slug}`,
             },
             tertiaryAction: {
               label: 'Compare',
