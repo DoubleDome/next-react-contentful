@@ -8,6 +8,8 @@ When creating content, Contentful considers "Draft" content and "Published" cont
 ### Validation
 - Circular References: when creating a Room, in the "Similar Rooms" field, there is nothing stopping a content author from linking the same room. In practice, this can be problematic when it comes to GraphQL queries.
 - Image previews: when specifying the URL to an image in Contentful using an image URL field, there is nothing to stop its publishing.
+### Setup Overhead
+- Setting up the validation rules that Contentful *does* support is time consuming.
 ### User Privileges
 - Certain options appear in the Contentful UI even though a user may not have the right privileges to use that option. Instead, nothing happens when those options are clicked. For example "Create Room and Link" when making a Room Detail Page.
 ### Digital Asset Management
@@ -19,3 +21,10 @@ When creating content, Contentful considers "Draft" content and "Published" cont
 - Any time you click a button on Contentful with the word "Create", something gets saved no matter what. This happens even if you don't fill in any fields, and even if you immediately click away. Content gets saved as "Untitled" if no title is specified and automatically gets put into Draft status. Anything unwanted __must explicitly be deleted__ using the site's Content tab.
 ### Fetching Content
 - If components are not designed with GraphQL in mind, some translation of GraphQL responses needs to happen in order to shoehorn fetched data into component props. There's a few ways to do this, with the main way being "aliasing" GraphQL responses. In this project's /next/queries folder, there is a function for each page called translateResponse that illustrates this issue.
+### Everything Must Live in a Single Space
+- There's no way to query content using GraphQL across multiple spaces.
+- On the bright side, Contentful's cli tool makes it very easy to move content between spaces.
+### No Default Values
+- Contentful allows you to require that fields be filled out, but does not have the ability to pre-populate them with a default value. For example, when creating a room, Contentful cannot set a default number for square feet.
+### Presentation Layer
+- Contentful is *CONTENT*ful, not *PRESENTATION*ful. Any control over a page's/content type's presentation in Contentful can appear somewhat "hacky" and requires developer insight to be properly implemented.
