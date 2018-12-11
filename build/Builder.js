@@ -8,6 +8,7 @@ const Component = require('./Component.js');
 const BrandThemeComponentBuilder = require('./builders/BrandThemeComponentBuilder.js');
 
 const ComponentBuilder = require('./builders/ComponentBuilder.js');
+const ComponentListBuilder = require('../next/build/ComponentListBuilder');
 
 class Builder extends AbstractBuilder {
   constructor(config) {
@@ -15,6 +16,7 @@ class Builder extends AbstractBuilder {
     this.brandThemeComponent = null;
     this.brandThemeComponentBuilder = new BrandThemeComponentBuilder(config);
     this.componentBuilder = new ComponentBuilder(config);
+    this.listBuilder = new ComponentListBuilder();
   }
 
   removeOldBuild() {
@@ -22,7 +24,9 @@ class Builder extends AbstractBuilder {
   }
 
   findComponents() {
-    const files = this.findComponentsFiles();
+    const files = this.findComponentFiles(
+      this.config.SOURCE_COMPONENTS_ROOT_DIR
+    );
 
     files.forEach(file => {
       const component = Component.fromPath(file);
@@ -37,10 +41,32 @@ class Builder extends AbstractBuilder {
     return this.components;
   }
 
+  findG2Components() {
+    const files = this.findComponentFiles(
+      `${this.config.SOURCE_DMP_DEPENDENCIES_DIR}/components`
+    );
+    const g2Components = [];
+
+    files.forEach(file => {
+      const component = Component.fromPath(file);
+      g2Components.push(component);
+    });
+
+    return g2Components;
+  }
+
+  syncWithContentful() {
+    const allComponents = [].concat(this.findG2Components(), this.components);
+    const list = allComponents.map(component => component.getName());
+    this.listBuilder.pull().then(() => {
+      this.listBuilder.sync(list);
+    });
+  }
+
   buildBrandThemeComponent() {
     this.brandThemeComponentBuilder.build(
       this.brandThemeComponent,
-      this.components,
+      this.components
     );
   }
 
@@ -59,14 +85,14 @@ class Builder extends AbstractBuilder {
   moveDmpDependencies() {
     fse.copySync(
       this.config.SOURCE_DMP_DEPENDENCIES_DIR,
-      this.config.TARGET_DMP_DEPENDENCIES_DIR,
+      this.config.TARGET_DMP_DEPENDENCIES_DIR
     );
   }
 
-  findComponentsFiles() {
+  findComponentFiles(path) {
     return glob.sync(this.config.COMPONENTS_GLOB_PATTERN, {
-      cwd: this.config.SOURCE_COMPONENTS_ROOT_DIR,
-      absolute: true,
+      cwd: path,
+      absolute: true
     });
   }
 }

@@ -1,165 +1,108 @@
-import { createClient } from '../integrations/contentful';
-
 import React from 'react';
+import { queryContent } from '../integrations/contentful';
+import config from '../integrations/contentful/config';
 import Layout from '../layouts/layout';
 import G2TextHeaderSection from '../../dmp/components/G2TextHeaderSection/G2TextHeaderSection.component';
 import G2HeroSection from '../../dmp/components/G2HeroSection/G2HeroSection.component';
 import G2RoomOverviewCardCollectionSection from '../../dmp/components/G2RoomOverviewCardCollectionSection/G2RoomOverviewCardCollectionSection.component';
 import PromoCardsRowSection from '../../src/components/PromoCardsRowSection/PromoCardsRowSection.component';
+import 'isomorphic-fetch';
+import { gqlQuery, translateResponse } from '../queries/index.query';
 
 class Index extends React.Component {
   static async getInitialProps() {
-    const client = createClient();
-    const entries = await client.getEntries({
-      content_type: 'roomLandingPage',
-      include: 1,
-    });
+    let response;
 
-    {
-      /* Todo: input validation, either here or Contentful */
-    }
-    return {
-      textHeader: entries.items[0].fields.textHeader.fields,
-      hero: entries.items[0].fields.sectionHero.fields,
-      roomCollection: entries.items[0].fields.roomCollection.map(room => {
-        return room.fields;
-      }),
-      roomCollectionLayout: entries.items[0].roomCollectionLayout,
-      secondHero: entries.items[0].fields.premiumSectionHero.fields,
-      promoSection: {
-        title: entries.items[0].fields.promoSectionTitle,
-        button: {
-          label: entries.items[0].fields.promoSectionButtonLabel,
-          url: entries.items[0].fields.promoSectionButtonUrl,
-        },
-        cards: entries.items[0].fields.promoCards.map(card => {
-          return card.fields;
-        }),
-      },
-    };
+    // Hard coding in the only room landing page ID we have right now
+    await queryContent(gqlQuery('4dxYMm3HWEaoA0qocm4SaQ'), config.spaces.rooms) // eslint-disable-line no-use-before-define
+      .then(res => {
+        response = res;
+      });
+        
+    return translateResponse(response.data.roomLandingPage);
+  }
+
+  createTextHeader(data) {
+    return <G2TextHeaderSection title={data.title} subtitle={data.subtitle} />;
+  }
+
+  createHero(data) {
+    return (
+      <G2HeroSection
+        title={data.title}
+        premium={data.premium}
+        description={data.description}
+        images={data.images}
+        secondaryAction={data.secondaryAction}
+      />
+    );
+  }
+
+  createRoomOverview(collection, layout) {
+    return (
+      <G2RoomOverviewCardCollectionSection rooms={collection} layout={layout} />
+    );
+  }
+
+  createPromoSection(data) {
+    return (
+      <PromoCardsRowSection
+        title={data.title}
+        readMoreButton={{
+          label: data.button.label,
+          url: data.button.url
+        }}
+        cards={data.cards}
+      />
+    );
+  }
+
+  santizeComponentCollection() {
+    const result = [];
+    this.props.componentsCollection.forEach(component => {
+      result.push({
+        name: component.component.name,
+        dataField: component.dataField
+      });
+    });
+    return result;
   }
 
   render() {
-    const {
-      textHeader,
-      hero,
-      roomCollection,
-      roomCollectionLayout,
-      secondHero,
-      promoSection,
-    } = this.props;
+    // This approach allows to reorder the components depending on data coming from the CMS
+    const components = [];
 
-    return (
-      <Layout>
-        <G2TextHeaderSection
-          title={textHeader.title}
-          subtitle={textHeader.subtitle}
-        />
-
-        {/* GraphQL needed for proper Contentful implementation of Hero */}
-        <G2HeroSection
-          title={hero.title}
-          premium={hero.premium}
-          description={hero.description.content[0].content[0].value}
-          images={[
-            {
-              url: hero.room1imageUrl,
-              caption: hero.room1caption,
-              tertiaryAction: {
-                label: hero.tertiaryActionLabel,
-                url: hero.room1actionUrl,
-              },
-            },
-            {
-              url: hero.room2imageUrl,
-              caption: hero.room2caption,
-              tertiaryAction: {
-                label: hero.tertiaryActionLabel,
-                url: hero.room2actionUrl,
-              },
-            },
-            {
-              url: hero.room3imageUrl,
-              caption: hero.room3caption,
-              tertiaryAction: {
-                label: hero.tertiaryActionLabel,
-                url: hero.room3actionUrl,
-              },
-            },
-          ]}
-        />
-
-        {/* GraphQL version of Hero will look more like this, much cleaner */}
-        <G2RoomOverviewCardCollectionSection
-            rooms={
-              roomCollection.map((room) => {
-                  return (
-                  {
-                      title: room.title,
-                      keyValues: [room.squareFeet, room.bedType, room.maxGuests],
-                      description: room.shortDescription.content[0].content[0].value,
-                      image: {
-                        url: room.cardImageUrl
-                      },
-                      primaryAction: {
-                        label: room.primaryActionLabel,
-                        url: room.primaryActionUrl,
-                      },
-                      secondaryAction: {
-                        label: room.secondaryActionLabel,
-                        url: '/' + room.slug,
-                      },
-                      tertiaryAction: {
-                        label: room.tertiaryActionLabel,
-                        url: room.tertiaryActionUrl,
-                      },
-                  }
-                )
-              })
-          }
-          layout={roomCollectionLayout}
-        />
-
-        <G2HeroSection
-          title={secondHero.title}
-          premium={secondHero.premium}
-          description={secondHero.description.content[0].content[0].value}
-          images={[
-            {
-              url: secondHero.room1imageUrl,
-            },
-          ]}
-        />
-
-        <PromoCardsRowSection
-          title={promoSection.title}
-          readMoreButton={{
-            label: promoSection.button.label,
-            url: promoSection.button.url,
-          }}
-          cards={promoSection.cards.map(card => {
-            return {
-              imageUrl: card.imageUrl,
-              categoryName: card.categoryName,
-              title: card.title,
-              description: card.description,
-              status: {
-                color: card.statusColor? card.statusColor:'',
-                label: card.statusLabel,
-              },
-              primaryAction: {
-                label: card.primaryActionLabel,
-                url: card.primaryActionUrl,
-              },
-              tertiaryAction: {
-                label: card.tertiaryActionLabel,
-                url: card.tertiaryActionUrl,
-              },
-            };
-          })}
-        />
-      </Layout>
+    const sanitizedCollection = this.santizeComponentCollection(
+      this.props.componentsCollection
     );
+
+    sanitizedCollection.forEach(component => {
+      switch (component.name) { // eslint-disable-line default-case
+        case 'G2TextHeaderSection':
+          components.push(
+            this.createTextHeader(this.props[component.dataField])
+          );
+          break;
+        case 'G2HeroSection':
+          components.push(this.createHero(this.props[component.dataField]));
+          break;
+        case 'G2RoomOverviewCardCollectionSection':
+          components.push(
+            this.createRoomOverview(
+              this.props[component.dataField],
+              this.props.roomCollectionLayout
+            )
+          );
+          break;
+        case 'PromoCardsRowSection':
+          components.push(
+            this.createPromoSection(this.props[component.dataField])
+          );
+          break;
+      }
+    });
+
+    return <Layout>{components.map(component => component)}</Layout>;
   }
 }
 

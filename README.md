@@ -4,10 +4,21 @@
 
 For list of supported browsers, see `.babelrc` .
 
+## TL;DR
+A Sparknotes version of how things work:
+- Install project dependencies: `yarn`
+- Run NextJs locally on port 3000: `npm run next`
+- /next folder is where all things (GraphQL queries, pages, components, styling, etc) build from, so most work is done here
+- Build pipeline does fancy things, takes /next and builds everything into /dmp-dist/gen2
+- Page content is fetched from Contentful using their GraphQL API **every time the page is requested**
+- Only **published** content is fetched unless you are on the staging branch, which is configured to use Contentful's preview capabilities
+
 ## Development environment
 
 - Install project dependencies: `yarn`
-- Run Storybook locally: `npm run start`
+- Run NextJs locally on port 3000: `npm run next`
+- Run Storybook locally on port 3001: `npm run start`
+- Run both locally: `npm run dev`
 
 While it is possible to develop without eslint - editor integration, consider doing so:
 

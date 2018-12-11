@@ -18,13 +18,16 @@ function run() {
   info('Looking for gen2 components...');
   builder.findComponents();
 
+  info('Syncronizing component list with Contenful...');
+  builder.syncWithContentful();
+
   info('Build gen2 BrandTheme component');
   builder.buildBrandThemeComponent();
 
   info('Building gen2 components...');
   builder.buildComponents();
 
-  info('Moving src');
+  info('Moving src...');
   builder.copySrc();
 
   info('Moving gen2 aem wrapper components...');

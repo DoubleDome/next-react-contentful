@@ -1,25 +1,67 @@
 /* eslint-disable no-undef */
-const contentful = require('contentful');
-
-const defaultConfig = {
-  CTF_SPACE_ID: process.env.CTF_SPACE_ID,
-  CTF_CDA_TOKEN: process.env.CTF_CDA_TOKEN,
-  CTF_CPA_TOKEN: process.env.CTF_CPA_TOKEN
-};
+const contentfulDelivery = require('contentful');
+const contentfulManagement = require('contentful-management');
+const defaultConfig = require('./config');
 
 module.exports = {
-  createClient(config = defaultConfig) {
+  createDeliveryClient(params) {
+    if (!params) {
+      throw new Error('Params must be defined!');
+    }
+
     const options = {
-      host: 'preview.contentful.com',
-      space: config.CTF_SPACE_ID,
-      accessToken: config.CTF_CPA_TOKEN
+      host: defaultConfig.hosts.preview,
+      space: params.id,
+      accessToken: params.preview,
     };
 
     if (process.env.NODE_ENV === 'production' && !process.env.STAGING) {
-      options.host = 'cdn.contentful.com';
-      options.accessToken = config.CTF_CDA_TOKEN;
+      options.host = defaultConfig.hosts.production;
+      options.accessToken = params.delivery;
     }
 
-    return contentful.createClient(options);
+    return contentfulDelivery.createClient(options);
+  },
+  createManagementClient(token) {
+    return contentfulManagement.createClient({
+      accessToken: token,
+    });
+  },
+  async queryContent(query, tokens) {
+    let result;
+    
+    if (!query) {
+      throw new Error('Query must be defined!');
+    }
+    
+    if (!tokens.delivery) {
+      throw new Error('Contentful Delivery Token must be defined!');
+    }
+    
+    if (!tokens.id) {
+      throw new Error('Contentful Space ID must be defined!');
+    }
+
+    const response = await fetch(
+      `https://graphql.contentful.com/content/v1/spaces/${tokens.id}/environments/master`,
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${tokens.delivery}`
+        },
+        body: JSON.stringify({
+          query
+        })
+      }
+    );
+    
+    const data = await response.json()
+    .then(res => {
+      result = res;
+    })
+    
+    return result;  
   }
+  
 };

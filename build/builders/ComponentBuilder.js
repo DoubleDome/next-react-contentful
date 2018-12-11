@@ -10,7 +10,7 @@ class ComponentBuilder extends AbstractBuilder {
       .getPath()
       .replace(
         this.config.SOURCE_COMPONENTS_ROOT_DIR,
-        this.config.TARGET_COMPONENTS_ROOT_DIR,
+        this.config.TARGET_COMPONENTS_ROOT_DIR
       );
   }
 
@@ -22,7 +22,7 @@ class ComponentBuilder extends AbstractBuilder {
 
   createComponentFile(component) {
     let parsedContent = component.getParsedContent({
-      lineIgnoreRegExp: this.config.IGNORE_REG_EXP,
+      lineIgnoreRegExp: this.config.IGNORE_REG_EXP
     });
     parsedContent = this.addComment('// ', '\n', parsedContent);
     const targetPath = this.getComponentTargetPath(component);

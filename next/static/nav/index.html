@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/global.css">
+  </head>
+  <body class="restyle" style="overflow: hidden">
+    <!-- Change the height on the sticky-wrap from 150 > 95 -->
+    <!-- Add the "collapsed-nav" style to the nav-container -->
+    <!-- Add a top: -2.5rem to the nav-container inline style -->
+    <div class="sticky-wrap app-hide" style="height: 95px;">
+      <div
+        class="nav-container ng-scope"
+        ng-controller="GlobalNavController"
+        style="top: 0px; margin: 0px 0rem 0rem;";
+      >
+        <style type="text/css">
+          .brand-logo span.brand-img {
+            background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4yLjEsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHdpZHRoPSIxNzdweCIgaGVpZ2h0PSI3OXB4IiB2aWV3Qm94PSIwIDAgMTc3IDc5IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAxNzcgNzk7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+DQoJLnN0MHtmaWxsOiMwMDJCNDk7fQ0KPC9zdHlsZT4NCjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMDIsMzcuNGMtMC44LTAuNS0xLjctMS0yLjctMWMtMC4zLDAtMC42LDAuMS0xLjEsMC45Yy0wLjYsMC44LTEuNCwzLjYtMS44LDUuOGMtMC45LDUuMS0xLjIsMTAuMy0wLjksMTUuNQ0KCWMwLjEsMS4zLDAuMiwyLjUsMC4zLDMuOGMwLjEsMS0wLjcsMi0xLjQsMi43Yy0wLjEsMC4xLTEuMSwwLjktMS42LDAuOWMtMC4yLDAtMC4zLTAuMS0wLjMtMC40Yy0wLjItMS41LTAuMy0zLjEtMC40LTQuNw0KCWMtMC4zLTQuMS0wLjgtOC4yLTEuNi0xMi4zYy0xLjEtNS0yLjgtOS44LTUuMS0xNC40Qzg0LjgsMzMsODgsMjkuNyw4OC43LDMxYzIuMSw0LjEsMy43LDguNCw0LjcsMTIuOGMwLjEtMC40LDAuMi0wLjksMC4zLTEuMw0KCWMxLjMtNC43LDUuNS0xMi43LDExLjMtOC44QzEwNi4xLDM0LjUsMTAzLjIsMzguMywxMDIsMzcuNHogTTExNC42LDIwLjVjLTAuMiwwLjItMS44LDEuNS0yLDAuNWMtMC4xLTAuMy0wLjItMC41LTAuOC0wLjgNCgljMCwwLTAuNS0wLjEtMC44LTAuMmMtMC40LTAuMS0wLjctMC4xLTEuMS0wLjFjLTIuMy0wLjEtNC41LDAuMy02LjcsMC44Qzk2LjEsMjIuMyw4OS4xLDI1LDgyLjUsMjhjLTEuNSwwLjctMi45LDEuNC00LjQsMi4xDQoJYzAuNCwxLjYsMC44LDMuMSwxLjIsNC43YzIuMyw5LjgsNC4zLDE5LjksNS4yLDMwYzAuMSwxLTAuNywyLTEuNCwyLjdjLTAuMiwwLjItMS45LDEuNS0yLDAuNWMtMC45LTkuNy0yLjctMTkuNC00LjktMjkNCgljLTAuNS0yLjMtMS4xLTQuNy0xLjgtN2MtNywzLjgtMTMuOCw4LjItMTkuNywxMy41Yy03LjMsNi41LTEzLjYsMTQuNy0xNSwyNC43Yy0wLjEsMC45LTAuOCwxLjgtMS41LDIuNWMwLDAsMCwwLDAsMA0KCWMtMC4xLDAuMS0wLjIsMC4yLTAuMywwLjJjLTAuMywwLjItMC45LDAuNS0xLjIsMC40Yy0wLjIsMC0wLjQtMC4yLTAuMy0wLjZjMC4yLTIuMiwwLjUtNC40LDAuOC02LjZjNC0yNy42LDExLjgtNDMuMywxNi01MC44DQoJYzQuMi03LjUsNy4xLTEwLDktMTAuN2MyLjctMSw1LjEsMC43LDYuNywyLjhjMi42LDMuMyw0LjMsNy40LDUuNywxMS4zYzEuMSwyLjksMiw1LjksMi44LDguOWM4LjEtNC4yLDE2LjYtNy44LDI1LjUtMTAuMQ0KCWMzLTAuOCw2LjEtMS41LDkuMi0xLjVjMS4zLDAsMy42LDAuMSw0LDEuN0MxMTYuMiwxOC44LDExNS4zLDE5LjgsMTE0LjYsMjAuNXogTTczLjcsMjkuNmMtMC42LTIuMS0xLjMtNC4yLTItNi4yDQoJYy0xLjQtMy45LTIuOS04LjEtNS4zLTExLjVDNjUuMSwxMCw2Myw3LjQsNjAuNyw4LjNjLTIuMywxLTcuOCwxMC4yLTEyLDIxLjdjLTQuMSwxMS4yLTUuNCwxNi4yLTcuNSwyOC44YzIuNS00LjMsNS42LTguMiw5LjEtMTEuOA0KCUM1Ny4xLDQwLjEsNjUuMiwzNC40LDczLjcsMjkuNnogTTEwOS40LDM0LjhjLTAuNyw5LjYsMC4yLDE5LjIsMS45LDI4LjZjMC4yLDEsMS43LTAuMywyLTAuNWMwLjYtMC42LDEuNS0xLjcsMS40LTIuNw0KCWMtMS42LTkuMi0yLjUtMTguNi0xLjgtMjcuOWMwLjEtMS4xLTEuMS0wLjUtMS41LTAuMkMxMTAuNCwzMi43LDEwOS40LDMzLjgsMTA5LjQsMzQuOEwxMDkuNCwzNC44eiBNMTQwLjUsNTQuOQ0KCWMwLjUtMS44LTAuNy0xMy45LTMuNS0yMGMtMS4yLTIuNi0zLTUuMS01LjgtNmMtMy41LTEuMS03LjIsMS4zLTkuOCwzLjNjLTAuOCwwLjYtMS43LDEuNi0xLjgsMi43Yy0wLjEsMS4xLDEuMSwwLjUsMS41LDAuMg0KCWMyLjMtMS44LDUtMy4yLDgtMi4yYzIuNSwwLjksNCwzLjcsNSw1LjljMS44LDQuMSwyLjYsOC44LDIuOSwxMy40Yy0yLjgtMS44LTYtMy4zLTkuNC0zLjNjLTMuNCwwLTYuMiwyLTcuOCw1DQoJYy0xLjIsMi4zLTAuOCw0LjgsMSw2LjZjMi41LDIuNSw2LjcsMi41LDEwLDJjMCwwLDAuMSwwLDAuMSwwYzEtMC4xLDMuOC0wLjQsNC41LTAuNmMxLTAuMywwLjUtMS4xLDAuMS0xLjYNCgljLTAuNi0wLjctMS42LTEuOC0yLjYtMS42Yy0wLjEsMC0wLjEsMC0wLjIsMGMtMC44LDAuMS0xLjYsMC4yLTIuNSwwLjJsLTAuMSwwYzAsMCwwLDAsMCwwYy0yLjEsMC00LjItMC41LTUuOS0xLjcNCgljLTAuNy0wLjYtMS4zLTEuMy0xLjYtMi4yYy0wLjEtMC40LTAuMi0wLjgtMC4yLTEuMWMwLTAuMiwwLTAuNCwwLTAuNWMwLTAuMSwwLjQtMC4zLDAuNC0wLjNjMC43LTAuMywyLjItMC40LDMuMi0wLjMNCgljNC4yLDAuNCw4LDMsMTEuMSw1LjVDMTM4LjMsNTkuMSwxNDAsNTYuNywxNDAuNSw1NC45eiBNMTM4LjIsNzBjLTEuMywwLTIuMy0xLTIuMy0yLjNjMC0xLjQsMS4xLTIuMywyLjMtMi4zDQoJYzEuMiwwLDIuMywwLjksMi4zLDIuM0MxNDAuNSw2OS4xLDEzOS40LDcwLDEzOC4yLDcweiBNMTM4LjIsNjUuN2MtMSwwLTEuOCwwLjgtMS44LDEuOWMwLDEuMSwwLjcsMS45LDEuOCwxLjljMSwwLDEuOC0wLjgsMS44LTEuOQ0KCUMxNDAsNjYuNSwxMzkuMiw2NS43LDEzOC4yLDY1Ljd6IE0xMzcuNyw2OWgtMC40di0yLjZoMWMwLjYsMCwwLjksMC4yLDAuOSwwLjdjMCwwLjUtMC4zLDAuNy0wLjcsMC43bDAuNywxLjFoLTAuNWwtMC43LTEuMWgtMC40DQoJVjY5eiBNMTM4LjIsNjcuNWMwLjMsMCwwLjYsMCwwLjYtMC40YzAtMC4zLTAuMy0wLjQtMC42LTAuNGgtMC41djAuOEgxMzguMnoiLz4NCjwvc3ZnPg0K);
+          }</style
+        ><style type="text/css">
+          .brand-logo span.text,
+          .nav-m .nav-logo a,
+          .nav-m-t .nav-logo a,
+          .nav-t .nav-logo a {
+            background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4yLjEsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHdpZHRoPSIzMjBweCIgaGVpZ2h0PSI2MHB4IiB2aWV3Qm94PSIwIDAgMzIwIDYwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAzMjAgNjA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+DQoJLnN0MHtmaWxsOiMwMDJCNDk7fQ0KPC9zdHlsZT4NCjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xNzEsMjYuOWMtMC42LTAuNC0xLjQtMC44LTIuMi0wLjhjLTAuMiwwLTAuNSwwLjEtMC45LDAuN2MtMC41LDAuNy0xLjEsMi45LTEuNCw0LjdjLTAuNyw0LjEtMSw4LjQtMC44LDEyLjYNCgljMC4xLDEsMC4yLDIuMSwwLjIsMy4xYzAuMSwwLjgtMC42LDEuNi0xLjEsMi4yYy0wLjEsMC4xLTAuOSwwLjctMS4zLDAuN2MtMC4xLDAtMC4yLTAuMS0wLjMtMC4zYy0wLjEtMS4yLTAuMi0yLjUtMC4zLTMuOA0KCWMtMC4zLTMuNC0wLjYtNi43LTEuMy0xMGMtMC45LTQuMS0yLjMtOC00LjEtMTEuN2MtMC41LTEsMi4yLTMuNywyLjctMi42YzEuNywzLjMsMyw2LjgsMy44LDEwLjRjMC4xLTAuMywwLjItMC43LDAuMy0xDQoJYzEtMy44LDQuNC0xMC4zLDkuMi03LjFDMTc0LjMsMjQuNSwxNzIsMjcuNiwxNzEsMjYuOXogTTE4MS4yLDEzLjFjLTAuMiwwLjItMS40LDEuMi0xLjYsMC40YzAtMC4zLTAuMi0wLjQtMC42LTAuNg0KCWMwLDAtMC40LTAuMS0wLjYtMC4yYy0wLjMsMC0wLjYtMC4xLTAuOS0wLjFjLTEuOC0wLjEtMy43LDAuMy01LjQsMC43Yy01LjgsMS4zLTExLjUsMy40LTE2LjksNS45Yy0xLjIsMC42LTIuNCwxLjEtMy42LDEuNw0KCWMwLjMsMS4zLDAuNiwyLjUsMC45LDMuOGMxLjksOCwzLjUsMTYuMiw0LjIsMjQuNGMwLjEsMC44LTAuNSwxLjYtMS4xLDIuMmMtMC4yLDAuMS0xLjUsMS4yLTEuNiwwLjRjLTAuNy03LjktMi4yLTE1LjgtNC0yMy41DQoJYy0wLjQtMS45LTAuOS0zLjgtMS40LTUuN2MtNS43LDMuMS0xMS4yLDYuNy0xNiwxMWMtNS45LDUuMy0xMS4xLDExLjktMTIuMSwyMC4xYy0wLjEsMC43LTAuNiwxLjUtMS4yLDJjMCwwLDAsMCwwLDANCgljLTAuMSwwLjEtMC4yLDAuMS0wLjMsMC4yYy0wLjIsMC4yLTAuNywwLjQtMSwwLjRjLTAuMiwwLTAuMy0wLjItMC4zLTAuNWMwLjItMS44LDAuNC0zLjYsMC43LTUuNGMzLjMtMjIuNCw5LjYtMzUuMiwxMy00MS4zDQoJYzMuNC02LjEsNS44LTguMSw3LjMtOC43YzIuMi0wLjgsNC4xLDAuNiw1LjQsMi4yYzIuMSwyLjcsMy41LDYsNC42LDkuMmMwLjksMi40LDEuNiw0LjgsMi4zLDcuMmM2LjYtMy40LDEzLjUtNi40LDIwLjctOC4yDQoJYzIuNC0wLjYsNS0xLjIsNy41LTEuMmMxLDAsMywwLjEsMy4yLDEuNEMxODIuNSwxMS43LDE4MS43LDEyLjYsMTgxLjIsMTMuMXogTTE0OCwyMC41Yy0wLjUtMS43LTEtMy40LTEuNi01LjENCgljLTEuMS0zLjItMi4zLTYuNi00LjMtOS40Yy0xLjEtMS41LTIuOC0zLjYtNC42LTIuOWMtMS44LDAuOC02LjMsOC4zLTkuNywxNy42Yy0zLjQsOS4xLTQuNCwxMy4yLTYuMSwyMy40YzItMy41LDQuNi02LjcsNy40LTkuNg0KCUMxMzQuNSwyOSwxNDEuMSwyNC40LDE0OCwyMC41eiBNMTc2LjksMjQuOGMtMC41LDcuOCwwLjIsMTUuNiwxLjUsMjMuMmMwLjEsMC44LDEuNC0wLjIsMS42LTAuNGMwLjUtMC41LDEuMi0xLjQsMS4xLTIuMg0KCWMtMS4zLTcuNS0yLTE1LjEtMS41LTIyLjdjMC4xLTAuOS0wLjktMC40LTEuMy0wLjFDMTc3LjgsMjMuMSwxNzcsMjMuOSwxNzYuOSwyNC44TDE3Ni45LDI0Ljh6IE0yMDIuMyw0MS4xDQoJYzAuNC0xLjUtMC42LTExLjMtMi44LTE2LjJjLTEtMi4xLTIuNC00LjEtNC43LTQuOGMtMi44LTAuOS01LjksMS04LDIuN2MtMC43LDAuNS0xLjQsMS4zLTEuNSwyLjJjLTAuMSwwLjksMC45LDAuNCwxLjMsMC4xDQoJYzEuOS0xLjQsNC4xLTIuNiw2LjUtMS44YzIsMC43LDMuMywzLDQuMSw0LjhjMS40LDMuNCwyLjEsNy4xLDIuNCwxMC44Yy0yLjMtMS41LTQuOS0yLjYtNy42LTIuN2MtMi43LDAtNS4xLDEuNy02LjMsNA0KCWMtMSwxLjgtMC43LDMuOSwwLjgsNS40YzIuMSwyLDUuNCwyLDguMSwxLjdjMCwwLDAsMCwwLjEsMGMwLjgtMC4xLDMuMS0wLjMsMy43LTAuNWMwLjgtMC4yLDAuNC0wLjksMC4xLTEuMw0KCWMtMC41LTAuNi0xLjMtMS40LTIuMS0xLjNjLTAuMSwwLTAuMSwwLTAuMiwwYy0wLjYsMC4xLTEuMywwLjEtMiwwLjFsLTAuMSwwYzAsMCwwLDAsMCwwYy0xLjcsMC0zLjQtMC40LTQuOC0xLjQNCgljLTAuNi0wLjUtMS0xLjEtMS4zLTEuOGMtMC4xLTAuMy0wLjItMC43LTAuMS0wLjljMC0wLjEsMC0wLjMsMC0wLjRjMC0wLjEsMC4zLTAuMiwwLjMtMC4yYzAuNi0wLjMsMS44LTAuMywyLjYtMC4yDQoJYzMuNCwwLjMsNi41LDIuNCw5LDQuNEMyMDAuNSw0NC41LDIwMS44LDQyLjYsMjAyLjMsNDEuMXogTTIwMC40LDUzLjNjLTEuMSwwLTEuOS0wLjgtMS45LTEuOWMwLTEuMSwwLjktMS45LDEuOS0xLjkNCgljMSwwLDEuOSwwLjgsMS45LDEuOUMyMDIuMiw1Mi42LDIwMS40LDUzLjMsMjAwLjQsNTMuM3ogTTIwMC40LDQ5LjljLTAuOCwwLTEuNSwwLjYtMS41LDEuNmMwLDAuOSwwLjYsMS42LDEuNSwxLjYNCgljMC44LDAsMS41LTAuNiwxLjUtMS42QzIwMS44LDUwLjUsMjAxLjIsNDkuOSwyMDAuNCw0OS45eiBNMjAwLDUyLjVoLTAuM3YtMi4xaDAuOGMwLjUsMCwwLjgsMC4yLDAuOCwwLjZjMCwwLjQtMC4yLDAuNS0wLjUsMC42DQoJbDAuNiwwLjloLTAuNGwtMC41LTAuOUgyMDBWNTIuNXogTTIwMC40LDUxLjNjMC4zLDAsMC41LDAsMC41LTAuM2MwLTAuMy0wLjMtMC4zLTAuNS0wLjNIMjAwdjAuNkgyMDAuNHoiLz4NCjwvc3ZnPg0K);
+          }</style
+        ><style type="text/css">
+          .icon-hotel:before {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSIxMDAiIHZpZXdCb3g9IjAgMCA1MCAxMDAiPjxwYXRoIGZpbGw9IiMzNzVFNzMiIGQ9Ik0zOC43IDc3LjlsLTMuNS02LjFjLjQtLjQuNi0uOS42LTEuNXYtMy45Yy0uMi0xLjEtMS0yLTIuMS0ySDE2LjRjLTEgMC0xLjkuOS0xLjkgMnYzLjljMCAuNS4xLjkuNCAxLjJsLTMuNSA2LjZWNzguNGMtLjEuMi0uMS4zLS4xLjV2My43YzAgLjguNiAxLjUgMS40IDEuN3YxLjRIMTZ2LTEuM2gxOC41djEuM2gzLjN2LTEuNGMuNy0uMyAxLjMtLjkgMS4zLTEuN3YtMy43YzAtLjQtLjItLjctLjQtMXptLTIzLjUtNS42aDE5LjZsMi44IDQuOWMtLjIgMC0uMy0uMS0uNS0uMUgxMy4yYy0uMiAwLS40IDAtLjYuMWwyLjYtNC45em0yMS45IDExLjVzLS4xIDAgMCAwaC0uNC40em0tMTEuNC0xNmMuMi0uMi41LS4yLjkgMCAuNi0uMS43LS42IDMtLjYgMi4zLjEgMi41LjQgMy4xLjYuMy0uMi43LS4zLjkgMCAuMi4yLjIuNi0uMS45LjEuNC4yLjkuMiAxLjQgMCAuNS0uMSAxLjEtLjIgMS41aC03LjdjLS4xLS40LS4yLS45LS4yLTEuNXMuMi0xLjEuMi0xLjRjLS4zLS4zLS4zLS43LS4xLS45em0tOS4xIDBjLjItLjIuNS0uMi45IDAgLjYtLjEgMS0uNSAzLS42IDIgMCAyLjQuNCAzIC42LjMtLjIuNy0uMy45IDAgLjIuMi4yLjYtLjEuOS4xLjQuMi45LjIgMS40IDAgLjYtLjIgMS4xLS4yIDEuNWgtNy43Yy0uMS0uNC0uMS0xLS4xLTEuNSAwLS42LjEtMS4xLjItMS40LS4zLS4zLS4zLS43LS4xLS45em0tMS4zIDE3LjNoLTJ2LS43aDJ2Ljd6bTIxLjggMGgtMnYtLjdoMnYuN3oiLz48cGF0aCBmaWxsPSIjRkZGIiBkPSJNMzguNyAyNy45bC0zLjUtNi4xYy40LS40LjYtLjkuNi0xLjV2LTMuOWMtLjItMS4xLTEtMi0yLjEtMkgxNi40Yy0xIDAtMS45LjktMS45IDJ2My45YzAgLjUuMS45LjQgMS4ybC0zLjUgNi42VjI4LjRjLS4xLjItLjEuMy0uMS41djMuN2MwIC44LjYgMS41IDEuNCAxLjd2MS40SDE2di0xLjNoMTguNXYxLjNoMy4zdi0xLjRjLjctLjMgMS4zLS45IDEuMy0xLjd2LTMuN2MwLS40LS4yLS43LS40LTF6bS0yMy41LTUuNmgxOS42bDIuOCA0LjljLS4yIDAtLjMtLjEtLjUtLjFIMTMuMmMtLjIgMC0uNCAwLS42LjFsMi42LTQuOXptMjEuOSAxMS41cy0uMSAwIDAgMGgtLjQuNHptLTExLjQtMTZjLjItLjIuNS0uMi45IDAgLjYtLjEuNy0uNiAzLS42IDIuMy4xIDIuNS40IDMuMS42LjMtLjIuNy0uMy45IDAgLjIuMi4yLjYtLjEuOS4xLjQuMi45LjIgMS40IDAgLjUtLjEgMS4xLS4yIDEuNWgtNy43Yy0uMS0uNC0uMi0uOS0uMi0xLjVzLjItMS4xLjItMS40Yy0uMy0uMy0uMy0uNy0uMS0uOXptLTkuMSAwYy4yLS4yLjUtLjIuOSAwIC42LS4xIDEtLjUgMy0uNiAyIDAgMi40LjQgMyAuNi4zLS4yLjctLjMuOSAwIC4yLjIuMi42LS4xLjkuMS40LjIuOS4yIDEuNCAwIC42LS4yIDEuMS0uMiAxLjVoLTcuN2MtLjEtLjQtLjEtMS0uMS0xLjUgMC0uNi4xLTEuMS4yLTEuNC0uMy0uMy0uMy0uNy0uMS0uOXptLTEuMyAxNy4zaC0ydi0uN2gydi43em0yMS44IDBoLTJ2LS43aDJ2Ljd6Ii8+PC9zdmc+);
+          }
+          .icon-entertainment:before {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSIxMDAiIHZpZXdCb3g9IjAgMCA1MCAxMDAiPjxnIGZpbGw9IiMzNzVFNzMiPjxwYXRoIGQ9Ik0zNC4yIDY5LjJoMi43VjgzaC0yLjd6TTEzLjUgNjkuMmgyLjdWODNoLTIuN3pNMzMuNCA2OS4ySDE3LjFWODNoMTYuM1Y2OS4yem0tNSAxMS45bC0zLjMtMS44LTMuMyAxLjcuNy0zLjctMi43LTIuNSAzLjctLjYgMS43LTMuMyAxLjcgMy4zIDMuNy42LTIuNyAyLjUuNSAzLjh6Ii8+PHBhdGggZD0iTTQxLjggNzEuM3YtMS40Yy0xLjggMC0yLjUtMS40LTIuNS0zLjJoLTI4YzAgMS44LS44IDMuMi0yLjUgMy4ydjEuNGMuNyAwIDEuMi42IDEuMiAxLjJzLS42IDEuMi0xLjIgMS4ydjEuMmMuNyAwIDEuMi42IDEuMiAxLjJzLS42IDEuMi0xLjIgMS4ydjEuMmMuNyAwIDEuMi42IDEuMiAxLjJTOS40IDgxIDguNyA4MXYxLjRoLjFjMS44IDAgMi41IDEuNCAyLjUgMy4yaDI3LjljMC0xLjguOC0zLjIgMi41LTMuMlY4MWMtLjcgMC0xLjItLjYtMS4yLTEuMnMuNi0xLjIgMS4yLTEuMnYtMS4yYy0uNyAwLTEuMi0uNi0xLjItMS4ycy42LTEuMiAxLjItMS4ydi0xLjJjLS43IDAtMS4yLS42LTEuMi0xLjIuMS0uOC42LTEuMyAxLjMtMS4zem0tNC4xIDEyLjZIMTIuOFY2OC40aDI0Ljl2MTUuNXoiLz48L2c+PGcgZmlsbD0iI0ZGRiI+PHBhdGggZD0iTTMzLjQgMTguOEgxNy4xdjEzLjhoMTYuM1YxOC44em0tNSAxMkwyNS4xIDI5bC0zLjMgMS43LjctMy43LTIuNy0yLjUgMy43LS42IDEuNy0zLjMgMS43IDMuMyAzLjcuNi0yLjkgMi41LjcgMy44ek0zNC4yIDE4LjhoMi43djEzLjhoLTIuN3oiLz48cGF0aCBkPSJNNDEuOCAyMC45di0xLjRjLTEuOCAwLTIuNS0xLjQtMi41LTMuMmgtMjhjMCAxLjgtLjggMy4yLTIuNSAzLjJ2MS40Yy43IDAgMS4yLjYgMS4yIDEuMiAwIC43LS42IDEuMi0xLjIgMS4ydjEuMmMuNyAwIDEuMi42IDEuMiAxLjIgMCAuNy0uNiAxLjItMS4yIDEuMnYxLjJjLjcgMCAxLjIuNiAxLjIgMS4yIDAgLjctLjYgMS4yLTEuMiAxLjJ2MS40aC4xYzEuOCAwIDIuNSAxLjQgMi41IDMuMmgyNy45YzAtMS44LjgtMy4yIDIuNS0zLjJ2LTEuNGMtLjcgMC0xLjItLjYtMS4yLTEuMiAwLS43LjYtMS4yIDEuMi0xLjJWMjdjLS43IDAtMS4yLS42LTEuMi0xLjIgMC0uNy42LTEuMiAxLjItMS4ydi0xLjJjLS43IDAtMS4yLS42LTEuMi0xLjIgMC0uNy41LTEuMyAxLjItMS4zem0tNC4xIDEyLjZIMTIuOFYxOGgyNC45djE1LjV6Ii8+PHBhdGggZD0iTTEzLjUgMTguOGgyLjd2MTMuOGgtMi43eiIvPjwvZz48L3N2Zz4=);
+          }
+          .icon-restaurants:before {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSIxMDAiIHZpZXdCb3g9IjAgMCA1MCAxMDAiPjxnIGZpbGw9IiMzNzVFNzMiPjxwYXRoIGQ9Ik0yNS4yIDY0LjJjLTYuMSAwLTExIDQuOS0xMSAxMXM0LjkgMTEgMTEgMTEgMTEtNC45IDExLTExLTUtMTEtMTEtMTF6bTAgMTguNWMtNC4yIDAtNy42LTMuNC03LjYtNy42IDAtNC4yIDMuNC03LjYgNy42LTcuNnM3LjYgMy40IDcuNiA3LjZjLS4xIDQuMi0zLjQgNy42LTcuNiA3LjZ6Ii8+PHBhdGggZD0iTTI1LjIgNjguNmMtMy43IDAtNi43IDIuOS02LjcgNi42IDAgMy42IDMgNi42IDYuNyA2LjZzNi43LTIuOSA2LjctNi42YzAtMy43LTMtNi42LTYuNy02LjZ6TTExLjcgNjVjLS4xLS4xLS4yLS4xLS4zLS4xLS4yIDAtLjIuMS0uMi4xLS4yLjEtLjIuNC0uMi40bC4xIDQuOWgtLjZsLS4xLTQuOXMwLS4zLS4xLS40Yy0uMS0uMS0uMS0uMS0uMi0uMXMtLjIuMS0uMy4xYy0uMS4xLS4xLjQtLjEuNGwtLjEgNC45SDlsLjEtNC44czAtLjMtLjEtLjRjLS4xLS4xLS4xLS4xLS4zLS4xLS4xIDAtLjIgMC0uMy4xLS4xLjEtLjIuNC0uMi40IDAgLjMtLjIgNi4xLS4yIDYuNSAwIC42LjkgMS4xIDEuNCAxLjIgMCA1LS42IDExLjctLjcgMTEuOCAwIC4xLjIuNCAxLjEuNC45IDAgMS4xLS4zIDEuMS0uNC0uMS0xLjgtLjItMy4yLS4zLTQuMy0uMy0zLjctLjMtMy43LS4zLTcuNS43LS4zIDEuNy0uNyAxLjctMS4zIDAtLjUtLjItNi4yLS4yLTYuNSAwIDAgMC0uMy0uMS0uNHpNNDAuNCA3Mi41di03LjRjLS4yLS4xLS4zLS4xLS41LjEtLjcuOC0xLjYgNC4zLTEuNCA3LjMuMSAyIC4zIDQuMS4zIDQuMnYuMWwuNi4xYy0uMSA0LS4zIDguMy0uMyA4LjMtLjIgMCAwIC4zLjkuMyAxIDAgMS0uMyAxLS40LjEtLjEtLjUtNy44LS42LTEyLjZ6Ii8+PC9nPjxnIGZpbGw9IiNGRkYiPjxwYXRoIGQ9Ik0yNS4yIDE0LjJjLTYuMSAwLTExIDQuOS0xMSAxMXM0LjkgMTEgMTEgMTEgMTEtNC45IDExLTExLTUtMTEtMTEtMTF6bTAgMTguNWMtNC4yIDAtNy42LTMuNC03LjYtNy42IDAtNC4yIDMuNC03LjYgNy42LTcuNnM3LjYgMy40IDcuNiA3LjZjLS4xIDQuMi0zLjQgNy42LTcuNiA3LjZ6Ii8+PHBhdGggZD0iTTI1LjIgMTguNmMtMy43IDAtNi43IDIuOS02LjcgNi42IDAgMy42IDMgNi42IDYuNyA2LjZzNi43LTIuOSA2LjctNi42YzAtMy43LTMtNi42LTYuNy02LjZ6TTExLjcgMTVjLS4xLS4xLS4yLS4xLS4zLS4xLS4yIDAtLjIuMS0uMi4xLS4yLjEtLjIuNC0uMi40bC4xIDQuOWgtLjZsLS4xLTQuOXMwLS4zLS4xLS40Yy0uMS0uMS0uMS0uMS0uMi0uMXMtLjIuMS0uMy4xYy0uMS4xLS4xLjQtLjEuNGwtLjEgNC45SDlsLjEtNC44czAtLjMtLjEtLjRjLS4xLS4xLS4xLS4xLS4zLS4xLS4xIDAtLjIgMC0uMy4xLS4xLjEtLjIuNC0uMi40IDAgLjMtLjIgNi4xLS4yIDYuNSAwIC42LjkgMS4xIDEuNCAxLjIgMCA1LS42IDExLjctLjcgMTEuOCAwIC4xLjIuNCAxLjEuNC45IDAgMS4xLS4zIDEuMS0uNC0uMS0xLjgtLjItMy4yLS4zLTQuMy0uMy0zLjctLjMtMy43LS4zLTcuNS43LS4zIDEuNy0uNyAxLjctMS4zIDAtLjUtLjItNi4yLS4yLTYuNSAwIDAgMC0uMy0uMS0uNHpNNDAuNCAyMi41di03LjRjLS4yLS4xLS4zLS4xLS41LjEtLjcuOC0xLjYgNC4zLTEuNCA3LjMuMSAyIC4zIDQuMS4zIDQuMnYuMWwuNi4xYy0uMSA0LS4zIDguMy0uMyA4LjMtLjIgMCAwIC4zLjkuMyAxIDAgMS0uMyAxLS40LjEtLjEtLjUtNy44LS42LTEyLjZ6Ii8+PC9nPjwvc3ZnPg==);
+          }
+          .icon-nightlife:before {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSIxMDAiIHZpZXdCb3g9IjAgMCA1MCAxMDAiPjxnIGZpbGw9IiMzNzVFNzMiPjxwYXRoIGQ9Ik0yNSA3Mi4zbDguOC03LjItMTEuOS4xLTMuNy0zLjVjLS4xLS4xLS4zLS4xLS40IDAtLjEuMS0uMS4zIDAgLjRsMy4yIDNoLTQuOGw4LjggNy4yem0wLTUuNGMuNi42LjcgMS40LjQgMS45bC45LjljLjEuMS4xLjMgMCAuNC0uMS4xLS4xLjEtLjIuMXMtLjEgMC0uMi0uMWwtLjktMWMtLjYuMy0xLjQuMi0xLjktLjQtLjYtLjYtLjctMS40LS40LTEuOWwtMS40LTEuNGguN2wxLjEgMS4xYy42LS4zIDEuNC0uMiAxLjkuNHoiLz48cGF0aCBkPSJNMzcuNSA2NC45Yy44LS44IDEuMS0xLjQuOC0xLjQtLjcgMC0xLjMuNi0yLjEgMS4zbC0xMS4yIDktMTEuMi05Yy0uOC0uNy0xLjUtMS4zLTIuMS0xLjMtLjMgMCAwIC42LjggMS40bDExLjMgMTAuOXY5LjZMMTcgODcuMmMtLjMuMS0uNi4yLS42LjNzLjMuMi43LjJoMTUuOGMuNCAwIC43LS4xLjctLjJzLS4zLS4yLS43LS4zbC02LjctMS43di05LjZsMTEuMy0xMXoiLz48L2c+PGcgZmlsbD0iI0ZGRiI+PHBhdGggZD0iTTI1IDIyLjNsOC44LTcuMi0xMS45LjEtMy43LTMuNWMtLjEtLjEtLjMtLjEtLjQgMC0uMS4xLS4xLjMgMCAuNGwzLjIgM2gtNC44bDguOCA3LjJ6bTAtNS40Yy42LjYuNyAxLjQuNCAxLjlsLjkuOWMuMS4xLjEuMyAwIC40LS4xLjEtLjEuMS0uMi4xcy0uMSAwLS4yLS4xbC0uOS0xYy0uNi4zLTEuNC4yLTEuOS0uNC0uNi0uNi0uNy0xLjQtLjQtMS45bC0xLjQtMS40aC43bDEuMSAxLjFjLjYtLjMgMS40LS4yIDEuOS40eiIvPjxwYXRoIGQ9Ik0zNy41IDE0LjljLjgtLjggMS4xLTEuNC44LTEuNC0uNyAwLTEuMy42LTIuMSAxLjNsLTExLjIgOS0xMS4yLTljLS44LS43LTEuNS0xLjMtMi4xLTEuMy0uMyAwIDAgLjYuOCAxLjRsMTEuMyAxMC45djkuNkwxNyAzNy4yYy0uMy4xLS42LjItLjYuM3MuMy4yLjcuMmgxNS44Yy40IDAgLjctLjEuNy0uMnMtLjMtLjItLjctLjNsLTYuNy0xLjd2LTkuNmwxMS4zLTExeiIvPjwvZz48L3N2Zz4=);
+          }
+          .icon-amenities:before {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSIxMDAiIHZpZXdCb3g9IjAgMCA1MCAxMDAiPjxnIGZpbGw9IiMzNzVFNzMiPjxwYXRoIGQ9Ik0yNSA2OS4zYy02LjkgMC0xMi4zIDUuOS0xMi4zIDEyLjhoMjQuNWMuMS03LTUuMy0xMi44LTEyLjItMTIuOHptOS43IDEwLjZsLS4yLjFjLS41LjEtLjgtLjQtLjktLjYtLjYtNC4yLTMuOC03LjMtOC03LjMtLjMgMC0uNS0uMi0uNS0uNXMuMi0uNS41LS41YzQuNyAwIDguOCAzLjUgOS42IDguMiAwIC4yLS4yLjYtLjUuNnpNMzQuOCA4My41SDE1LjJjLS4xIDAtLjMuNC0uMy44cy4xLjguMy44aDE5LjZjLjIgMCAuMy0uMy4zLS44IDAtLjQtLjEtLjgtLjMtLjh6TTI0LjMgNjYuOHYxLjRoMS41di0xLjRjMS4xLS4yIDEuNy0uNSAxLjctLjggMC0uNC0xLjEtLjgtMi41LS44cy0yLjUuMy0yLjUuOGMwIC40LjcuNyAxLjguOHoiLz48L2c+PGcgZmlsbD0iI0ZGRiI+PHBhdGggZD0iTTI1IDE5LjNjLTYuOSAwLTEyLjMgNS45LTEyLjMgMTIuOGgyNC41Yy4xLTctNS4zLTEyLjgtMTIuMi0xMi44em05LjcgMTAuNmwtLjIuMWMtLjUuMS0uOC0uNC0uOS0uNi0uNi00LjItMy44LTcuMy04LTcuMy0uMyAwLS41LS4yLS41LS41cy4yLS41LjUtLjVjNC43IDAgOC44IDMuNSA5LjYgOC4yIDAgLjItLjIuNi0uNS42ek0zNC44IDMzLjVIMTUuMmMtLjEgMC0uMy40LS4zLjhzLjEuOC4zLjhoMTkuNmMuMiAwIC4zLS4zLjMtLjggMC0uNC0uMS0uOC0uMy0uOHpNMjQuMyAxNi44djEuNGgxLjV2LTEuNGMxLjEtLjIgMS43LS41IDEuNy0uOCAwLS40LTEuMS0uOC0yLjUtLjhzLTIuNS4zLTIuNS44YzAgLjQuNy43IDEuOC44eiIvPjwvZz48L3N2Zz4=);
+          }
+          .icon-casino:before {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSIxMDAiIHZpZXdCb3g9IjAgMCA1MCAxMDAiPjxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0yMi44IDgzLjZsLjcuMk0zOS4zIDY2LjRsLTYtMS40LTguNyA2LjQtMSAxMC42LjUgMS41IDQuNyAzLjktMi4xLS4xIDcuMiAxLjdjLjMuMS43LS4xLjgtLjRsNS4yLTIxLjVjMC0uMi0uMi0uNi0uNi0uN3oiLz48ZyBmaWxsPSIjMzc1RTczIj48cGF0aCBkPSJNMTEuMyA2NC4zYy0uMS4xLS4yLjMtLjIuNXYuMWw0IDIxLjljMCAuMi4xLjMuMi40LjEuMS4zLjEuNC4xbDEuMy0uMmMtLjctLjEtLjgtLjctLjgtMS4ybC43LTIyLjJjLjEtLjEuMi0uMi4yLS4zbC4xLS4yLTUuNiAxYy0uMSAwLS4yLjEtLjMuMXpNMzMuNSA2M2gtNC45bDUuOSAxLjR2LS4zYzAtLjUtLjQtMS4xLTEtMS4xek0xOC44IDYzLjJjLS4xLjEtLjIuMy0uMi40bC0uNyAyMi4yYzAgLjMuMi44LjcuOEgyMGMtLjktLjEtMS4yLTEtMS0xLjhsNS4yLTIxLjVzLjEtLjIuMS0uM2gtNS4xYy0uMiAwLS4zLjEtLjQuMnoiLz48cGF0aCBkPSJNMzkuOSA2Ni42bC02LTEuNC03LjctMS44aC0uMWMtLjMgMC0uNS4yLS43LjVsLTUuMiAyMS41Yy0uMS4zLjEuNy40LjhsNi41IDEuNiA3LjIgMS43Yy4zLjEuNy0uMS44LS40bDUuMi0yMS41Yy4xLS41LS4xLS45LS40LTF6bS03LjUgMTMuNmMtLjktLjEtMS40LS41LTEuOC0xLjMtLjEtLjMtLjItLjQtLjMtLjkgMCAwIDAtLjEtLjEtLjItLjEuNS0uMiAxLjEtLjIgMS41IDAgMS40LjMgMi40IDEuNyAyLjkuMS4xLjIuMS40LjEuMy4xLjUuMi41LjUtMi41LS43LTUtMS4yLTcuNC0xLjggMC0uMS4xLS4xLjEtLjEuMi0uMS40LS4xLjUtLjFoLjVjMS41IDAgMi40LS43IDMtMiAuMi0uNC40LTEuMy40LTEuM2wtLjEuMWMtLjQuNS0xIDEtMS43IDEuMS0xLjQuMi0yLjYtLjktMi42LTIuMyAwLS44LjMtMS4zLjktMS43LjQtLjQgMS0uNyAxLjQtMSAuNy0uMyAxLjQtLjggMi0xLjIuOS0uNSAxLjQtMS4yIDItMi4xIDAgLjQuMS43LjEgMSAuMS40LjQgMS41LjkgMi4zLjQuOC45IDEuNSAxLjMgMi4yLjcuOS45IDEuNi45IDIuMi0uMSAxLjQtMS4zIDIuMi0yLjQgMi4xeiIvPjwvZz48cGF0aCBmaWxsPSJub25lIiBkPSJNMjIuNSAzMi41bC43LjFNMzkgMTUuM2wtNi0xLjQtOC43IDYuNC0xLjEgMTAuNi41IDEuNSA0LjcgMy45LTIuMS0uMSA3LjIgMS43Yy4zLjEuNy0uMS44LS40TDM5LjYgMTZjMC0uMy0uMi0uNi0uNi0uN3oiLz48ZyBmaWxsPSIjRkZGIj48cGF0aCBkPSJNMTEgMTMuMWMtLjEuMS0uMi4zLS4yLjV2LjFsNCAyMS45YzAgLjIuMS4zLjIuNC4xLjEuMy4xLjQuMWwxLjMtLjJjLS43LS4xLS44LS43LS44LTEuMmwuNy0yMi4yYy4xLS4xLjItLjIuMi0uM2wuMS0uMi01LjYgMWMtLjEgMC0uMi4xLS4zLjF6TTMzLjIgMTEuOWwtNC45LS4xIDUuOSAxLjRWMTNjMC0uNS0uNC0xLjEtMS0xLjF6TTE4LjUgMTIuMWMtLjEuMS0uMi4zLS4yLjRsLS43IDIyLjJjMCAuMy4yLjguNy44aDEuNGMtLjktLjItMS4yLTEuMS0xLTEuOGw1LjItMjEuNXMuMS0uMi4xLS4zaC01LjFjLS4yIDAtLjMuMS0uNC4yeiIvPjwvZz48cGF0aCBmaWxsPSIjRkZGIiBkPSJNMzkuNiAxNS41bC02LTEuNC03LjctMS44aC0uMWMtLjMgMC0uNS4yLS43LjVsLTUuMiAyMS41Yy0uMS4zLjEuNy40LjhsNi41IDEuNiA3LjIgMS43Yy4zLjEuNy0uMS44LS40TDQwIDE2LjVjLjEtLjYtLjEtLjktLjQtMXpNMzQuNSAyN2MtLjEgMS40LTEuMyAyLjItMi40IDIuMS0uOS0uMS0xLjQtLjUtMS44LTEuMy0uMS0uMy0uMi0uNC0uMy0uOSAwIDAgMC0uMS0uMS0uMi0uMS41LS4yIDEuMS0uMiAxLjUgMCAxLjQuMyAyLjQgMS43IDIuOS4xIDAgLjIuMS40LjEuMy4xLjUuMi41LjUtMi41LS43LTUtMS4yLTcuNC0xLjggMC0uMS4xLS4xLjEtLjEuMi0uMS40LS4xLjUtLjFoLjVjMS41IDAgMi40LS43IDMtMiAuMi0uNC40LTEuMy40LTEuM2wtLjEuMWMtLjQuNS0xIDEtMS43IDEuMS0xLjQuMi0yLjYtLjktMi42LTIuMyAwLS44LjMtMS4zLjktMS43LjQtLjQgMS0uNyAxLjQtMSAuNy0uMyAxLjQtLjggMi0xLjIuOS0uNSAxLjQtMS4yIDItMi4xIDAgLjQuMS43LjEgMSAuMS40LjQgMS41LjkgMi4zLjQuOC45IDEuNSAxLjMgMi4yLjcuOS45IDEuNS45IDIuMnoiLz48L3N2Zz4=);
+          }
+          .icon-groups:before {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSIxMDAiIHZpZXdCb3g9IjAgMCA1MCAxMDAiPjxnIGZpbGw9IiMzNzVFNzMiPjxwYXRoIGQ9Ik0xNy42IDc4LjdzMS4xLS41IDEuNC0xLjVjLjctLjMuNi0uNS43LS45IDAgMCAuMi0xLjYtLjMtMS42IDAgMC0uOS0uMS0uOC0uNSAwLS42LjEtMS42LjEtMiAwLS40LjItMS4zLS43LTEuNS0uOC0uMi0uNS0uMS0uOC0uMXMtLjItLjItLjctLjJsLTEuMS0uMmMtLjUgMC0uOS41LTEuMS42LS4zIDAgLjItLjEtLjQgMC0uOC4yLS43IDEuMy0uOCAxLjcgMCAuNC0uMSAxLjYgMCAxLjkuMS40LS4yLjMtLjIuMy0uNiAwLTEgMS42LTEgMS42LjEuNC4zLjUuOS44LjQgMSAxLjMgMS43IDEuMyAxLjdzLjEuOC4xIDFjMCAuMS4zIDEuMi0uOSAxLjYtMi4yLjktMi43IDEuMS0zLjIgMS41LTEuNyAxLTEuNiAzLjQtMS42IDMuNGg2LjZzMC0yLjguNi00LjZjLjYtLjcgMS4zLTEuMyAyLjItMS44IDAtLjUtLjMtMS4yLS4zLTEuMnpNNDAgODIuOWMtLjQtLjQtLjktLjktMy4yLTEuNS0xLjUtLjQtLjgtMS42LS44LTEuNiAwLS4yLjEtMSAuMS0xcy45LS42IDEuMy0xLjdjLjYtLjQuOC0uNC45LS44IDAgMC0uNC0xLjYtMS0xLjYgMCAwLS4yIDAtLjItLjMuMS0uNC4xLTEuNSAwLTEuOS0uMS0uNC4xLTEuNi0uOC0xLjctLjYtLjEtLjEuMS0uNCAwLS4zIDAtLjYtLjYtMS4xLS42bC0xLjEuMmMtLjUgMC0uNC4yLS43LjJzLjEgMC0uOC4xYy0uOC4yLS42IDEtLjcgMS41IDAgLjQgMCAxLjQuMSAyIC4xLjQtLjguNS0uOC41LS41IDAtLjMgMS42LS4zIDEuNi4xLjQgMCAuNi43LjkuNCAxIDEuNCAxLjUgMS40IDEuNXMtLjMuNy0uMyAxLjJjLjkuNSAxLjUgMS4yIDIgMS44LjYgMS44LjYgNC42LjYgNC42IDMgMCA2LjYtLjEgNi42LS4xcy0uMS0yLjUtMS41LTMuM3oiLz48cGF0aCBkPSJNMjkuNiA4MGMtMy0uNS0yLjItMi0yLjItMi4xIDAtLjIuMS0xLjMuMS0xLjNzMS4yLS44IDEuNi0yLjJjLjctLjUgMS0uNSAxLjEtMS4xIDAgMCAuMi0yLS41LTIgMCAwLS4zLjEtLjItLjRzLjEtMiAwLTIuNS4xLTItMS0yLjJjLS43LS4xLS44LjEtMS4yIDAtLjQtLjEtLjgtMS0xLjUtMWwtMS40LjJjLS43IDAtLjYuMi0uOS4zLS40LjEuMS0uMS0xIC4yLTEuMS4yLTEuNSAxLjYtMS41IDIuMi0uMS41LS4yIDIuMS0uMSAyLjkuMS41LS42LjUtLjYuNS0uNyAwLS40IDItLjQgMiAuMS41IDAgLjguOSAxLjIuNSAxLjMgMi4zIDIgMi4zIDJzLjEuOS4xIDEuNWMtLjEtLjEuNCAxLjYtMi43IDItMyAuNC0zIDEuNC0zLjYgMi0uNi42LS41IDQuMy0uNSA0LjNIMzRzLS4xLTMuNy0uNi00LjNjLS42LS43LS44LTEuNy0zLjgtMi4yeiIvPjwvZz48ZyBmaWxsPSIjRkZGIj48cGF0aCBkPSJNMTcuNiAyOC43czEuMS0uNSAxLjQtMS41Yy43LS4zLjYtLjUuNy0uOSAwIDAgLjItMS42LS4zLTEuNiAwIDAtLjktLjEtLjgtLjUgMC0uNi4xLTEuNi4xLTIgMC0uNC4yLTEuMy0uNy0xLjUtLjgtLjItLjUtLjEtLjgtLjFzLS4yLS4yLS43LS4ybC0xLjEtLjJjLS41IDAtLjkuNS0xLjEuNi0uMyAwIC4yLS4xLS40IDAtLjguMi0uNyAxLjMtLjggMS43IDAgLjQtLjEgMS42IDAgMS45LjEuNC0uMi4zLS4yLjMtLjYgMC0xIDEuNi0xIDEuNi4xLjQuMy41LjkuOC40IDEgMS4zIDEuNyAxLjMgMS43cy4xLjguMSAxYzAgLjEuMyAxLjItLjkgMS42LTIuMi45LTIuNyAxLjEtMy4yIDEuNS0xLjcgMS0xLjYgMy40LTEuNiAzLjRoNi42czAtMi44LjYtNC42Yy42LS43IDEuMy0xLjMgMi4yLTEuOCAwLS41LS4zLTEuMi0uMy0xLjJ6Ii8+PHBhdGggZD0iTTI5LjYgMzBjLTMtLjUtMi4yLTItMi4yLTIuMSAwLS4yLjEtMS4zLjEtMS4zczEuMi0uOCAxLjYtMi4yYy43LS41IDEtLjUgMS4xLTEuMSAwIDAgLjItMi0uNS0yIDAgMC0uMy4xLS4yLS40cy4xLTIgMC0yLjUuMS0yLTEtMi4yYy0uNy0uMS0uOC4xLTEuMiAwLS40LS4xLS44LTEtMS41LTFsLTEuNC4yYy0uNyAwLS42LjItLjkuMy0uNC4xLjEtLjEtMSAuMi0xLjEuMi0xLjUgMS42LTEuNSAyLjItLjEuNS0uMiAyLjEtLjEgMi45LjEuNS0uNi41LS42LjUtLjcgMC0uNCAyLS40IDIgLjEuNSAwIC44LjkgMS4yLjUgMS4zIDIuMyAyIDIuMyAycy4xLjkuMSAxLjVjLS4xLS4xLjQgMS42LTIuNyAyLTMgLjQtMyAxLjQtMy42IDItLjYuNS0uNSA0LjMtLjUgNC4zSDM0cy0uMS0zLjctLjYtNC4zYy0uNi0uNy0uOC0xLjctMy44LTIuMnoiLz48cGF0aCBkPSJNNDAgMzIuOWMtLjQtLjQtLjktLjktMy4yLTEuNS0xLjUtLjQtLjgtMS42LS44LTEuNiAwLS4yLjEtMSAuMS0xcy45LS42IDEuMy0xLjdjLjYtLjQuOC0uNC45LS44IDAgMC0uNC0xLjYtMS0xLjYgMCAwLS4yIDAtLjItLjMuMS0uNC4xLTEuNSAwLTEuOS0uMS0uNC4xLTEuNi0uOC0xLjctLjYtLjEtLjEuMS0uNCAwLS4zIDAtLjYtLjYtMS4xLS42bC0xLjEuMmMtLjUgMC0uNC4yLS43LjJzLjEgMC0uOC4xYy0uOC4yLS42IDEtLjcgMS41IDAgLjQgMCAxLjQuMSAyIC4xLjQtLjguNS0uOC41LS41IDAtLjMgMS42LS4zIDEuNi4xLjQgMCAuNi43LjkuNCAxIDEuNCAxLjUgMS40IDEuNXMtLjMuNy0uMyAxLjJjLjkuNSAxLjUgMS4yIDIgMS44LjYgMS44LjYgNC42LjYgNC42IDMgMCA2LjYtLjEgNi42LS4xcy0uMS0yLjUtMS41LTMuM3oiLz48L2c+PC9zdmc+);
+          }
+          .icon-offers:before {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSIxMDAiIHZpZXdCb3g9IjAgMCA1MCAxMDAiPjxnIGZpbGw9IiMzNzVFNzMiPjxwYXRoIGQ9Ik0zNi41IDczLjhMMjYuNyA2NGgtMS41bDEwLjUgMTAuNWMuNS41LjggMS4yLjggMS45cy0uMyAxLjQtLjggMS45bC04IDhjLjkgMCAxLjktLjMgMi42LTEuMWw2LjItNi4yYzEuNS0xLjMgMS41LTMuNyAwLTUuMnoiLz48cGF0aCBkPSJNMzUgNzUuNEwyMy44IDY0LjFsLTEwLjkuMVY3NWwxMS4yIDExLjJjLjYuNiAxLjYuNiAyLjMgMGw4LjYtOC42Yy43LS42LjctMS42IDAtMi4yem0tMTcuMS02LjNjLS43LjctMS44LjctMi41IDBzLS43LTEuOCAwLTIuNSAxLjgtLjcgMi41IDAgLjcgMS44IDAgMi41ek0yOS4zIDc4Yy0uMi40LS41LjgtLjggMS4xbC44LjgtLjQuNC0uOS0uOGMtLjQuNC0uOC42LTEuMi44LS40LjItLjguMy0xLjIuMy0uNCAwLS44LS4xLTEuMi0uMi0uNC0uMi0uOC0uNC0xLjItLjhsMS4yLTEuMmMuNC41LjkuNyAxLjMuOC41LjEuOS0uMSAxLjQtLjZsLTIuNC0yLjRjLS40LjItLjcuNC0xLjEuNi0uNC4yLS44LjMtMS4xLjMtLjQuMS0uOCAwLTEuMi0uMS0uNC0uMS0uOC0uNC0xLjEtLjctLjMtLjMtLjUtLjctLjctMS0uMS0uNC0uMi0uNy0uMS0xLjEgMC0uNC4yLS43LjQtMS4xLjItLjQuNC0uNy43LTFsLS44LS44LjQtLjQuOC44Yy4zLS4zLjYtLjUgMS0uNy4zLS4yLjctLjMgMS4xLS4zcy43IDAgMS4xLjFjLjQuMS43LjQgMSAuN2wtMS4yIDEuMmMtLjQtLjMtLjctLjUtMS4xLS41LS4zIDAtLjcuMi0xLjEuNWwyLjEgMi4xIDEuMi0uNnMuOC0uMyAxLjItLjRjLjQtLjEuOCAwIDEuMi4xLjQuMS44LjQgMS4xLjcuNC4yLjcuNi45IDEgLjIuNC4yLjguMiAxLjIgMCAuNC0uMS44LS4zIDEuMnoiLz48cGF0aCBkPSJNMjAuOCA3My45Yy0uMS40IDAgLjguNCAxLjEuMi4yLjMuMy41LjNzLjQuMS42IDBjLjIgMCAuNC0uMS42LS4yLjItLjEuNC0uMi41LS4zbC0yLTJjLS40LjQtLjYuNy0uNiAxLjF6TTI3LjEgNzUuNmMtLjMtLjEtLjUtLjItLjctLjEtLjIgMC0uNC4xLS42LjJsLS42LjMgMi40IDIuNGMuMy0uNC41LS44LjYtMS4yIDAtLjQtLjEtLjgtLjUtMS4yLS4yLS4yLS40LS4zLS42LS40eiIvPjwvZz48ZyBmaWxsPSIjRkZGIj48cGF0aCBkPSJNMzYuNSAyMy45bC05LjgtOS44aC0xLjVsMTAuNSAxMC41Yy41LjUuOCAxLjIuOCAxLjlzLS4zIDEuNC0uOCAxLjlsLTggOGMuOSAwIDEuOS0uMyAyLjYtMWw2LjItNi4yYzEuNS0xLjUgMS41LTMuOSAwLTUuM3oiLz48cGF0aCBkPSJNMzUgMjUuNEwyMy44IDE0LjFsLTEwLjkuMVYyNWwxMS4yIDExLjJjLjYuNiAxLjYuNiAyLjMgMGw4LjYtOC42Yy43LS42LjctMS42IDAtMi4yem0tMTcuMS02LjNjLS43LjctMS44LjctMi41IDBzLS43LTEuOCAwLTIuNSAxLjgtLjcgMi41IDAgLjcgMS44IDAgMi41ek0yOS4zIDI4Yy0uMi40LS41LjgtLjggMS4xbC44LjgtLjQuNC0uOS0uOGMtLjQuNC0uOC42LTEuMi44LS40LjItLjguMy0xLjIuMy0uNCAwLS44LS4xLTEuMi0uMi0uNC0uMi0uOC0uNC0xLjItLjhsMS4yLTEuMmMuNC41LjkuNyAxLjMuOC41LjEuOS0uMSAxLjQtLjZsLTIuNC0yLjRjLS40LjItLjcuNC0xLjEuNi0uNC4yLS44LjMtMS4xLjMtLjQuMS0uOCAwLTEuMi0uMS0uNC0uMS0uOC0uNC0xLjEtLjdzLS41LS43LS43LTFjLS4xLS40LS4yLS43LS4xLTEuMSAwLS40LjItLjcuNC0xLjEuMi0uNC40LS43LjctMWwtLjgtLjguNC0uNC44LjhjLjMtLjMuNi0uNSAxLS43LjMtLjIuNy0uMyAxLjEtLjNzLjcgMCAxLjEuMWMuNC4xLjcuNCAxIC43bC0xLjIgMS4yYy0uNC0uMy0uNy0uNS0xLjEtLjUtLjMgMC0uNy4yLTEuMS41bDIuMSAyLjEgMS4yLS42cy44LS4zIDEuMi0uNGMuNC0uMS44IDAgMS4yLjEuNC4xLjguNCAxLjEuNy40LjIuNy42LjkgMSAuMi40LjIuOC4yIDEuMiAwIC40LS4xLjgtLjMgMS4yeiIvPjxwYXRoIGQ9Ik0yMC44IDIzLjljLS4xLjQgMCAuOC40IDEuMS4yLjIuMy4zLjUuM3MuNC4xLjYgMGMuMiAwIC40LS4xLjYtLjIuMi0uMS40LS4yLjUtLjNsLTItMmMtLjQuNC0uNi43LS42IDEuMXpNMjcuMSAyNS42Yy0uMy0uMS0uNS0uMi0uNy0uMS0uMiAwLS40LjEtLjYuMmwtLjYuMyAyLjQgMi40Yy4zLS40LjUtLjguNi0xLjIgMC0uNC0uMS0uOC0uNS0xLjItLjItLjItLjQtLjMtLjYtLjR6Ii8+PC9nPjwvc3ZnPg==);
+          }
+          .icon-mobile-app:before {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSIxMDAiPjxwYXRoIGZpbGw9IiMzNzVENzMiIGQ9Ik0xOCA4NC43aDEzLjd2My4yYzAgLjktLjggMS43LTEuNyAxLjdIMTkuN2MtLjkgMC0xLjctLjgtMS43LTEuN3YtMy4yem0wLS42VjY2LjloMTMuN3YxNy4ySDE4em02LjggMi4xYy0uNyAwLTEuMi41LTEuMiAxLjJzLjUgMS4yIDEuMiAxLjIgMS4yLS41IDEuMi0xLjItLjUtMS4yLTEuMi0xLjJ6TTMwIDYzYy45IDAgMS43LjggMS43IDEuN3YxLjdIMTh2LTEuN2MwLS45LjgtMS43IDEuNy0xLjdIMzB6bS04LjEgMmMuMiAwIC40LS4yLjQtLjRzLS4yLS40LS40LS40LS40LjItLjQuNC4yLjQuNC40em00LjYtLjFjLjIgMCAuMy0uMS4zLS4zIDAtLjItLjEtLjMtLjMtLjNoLTMuNGMtLjIgMC0uMy4xLS4zLjMgMCAuMi4xLjMuMy4zaDMuNHoiLz48cGF0aCBmaWxsPSIjRkZGIiBkPSJNMTguMyAzMy43SDMydjMuMmMwIC45LS44IDEuNy0xLjcgMS43SDIwYy0uOSAwLTEuNy0uOC0xLjctMS43di0zLjJ6bTAtLjZWMTUuOUgzMnYxNy4ySDE4LjN6bTYuOSAyLjFjLS43IDAtMS4yLjUtMS4yIDEuMnMuNSAxLjIgMS4yIDEuMiAxLjItLjUgMS4yLTEuMi0uNi0xLjItMS4yLTEuMnpNMzAuMyAxMmMuOSAwIDEuNy44IDEuNyAxLjd2MS43SDE4LjN2LTEuN2MwLS45LjgtMS43IDEuNy0xLjdoMTAuM3ptLTguMSAyYy4yIDAgLjQtLjIuNC0uNHMtLjItLjQtLjQtLjQtLjQuMi0uNC40YzAgLjMuMi40LjQuNHptNC43LS4xYy4yIDAgLjMtLjEuMy0uM3MtLjEtLjMtLjMtLjNoLTMuNGMtLjIgMC0uMy4xLS4zLjNzLjEuMy4zLjNoMy40eiIvPjwvc3ZnPg==);
+          }</style
+        ><!-- ngIf: vpIs === 'small' -->
+        <!-- ngIf: vpIs === 'medium' -->
+        <!-- ngIf: vpIs === 'xlarge' -->
+        <nav
+          class="nav-d ng-scope"
+          role="navigation"
+          aria-label="Menu"
+          ng-if="vpIs === 'xlarge'"
+        >
+          <div
+            class="skip-links"
+            role="complementary"
+            data-scroll-speed="1000"
+            skip-links=""
+          >
+            <a class="skip-to-content" href="#main">Skip to main content</a>
+            <a class="skip-to-footer" href="#footer">Skip to footer</a>
+          </div>
+          <ul
+            class="nav-secondary ng-scope"
+            role="menubar"
+            ng-controller="SignInWidgetController"
+          >
+            <li
+              class="nav-mlife mlife-container nav-dropdown unauth-mife"
+              role="menuitem"
+              ng-class="{'unauth-mife':!authenticated}"
+            >
+              <!--
+                @FLAG: Move data attributes to config | Christopher Gwizdala
+              -->
+              <button
+                class="nav-dd-trigger toggle-element rotate-nav"
+                aria-label="Toggle M life Sign in widget"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="mlife-dd"
+                data-cookie-names="mgm_auth_user,remgm"
+                data-redirect-unauth="/content/aria/en/sign-in.html"
+                ng-click="showSignInWidget($event)"
+              >
+                <span class="mlife-img" aria-label="M life"></span>
+                <span
+                  class="mlife-text"
+                  ng-hide="authenticated"
+                  aria-hidden="false"
+                  >Sign In</span
+                >
+              </button>
+              <ul id="mlife-dd" class="sign-in-widget nav-dd" role="widget">
+                <li>
+                  <div class="sign-in-grid">
+                    <div class="grid-item width-1-2">
+                      <div ng-hide="authenticated" aria-hidden="false" class="">
+                        <form
+                          class="sign-in-form ng-pristine ng-valid"
+                          id="signin-widget-form"
+                          method="post"
+                          data-cookie-names="mgm_auth_user,remgm"
+                          ng-submit="widgetSubmit()"
+                          enctype="multipart/form-data"
+                        >
+                          <img
+                            src="//static.mgmresorts.com/content/dam/MGM/aria/website-graphics/property-content-logos/email_mlife.gif"
+                            contentimage="true"
+                            class="fieldset-title"
+                            alt="M life Rewards"
+                          />
+                          <fieldset>
+                            <div class="input-step field">
+                              <label for="email-widget">Email</label>
+                              <input
+                                type="email"
+                                name="customerEmail"
+                                id="email-widget"
+                                ng-model="eId"
+                                aria-required="true"
+                                class="ng-pristine ng-valid ng-valid-email"
+                                aria-invalid="false"
+                              />
+                            </div>
+                            <div class="input-step field">
+                              <label for="password-widget">Password</label>
+                              <div class="password-toggle">
+                                <input
+                                  type="password"
+                                  data-view-password-toggle=""
+                                  name="password"
+                                  id="password-widget"
+                                  autocomplete="off"
+                                  ng-model="pwd"
+                                  aria-required="true"
+                                  class="ng-isolate-scope ng-pristine ng-valid"
+                                  aria-invalid="false"
+                                /><a
+                                  data-ng-click="tgl()"
+                                  class="icon-account-password-on ng-scope"
+                                ></a>
+                              </div>
+                            </div>
+                            <a
+                              class="field"
+                              href="#nowhere"
+                              >Forgot My Password</a
+                            >
+                            <div class="btn-container">
+                              <button
+                                type="submit"
+                                class="btn-xsmall cta sign-in"
+                                data-redirect="#nowhere"
+                                id="sign-in-widget"
+                              >
+                                Sign In
+                              </button>
+                            </div>
+                          </fieldset>
+                        </form>
+                      </div>
+                      <div
+                        ng-show="authenticated"
+                        aria-hidden="true"
+                        class="ng-hide"
+                      >
+                        <!-- ngIf: tierDetails.cardImage -->
+                        <div class="user-name">
+                          <span class="h2class">
+                            Welcome,<span
+                              ng-bind="fname"
+                              class="fname ng-binding"
+                            ></span>
+                            <br />
+                            <span ng-bind="lname" class="ng-binding"></span>
+                          </span>
+                        </div>
+                        <div class="tier-details">
+                          <span class="h3class text-color-">
+                            Tier Level<span
+                              class="pointer ng-binding"
+                              ng-click="redirectSummary()"
+                              role="button"
+                              tabindex="0"
+                            >
+                            </span>
+                          </span>
+                          <div class="widget-progress-bar">
+                            <div
+                              class="progress-bar-progress color-"
+                              ng-style="{width: tierDetails.percentProgressBar }"
+                            ></div>
+                          </div>
+                          <p
+                            class="pointer curr-tierpoint text-color-"
+                            ng-click="redirectSummary()"
+                            role="button"
+                            tabindex="0"
+                          >
+                            Tier Credits
+                          </p>
+                          <p
+                            id="advance-credit"
+                            ng-click="redirectSummary(tierDetails.currentTierClass)"
+                            ng-bind-html="tierDetails.progressText | trust"
+                            ng-class="{'pointer':tierDetails.currentTierClass === 'pearl' || tierDetails.currentTierClass === 'sapphire'|| tierDetails.currentTierClass === 'gold'}"
+                            role="button"
+                            tabindex="0"
+                            class="ng-binding"
+                          ></p>
+                        </div>
+                        <div class="link-container">
+                          <ul>
+                            <li>
+                              <a
+                                class="links toggle-element"
+                                href="#nowhere"
+                                >Reservations / Itinerary</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                class="links toggle-element"
+                                href="#nowhere"
+                                >My Rewards</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                class="links toggle-element"
+                                href="#nowhere"
+                                >My Profile</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                class="links toggle-element"
+                                href="#nowhere"
+                                >Win/Loss (Tax) Info</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                class="links toggle-element"
+                                ng-click="logout()"
+                              >
+                                Log Out</a
+                              >
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="grid-item width-1-2">
+                      <div ng-hide="authenticated" aria-hidden="false" class="">
+                        <div class="desc">
+                          <span class="h2class cond">Get with the program</span>
+                          <p>
+                            M life Rewards&nbsp;gets you access to the best
+                            MGM&nbsp;Resorts has to offer. Join today and
+                            receive:
+                          </p>
+                          <p>
+                            • Up to 20% off&nbsp;room rates<br />
+                            •&nbsp;Pre-sale ticket offers to world-class
+                            entertainment<br />
+                            •&nbsp;Discounts at participating retail shops<br />
+                            •&nbsp;Access to exclusive M life Moments
+                          </p>
+                          <p>
+                            To view and book offers for Borgata Hotel Casino
+                            &amp; Spa in Atlantic City,
+                            <a
+                              href="#nowhere"
+                              
+                              >click here.</a
+                            >
+                          </p>
+                          <div class="buttons">
+                            <a
+                              class="btn-xsmall btn-learn"
+                              href="#nowhere"
+                              >Learn more<span class="screen-reader"
+                                >Learn more</span
+                              ></a
+                            >
+                            <a
+                              class="btn-xsmall  cta btn-join cta-transform-normal"
+                              href="#nowhere"
+                              >Join Today</a
+                            >
+                          </div>
+                        </div>
+                        <div class="signin-sub-desc">
+                          <span class="h3class cond"
+                            >First time using M life Rewards online?</span
+                          >
+                          <div class="card-text-wrapper">
+                            <p class="copy">
+                              If so, you'll need to activate your account to
+                              enjoy all the features and benefits M life Rewards
+                              has to offer.
+                            </p>
+                          </div>
+                          <a href="#nowhere"
+                            >Activate your account</a
+                          >
+                        </div>
+                      </div>
+                      <div
+                        ng-show="authenticated"
+                        aria-hidden="true"
+                        class="ng-hide"
+                      >
+                        <div class="tier-class" id="current-tier">
+                          <div class="tier-disp-val text-color-"></div>
+                          <div
+                            class="promo-tier-perk ng-binding"
+                            ng-bind-html="tierDetails.tirePerkInfo | trust"
+                          ></div>
+                        </div>
+                        <div class="tier-class" id="next-tier">
+                          <div class="tier-disp-val text-color-"></div>
+                          <div
+                            class="promo-tier-perk ng-binding"
+                            ng-bind-html="tierDetails.nextTirePerkInfo | trust"
+                          ></div>
+                        </div>
+                        <!-- ngIf: tierDetails.currentTierClass !== 'noir' -->
+                        <div
+                          class="compare-link ng-scope"
+                          ng-if="tierDetails.currentTierClass !== 'noir'"
+                        >
+                          <a
+                            class="links toggle-element"
+                            href="#nowhere"
+                            >View all Benefits and Terms &amp; Conditions</a
+                          >
+                        </div>
+                        <!--
+                          end ngIf: tierDetails.currentTierClass !== 'noir'
+                        -->
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li
+              role="menuitem"
+              class="nav-skylofts"
+              ng-class=""
+              ng-hide=""
+              aria-hidden="false"
+            >
+              <a
+                class="rotate-nav"
+                href="#nowhere"
+                
+              >
+                ARIA Sky Suites</a
+              >
+            </li>
+            <li
+              role="menuitem"
+              class="nav-signature"
+              ng-class=""
+              ng-hide=""
+              aria-hidden="false"
+            >
+              <a
+                class="rotate-nav"
+                href="#nowhere"
+                
+              >
+                ARIA Tower Suites
+              </a>
+            </li>
+          </ul>
+          <div id="nav-logo" class="brand-logo">
+            <a class="brand-logo" href="#nowhere">
+              <span class="logo-top brand-img"></span>
+              <span class="logo-bottom text">aria-collapsed</span>
+              <span class="screen-reader"></span>
+            </a>
+          </div>
+          <ul class="nav-util" role="menubar">
+            <li class="nav-guest-services nav-dropdown" role="menuitem">
+              <button
+                class="nav-services-btn nav-dd-trigger rotate-nav"
+                aria-label="Click to toggle Guest Services menu"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Guest Services
+              </button>
+              <!-- ngIf: !isLogged -->
+              <ul
+                id="unsignedIn-guest-menu"
+                class="nav-dd ng-scope"
+                role="menu"
+                ng-if="!isLogged"
+              >
+                <li role="menuitem">
+                  <a href="#nowhere" target=""
+                    >Find Reservation</a
+                  >
+                </li>
+                <li role="menuitem">
+                  <a href="#nowhere" target=""
+                    >Mobile Check-In</a
+                  >
+                </li>
+                <li role="menuitem">
+                  <a
+                    href="#nowhere"
+                    
+                    >Mobile Check-Out</a
+                  >
+                </li>
+                <li role="menuitem">
+                  <a href="#nowhere" target="">Offers Sign-Up</a>
+                </li>
+                <li role="menuitem">
+                  <a
+                    href="#nowhere"
+                    
+                    >Manage Preferences</a
+                  >
+                </li>
+                <li role="menuitem">
+                  <a href="#nowhere" target="">Contact Us</a>
+                </li>
+              </ul>
+              <!-- end ngIf: !isLogged -->
+              <!-- ngIf: isLogged -->
+            </li>
+            <li class="nav-itinerary" role="menuitem">
+              <a
+                href="#nowhere"
+                class="rotate-nav"
+                target=""
+              >
+                Itinerary<span
+                  class="itinerary-counter ng-binding itinerary-count no-itinerary"
+                  ng-bind="itineraryCount"
+                  ng-class="{'itinerary-count' : itineraryCount, 'no-itinerary' : itineraryCount === '0'}"
+                  >0</span
+                >
+                <span class="screen-reader"
+                  >Your Itinerary count is<span
+                    class="itinerary-counter ng-binding itinerary-count no-itinerary"
+                    ng-bind="itineraryCount"
+                    ng-class="{'itinerary-count' : itineraryCount, 'no-itinerary' : itineraryCount === '0'}"
+                    >0</span
+                  ></span
+                >
+              </a>
+            </li>
+            <li
+              class="nav-search search-expanded"
+              role="search"
+              toggle-search=""
+            >
+              <button
+                class="nav-search-trigger"
+                aria-label="Click to open search box"
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-controls="global-nav-search-form"
+              >
+                <span class="iconui-search"></span>
+              </button>
+              <div class="wrapper-div hide">
+                <form
+                  id="global-nav-search-form"
+                  data-action="/en/search.html"
+                  data-dtm="searchfield"
+                  handle-search=""
+                  items="items"
+                  class="ng-isolate-scope ng-pristine ng-valid"
+                >
+                  <input
+                    type="text"
+                    class="search-box searchInput ng-pristine ng-valid"
+                    ng-placeholder=""
+                    placeholder="Search restaurants, shows, more…"
+                    clear-text-input=""
+                    ng-model="globalSearchKeyword"
+                    data-dtm="searchkeyword"
+                    aria-invalid="false"
+                  />
+                  <button
+                    type="submit"
+                    class="btn-xsmall nav-search-btn cta"
+                    aria-label="Search"
+                    disabled="disabled"
+                  >
+                    Search
+                  </button>
+                  <span class="clear-search  close-search-overlay"></span>
+                  <!-- ngIf: items.length -->
+                </form>
+              </div>
+            </li>
+            <li
+              class="nav-language nav-dropdown nav-language-hide"
+              role="menuitem"
+              language-links=""
+            >
+              <button
+                class="nav-language-btn nav-dd-trigger rotate-nav"
+                aria-label="Language Menu"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="language-dd"
+              >
+                <span class="ico-lang"></span>
+              </button>
+              <ul id="language-dd" class="nav-dd" role="menu">
+                <li role="menuitem">
+                  <a id="en-0" href="#nowhere" class="highlight" target="">
+                    <span aria-hidden="true">en</span> English</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav-main nav-items-8" role="menubar">
+            <li id="booking" class="nav-booking nav-dropdown" role="menuitem">
+              <button
+                class="icon-book-nav"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="booking-widget"
+                ng-click="openBookingWidget()"
+              >
+                Book a Room
+              </button>
+              <ul id="booking-widget" class="nav-dd bwdrop">
+                <li>
+                  <div
+                    id="booking-widget1"
+                    class="booking-widget ng-scope"
+                    ng-controller="BookingWidgetController"
+                    tabindex="-1"
+                  >
+                    <div class="main-info">
+                      <!-- ngIf: sessionStorage -->
+                      <div ng-if="sessionStorage" class="ng-scope">
+                        <div
+                          id="selector-arrive"
+                          class="date-selector arrive"
+                          ng-class="{ selected : arriveSelected }"
+                        >
+                          <div class="arrival-date">
+                            <span class="h3class cond">Arrival</span>
+                            <input
+                              type="text"
+                              ng-model="formatted.arrive"
+                              ng-focus="inputFocused($event, 'arrive')"
+                              ng-blur="inputBlurred($event, 'arrive')"
+                              ng-change="inputChanged()"
+                              class="ng-pristine ng-valid"
+                              aria-invalid="false"
+                            />
+                          </div>
+                          <button
+                            id="arrive-picker"
+                            class="icon-calendar"
+                            ng-click="handleCalendar($event)"
+                          >
+                            <span class="screen-reader"
+                              >Open calendar to choose arrival date.</span
+                            >
+                          </button>
+                        </div>
+                        <div
+                          id="selector-depart"
+                          class="date-selector depart selected"
+                          ng-class="{ selected : !arriveSelected }"
+                        >
+                          <div class="depart-date">
+                            <span class="h3class cond">Departure</span>
+                            <input
+                              type="text"
+                              ng-model="formatted.depart"
+                              ng-focus="inputFocused($event, 'depart')"
+                              ng-blur="inputBlurred($event, 'depart')"
+                              ng-change="inputChanged()"
+                              class="ng-pristine ng-valid"
+                              aria-invalid="false"
+                            />
+                          </div>
+                          <button
+                            id="depart-picker"
+                            class="icon-calendar grid-item width-1-5"
+                            ng-click="handleCalendar($event)"
+                          >
+                            <span class="screen-reader"
+                              >Open calendar to choose departure date.</span
+                            >
+                          </button>
+                        </div>
+                        <div id="selector-guest" class="guest-selector form">
+                          <div class="guest-selector-container field-select">
+                            <select class="guest-options" id="guest-options">
+                              <option value="1" class="guests-1"
+                                >1&nbsp;Guest</option
+                              >
+                              <option value="2" class="guests-2" selected=""
+                                >2&nbsp;Guests</option
+                              >
+                              <option value="3" class="guests-3"
+                                >3&nbsp;Guests</option
+                              >
+                              <option value="4" class="guests-4"
+                                >4&nbsp;Guests</option
+                              >
+                            </select>
+                          </div>
+                        </div>
+                        <div id="room-choices" class="view-rooms-btn">
+                          <a
+                            href="#nowhere"
+                            data-link="/en/booking/room-booking.html#/rooms"
+                            class="booking-widget-anchor btn-large cta grid-item width-4-5 btn-inactive"
+                            ng-class="{ 'btn-inactive' : !formatted.arrive || formatted.arrive === '' }"
+                            ng-click="viewRooms( $event )"
+                            >View Room Choices</a
+                          >
+                        </div>
+                        <p
+                          id="flexible-dates"
+                          class="booking-widget-anchor flexible-travel"
+                        >
+                          <!-- ngIf: !reactRoomRefresh
+                          --><a
+                            ng-if="!reactRoomRefresh"
+                            href="#nowhere"
+                            class="ng-scope"
+                            >Flexible Travel Dates<span class="screen-reader"
+                              >Click to see availability for more dates.</span
+                            ></a
+                          ><!-- end ngIf: !reactRoomRefresh -->
+                          <!-- ngIf: reactRoomRefresh -->
+                        </p>
+                        <!-- ngIf: !sessionStorage -->
+                        <p id="best-rate">
+                          <a class="info-title hdr-best-rate" href="#nowhere">
+                            <img
+                              src="//static.mgmresorts.com/content/dam/MGM/aria/website-graphics/property-content-logos/bestrates-banner_widget.png"
+                              contentimage="true"
+                              alt="MGM Resorts Best Rate Guaranteed"
+                          /></a>
+                        </p>
+                      </div>
+                      <!-- end ngIf: sessionStorage -->
+                      <div
+                        id="off-canvas-content"
+                        class="off-canvas-content ocContent canvas4"
+                      >
+                        <div class="offcanvas-best-rate">
+                          <button
+                            id="c-bestRate-close-btn"
+                            data-action="close"
+                            class="btn-close s-hide"
+                          >
+                            Close<span class="screen-reader">Close</span>
+                          </button>
+                          <span class="h2class">
+                            <button
+                              tabindex="-1"
+                              id="c-bestRate-hdr"
+                              class="h2"
+                              data-action="close"
+                            >
+                              <img
+                                src="//static.mgmresorts.com/content/dam/MGM/aria/website-graphics/property-content-logos/bestrates-banner_widget.png"
+                                contentimage="true"
+                                class="m-hide"
+                                alt="MGM Resorts Best Rate Guaranteed"
+                              /><span class="l-hide"
+                                ><span class="screen-reader">Close</span>Receive
+                                extra benefits when you book a room through our
+                                hotel websites:</span
+                              >
+                            </button>
+                          </span>
+                          <div class="intro">
+                            <p>
+                              We promise that if you find a lower&nbsp;third
+                              party room rate within 24 hours of booking on our
+                              website, we will not only match that rate, but
+                              give you an additional 10% off the lower rate.<br />
+                            </p>
+                            <p>
+                              <a
+                                id="c-bestRate-learnMore"
+                                triggers-session-check=""
+                                href="#nowhere"
+                                target=""
+                                title="Learn more about our Best Rate Guarantee"
+                                >Learn more about our Best Rate Guarantee</a
+                              >
+                            </p>
+                          </div>
+                          <div class="text-content">
+                            <p>
+                              Receive extra benefits when you book a room
+                              through our hotel websites:
+                            </p>
+                            <p>
+                              <b>No Hidden Fees<br /> </b>Your online total
+                              includes all taxes and fees; other travel sites
+                              often charge extra hidden fees for online
+                              bookings.
+                            </p>
+                            <p>
+                              By booking online you also avoid paying our
+                              additional $10 fee associated with phone-based
+                              reservations.
+                            </p>
+                            <p>
+                              <b>Book Now, Finish Paying Later<br /> </b>You are
+                              only required to put down a one-night deposit and
+                              tax when you book your reservation online. You pay
+                              the remaining balance when you check out.
+                            </p>
+                            <p>
+                              <b>72-Hour Cancellation Policy<br /> </b>Receive a
+                              full refund if you decide to cancel your
+                              reservation no later than 72 hours prior to your
+                              arrival, unless specifically excluded by booked
+                              offer. Other travel sites may charge you for
+                              cancellations.
+                            </p>
+                            <p>
+                              <b>Customer Service<br /> </b>Reserving on our
+                              sites is quick, clear, and convenient. If you have
+                              any questions, you can access support anytime.
+                            </p>
+                            <p>
+                              <b>Best Hotel Information<br /> </b>Get the most
+                              robust information about our hotels right on our
+                              sites. Get everything from guest room info to show
+                              and dining reservations, plus a full collection of
+                              hotel imagery.
+                            </p>
+                            <p>
+                              <b
+                                >Best Place to Earn M life Rewards Tier
+                                Credits<br /> </b
+                              >Our sites are the only place you can earn M life
+                              Rewards Tier Credits for every booking.
+                            </p>
+                            <p>
+                              <b>Access to Exclusive Offers<br /> </b>If you
+                              enroll in M life Rewards, you'll receive exclusive
+                              deals and our best rates from us via email.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- ngIf: !errorDiv -->
+                      <div class="non-rate-calendar ng-scope" ng-if="!errorDiv">
+                        <div
+                          class="non-rate-calendar-content off-canvas-loading"
+                          ng-class="{'off-canvas-loading': !model.loadCalendar}"
+                        >
+                          <button class="btn-close">
+                            <span class="screen-reader">CloseSelect Dates</span>
+                          </button>
+                          <span class="h2class s-hide">Select Dates</span>
+                          <!-- ngInclude: '/en.calendar.html' -->
+                          <div
+                            ng-include="'/en.calendar.html'"
+                            ng-init="view=''"
+                            class="ng-scope"
+                          >
+                            <div
+                              id="calendar"
+                              class="calendar grid-item ng-scope"
+                              aria-live="polite"
+                              ng-controller="CalendarController"
+                              ng-class="{ 'calendar-rate l-3-4' : breakpointMatches &amp;&amp; model.step !== '2' &amp;&amp; model.calendarView != 'dining' &amp;&amp; model.flow === 'room', 'reselect-dates' : model.progress > 2, 'calendar-offer' : ( model.offer &amp;&amp; model.offer !== '' ) || model.multipleOffers }"
+                            >
+                              <div
+                                class="error-message error-hide"
+                                ng-class="{ 'error-hide' : !model.errorShowing }"
+                              >
+                                <p
+                                  ng-bind-html="model.error | trust"
+                                  class="ng-binding"
+                                ></p>
+                                <div class="btn-error-close"></div>
+                              </div>
+                              <div
+                                class="day-of-week-fixed grid"
+                                aria-hidden="true"
+                                style="top: 0px;"
+                              >
+                                <div class="grid-item width-1-7">S</div>
+                                <div class="grid-item width-1-7">M</div>
+                                <div class="grid-item width-1-7">T</div>
+                                <div class="grid-item width-1-7">W</div>
+                                <div class="grid-item width-1-7">T</div>
+                                <div class="grid-item width-1-7">F</div>
+                                <div class="grid-item width-1-7">S</div>
+                              </div>
+                              <div
+                                id="months-wrapper"
+                                class="months-wrapper"
+                                ng-style="errorPlacement();"
+                                style="top: 0.625rem;"
+                              >
+                                <!--
+                                  ngIf: errorCodes.calendar['_system_error'] || errorCodes.calendar['_runtime_error']
+                                -->
+                                <!--
+                                  ngIf: errorCodes.calendar['_system_down']
+                                -->
+                                <!--
+                                  ngRepeat: month in model.calendar | limitTo:limit track by $index
+                                -->
+                              </div>
+                              <div
+                                class="calendar-legend calendar-legend-small grid-gutter"
+                              >
+                                <div
+                                  class="grid-item width-1-2 ng-hide"
+                                  ng-class="{ 'm-1-5' : model.calendarView === 'rate' &amp;&amp; model.step === '1'}"
+                                  ng-show="model.offer || model.multipleOffers"
+                                  aria-hidden="true"
+                                >
+                                  <span class="legend-offer"> Offers</span>
+                                </div>
+                                <div
+                                  class="grid-item width-1-2"
+                                  ng-class="{ 'm-1-5' : model.calendarView === 'rate' &amp;&amp; model.step === '1'}"
+                                  ng-show="model.calendarView !== 'request' &amp;&amp; model.calendarView !== 'filterDateRange'"
+                                  aria-hidden="false"
+                                >
+                                  <span class="legend-selected">
+                                    Selected Dates</span
+                                  >
+                                </div>
+                                <div
+                                  class="grid-item width-1-2 ng-hide"
+                                  ng-class="{ 'm-1-5' : model.calendarView === 'rate' &amp;&amp; model.step === '1'}"
+                                  ng-show="model.calendarView === 'request' || model.calendarView === 'filterDateRange'"
+                                  aria-hidden="true"
+                                >
+                                  <span class="legend-selected"> Selected</span>
+                                </div>
+                                <div
+                                  class="grid-item width-1-2"
+                                  ng-class="{ 'm-1-5' : model.calendarView === 'rate' &amp;&amp; model.step === '1'}"
+                                  ng-show="model.calendarView !== 'dining' &amp;&amp; model.calendarView !== 'request' &amp;&amp; model.calendarView !== 'filterDateRange' &amp;&amp; model.flow !== 'ticketing'"
+                                  aria-hidden="false"
+                                >
+                                  <span class="legend-no-arrivals">
+                                    No Arrivals</span
+                                  >
+                                </div>
+                                <div
+                                  class="grid-item width-1-2"
+                                  ng-class="{ 'm-1-5' : model.calendarView === 'rate' &amp;&amp; model.step === '1'}"
+                                  ng-show="model.calendarView !== 'dining' &amp;&amp; model.calendarView !== 'request' &amp;&amp; model.calendarView !== 'filterDateRange'"
+                                  aria-hidden="false"
+                                >
+                                  <span
+                                    class="legend-sold-out ng-binding"
+                                    ng-bind="legend.soldOut"
+                                    >Unavailable</span
+                                  >
+                                </div>
+                                <div
+                                  class="grid-item width-1-2 ng-hide"
+                                  ng-class="{ 'm-1-5' : model.calendarView === 'rate' }"
+                                  ng-show="model.calendarView === 'dining'"
+                                  aria-hidden="true"
+                                >
+                                  <span class="legend-sold-out">Closed</span>
+                                </div>
+                              </div>
+                              <div class="calendar-disclaimer">
+                                Taxes and resort fee are not included. Prices
+                                shown are the lowest available for each night,
+                                rounded to the nearest dollar. Prices shown may
+                                be available only with multi-night stays or
+                                arrival on a specific day.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- end ngIf: !errorDiv -->
+                      <!-- ngIf: errorDiv -->
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li id="Mobile App-1" role="menuitem" class="">
+              <a href="#nowhere" target="" class="icon-hotel">Hotel</a>
+            </li>
+            <li id="Hotel-2" role="menuitem" class="">
+              <a
+                href="#nowhere"
+                target=""
+                class="icon-entertainment"
+                >Entertainment</a
+              >
+            </li>
+            <li id="Entertainment-3" role="menuitem" class="">
+              <a href="#nowhere" target="" class="icon-restaurants"
+                >Restaurants</a
+              >
+            </li>
+            <li id="Restaurants-4" role="menuitem" class="">
+              <a href="#nowhere" target="" class="icon-nightlife"
+                >Nightlife</a
+              >
+            </li>
+            <li id="Nightlife-5" role="menuitem" class="">
+              <a href="#nowhere" target="" class="icon-amenities"
+                >Amenities</a
+              >
+            </li>
+            <li id="Amenities-6" role="menuitem" class="">
+              <a href="#nowhere" target="" class="icon-casino">Casino</a>
+            </li>
+            <li id="Casino-7" role="menuitem" class="">
+              <a href="#nowhere" target="" class="icon-groups"
+                >Groups &amp; Weddings</a
+              >
+            </li>
+            <li id="Groups &amp; Weddings-8" role="menuitem" class="">
+              <a href="#nowhere" target="" class="icon-offers">Offers</a>
+            </li>
+            <li id="Offers-9" role="menuitem" class="">
+              <a
+                href="#nowhere"
+                class="icon-mobile-app"
+                >Mobile App</a
+              >
+            </li>
+          </ul>
+        </nav>
+        <!-- end ngIf: vpIs === 'xlarge' -->
+        <div class="modal-content-info">
+          <div class="nav-modal-text">
+            <span class="h2class">Booking not available in this language</span>
+            <p></p>
+            <button id="nav-close-modal" class="btn-large close-modal">
+              <span class="screen-reader">Close</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

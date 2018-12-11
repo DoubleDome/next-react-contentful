@@ -11,7 +11,7 @@ import {
   SCREEN_WIDTH_MD_MAX,
   SCREEN_WIDTH_LG_MAX,
 } from '../config/config';
-import { window } from '../utils/browser';
+import { window } from '../utils/browser'; // eslint-disable-line no-unused-vars
 
 const mediaQueries = {
   xs: `(max-width: ${SCREEN_WIDTH_XS_MAX}px)`,

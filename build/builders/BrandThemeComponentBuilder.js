@@ -23,7 +23,7 @@ class BrandThemeComponentBuilder extends AbstractBuilder {
 
     this.components.forEach(component => {
       const scssFilePath = BrandThemeComponentBuilder.getComponentScssFile(
-        component,
+        component
       );
       if (scssFilePath) {
         files.push(scssFilePath);
@@ -41,12 +41,12 @@ class BrandThemeComponentBuilder extends AbstractBuilder {
 
   createComponentFile() {
     let parsedContent = this.brandThemeComponent.getParsedContent({
-      lineIgnoreRegExp: this.config.IGNORE_REG_EXP,
+      lineIgnoreRegExp: this.config.IGNORE_REG_EXP
     });
     parsedContent = this.addComment('// ', '\n', parsedContent);
     const targetPath = path.join(
       this.getTargetDir(),
-      `${this.config.BRAND_THEME_COMPONENT_NAME}.component.js`,
+      `${this.config.BRAND_THEME_COMPONENT_NAME}.component.js`
     );
 
     fs.writeFileSync(targetPath, parsedContent);
@@ -61,7 +61,7 @@ class BrandThemeComponentBuilder extends AbstractBuilder {
 
   static renderThemeCss(scssData) {
     return sass.renderSync({
-      data: scssData,
+      data: scssData
     });
   }
 
@@ -104,10 +104,10 @@ class BrandThemeComponentBuilder extends AbstractBuilder {
     const commonScssFiles = [
       path.join(
         this.config.SOURCE_SCSS_FILES_ROOT_DIR,
-        `/themes/${theme}/_variables.scss`,
+        `/themes/${theme}/_variables.scss`
       ),
       path.join(this.config.SOURCE_SCSS_FILES_ROOT_DIR, '/base.dmp.scss'),
-      path.join(this.config.SOURCE_SCSS_FILES_ROOT_DIR, '/shared/_mixins.scss'),
+      path.join(this.config.SOURCE_SCSS_FILES_ROOT_DIR, '/shared/_mixins.scss')
     ];
 
     const componentsScssFiles = this.getComponentsScssFiles();
@@ -115,7 +115,7 @@ class BrandThemeComponentBuilder extends AbstractBuilder {
 
     const normalizedScssImportPaths = this.normalizeScssImportPaths(scssFiles);
     const scssData = BrandThemeComponentBuilder.buildThemeScssData(
-      normalizedScssImportPaths,
+      normalizedScssImportPaths
     );
     const themeCss = BrandThemeComponentBuilder.renderThemeCss(scssData);
 
